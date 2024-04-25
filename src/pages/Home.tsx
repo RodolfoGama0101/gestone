@@ -28,7 +28,9 @@ const Home: React.FC = () => {
       <HeaderComponent></HeaderComponent>
 
       <IonContent fullscreen>
-        <IonTitle class='ion-text-start ion-margin'>Dashboard</IonTitle>
+        <IonText>
+          <h1 className='ion-text-start ion-margin-start'>Dashboard</h1>
+        </IonText>
 
         <IonGrid>
           <IonRow>

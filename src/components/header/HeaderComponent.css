@@ -1,7 +1,15 @@
 ion-img {
-    width: 30%;
+    width: 64px;
 }
 
-.login-icon{
-    font-size: 500px;
+.um {
+    background-color: aqua;
+}
+
+.dois {
+    background-color: aquamarine;
+}
+
+.tres {
+    background-color: bisque;
 }
