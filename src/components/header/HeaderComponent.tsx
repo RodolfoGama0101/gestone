@@ -10,7 +10,7 @@ const HeaderComponent: React.FC = () => {
             <IonToolbar>
                 <IonButtons slot='start'>
                     <IonButton href='#'>
-                        <IonImg src='resources\gestoneLogo\icone.svg'></IonImg>
+                        <IonImg src='public\icone.svg'></IonImg>
                     </IonButton>
                 </IonButtons>
 
