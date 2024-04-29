@@ -12,7 +12,7 @@ const HeaderComponent: React.FC = () => {
                         {/* Ícone Gestone */}
                         <IonCol className='um'>
                             <IonRouterLink href='#'>
-                                <IonImg src='public\gestoneLogo\Versão Final\icone.svg'></IonImg>
+                                <IonImg src='resources\gestoneLogo\icone.svg'></IonImg>
                             </IonRouterLink>
                         </IonCol>
 
