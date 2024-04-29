@@ -2,39 +2,29 @@ import './HeaderComponent.css';
 import React from 'react';
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonImg, IonText, IonGrid, IonRow, IonCol, IonRouterLink } from '@ionic/react';
 import { personCircle, personCircleSharp, person, personCircleOutline } from 'ionicons/icons';
+import Login from '../../pages/Login';
 
 const HeaderComponent: React.FC = () => {
     return (
         <IonHeader>
             <IonToolbar>
-                <IonGrid>
-                    <IonRow className='ion-align-items-center'>
-                        {/* Ícone Gestone */}
-                        <IonCol className='um'>
-                            <IonRouterLink href='#'>
-                                <IonImg src='resources\gestoneLogo\icone.svg'></IonImg>
-                            </IonRouterLink>
-                        </IonCol>
+                <IonButtons slot='start'>
+                    <IonButton href='#'>
+                        <IonImg src='resources\gestoneLogo\icone.svg'></IonImg>
+                    </IonButton>
+                </IonButtons>
 
-                        {/* Título */}
-                        <IonCol className='dois'>
-                            <IonText className='ion-text-left'>
-                                <h1>GESTONE</h1>
-                            </IonText>
-                        </IonCol>
+                <IonButtons slot='end' className='login-button'>
+                    <IonButton href='../../pages/Login.tsx'>
+                        <IonIcon icon={personCircleOutline}></IonIcon>
+                    </IonButton>
+                </IonButtons>
 
-                        {/* Login */}
-                        <IonCol className='tres'>
-                            <IonRouterLink>
-                                <IonButton className='ion-float-right'>
-                                    <IonIcon icon={personCircleOutline}></IonIcon>
-                                </IonButton>
-                            </IonRouterLink>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+                <IonTitle>GESTONE</IonTitle>
             </IonToolbar>
         </IonHeader>
+
+        
     )
 }
 

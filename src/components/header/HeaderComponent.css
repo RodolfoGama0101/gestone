@@ -1,15 +1,12 @@
 ion-img {
-    width: 64px;
+    width: 60px;
 }
 
-.um {
-    background-color: aqua;
+ion-title {
+    font-size: x-large;
 }
 
-.dois {
-    background-color: aquamarine;
+.login-button {
+    border-radius: 25px;
 }
 
-.tres {
-    background-color: bisque;
-}
