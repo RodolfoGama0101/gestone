@@ -1,8 +1,10 @@
 import './HeaderComponent.css';
 import React from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonImg, IonText, IonGrid, IonRow, IonCol, IonRouterLink } from '@ionic/react';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonImg, IonRouterOutlet } from '@ionic/react';
+
+
 import { personCircle, personCircleSharp, person, personCircleOutline } from 'ionicons/icons';
-import Login from '../../pages/Login';
+
 
 const HeaderComponent: React.FC = () => {
     return (
@@ -14,8 +16,16 @@ const HeaderComponent: React.FC = () => {
                     </IonButton>
                 </IonButtons>
 
+                <IonReactRouter>
+                    <IonRouterOutlet>
+                        <Route path="../../pages/Login" component={Login}>
+                            <Login></Login>
+                        </Route>
+                    </IonRouterOutlet>
+                </IonReactRouter>
+
                 <IonButtons slot='end' className='login-button'>
-                    <IonButton href='../../pages/Login.tsx'>
+                    <IonButton href='Login'>
                         <IonIcon icon={personCircleOutline}></IonIcon>
                     </IonButton>
                 </IonButtons>
@@ -23,8 +33,6 @@ const HeaderComponent: React.FC = () => {
                 <IonTitle>GESTONE</IonTitle>
             </IonToolbar>
         </IonHeader>
-
-        
     )
 }
 

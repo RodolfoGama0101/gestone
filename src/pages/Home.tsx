@@ -8,12 +8,37 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonText
+  IonText, 
+  IonToolbar, 
+  IonImg, 
+  IonTitle
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
-import HeaderComponent from '../components/header/HeaderComponent';
-import SaldoButtonComponent from '../components/buttons/Button';
+import Login from './Login';
+
+
+const HeaderComponent: React.FC = () => {
+  return (
+      <IonHeader>
+          <IonToolbar>
+              <IonButtons slot='start'>
+                  <IonButton href='#'>
+                      <IonImg src='src\assets\icone.svg'></IonImg>
+                  </IonButton>
+              </IonButtons>
+
+              <IonButtons slot='end' className='login-button'>
+                  <IonButton routerLink='Login'>
+                      <IonIcon icon={personCircleOutline}></IonIcon>
+                  </IonButton>
+              </IonButtons>
+
+              <IonTitle>GESTONE</IonTitle>
+          </IonToolbar>
+      </IonHeader>
+  )
+}
 
 const Home: React.FC = () => {
   return (
@@ -30,7 +55,23 @@ const Home: React.FC = () => {
           <IonRow>
             {/* Saldo */}
             <IonCol>
-              <SaldoButtonComponent></SaldoButtonComponent>
+              <IonButton color={'light'} expand='block' fill='solid'>
+                <IonGrid>
+                  <IonRow className='ion-align-items-center'>
+                    <IonCol>
+                      <IonText className='ion-text-start ion-text-uppercase'>
+                        <p>Saldo</p>
+                      </IonText>
+                      <IonText className='ion-text-start'>
+                        <h1>R$ 0,00</h1>
+                      </IonText>
+                    </IonCol>
+                    <IonCol>
+                      <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              </IonButton>
             </IonCol>
 
             {/* Receitas */}

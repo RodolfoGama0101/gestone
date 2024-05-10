@@ -14,6 +14,7 @@ import { addCircleOutline, homeOutline, barChartOutline} from 'ionicons/icons';
 import Home from './pages/Home';
 import Add from './pages/Add';
 import Charts from './pages/Charts';
+import Login from './pages/Login';
 import './App.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -42,31 +43,34 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/home">
+          <Route exact path="/Home">
             <Home />
           </Route>
-          <Route exact path="/add">
+          <Route exact path="/Add">
             <Add />
           </Route>
-          <Route path="/charts">
+          <Route path="/Charts">
             <Charts />
           </Route>
+          <Route exact path="/Login">
+            <Login />
+          </Route>
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to="/Home" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="Home" href="/home">
+          <IonTabButton tab="Home" href="/Home">
             <IonIcon aria-hidden="true" icon={homeOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="add" href="/add">
+          <IonTabButton tab="Add" href="/Add">
             <IonIcon aria-hidden="true" icon={addCircleOutline} color='sucess'/>
             <IonLabel>Add</IonLabel>
           </IonTabButton>
           
-          <IonTabButton tab="charts" href="/charts">
+          <IonTabButton tab="Charts" href="/Charts">
             <IonIcon aria-hidden="true" icon={barChartOutline} />
             <IonLabel>Grafics</IonLabel>
           </IonTabButton>
