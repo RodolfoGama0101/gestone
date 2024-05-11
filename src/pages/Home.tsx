@@ -29,7 +29,7 @@ const HeaderComponent: React.FC = () => {
               </IonButtons>
 
               <IonButtons slot='end' className='login-button'>
-                  <IonButton routerLink='Login'>
+                  <IonButton href='/Login'>
                       <IonIcon icon={personCircleOutline}></IonIcon>
                   </IonButton>
               </IonButtons>
