@@ -24,7 +24,7 @@ const HeaderComponent: React.FC = () => {
           <IonToolbar>
               <IonButtons slot='start'>
                   <IonButton href='#'>
-                      <IonImg src='src\assets\icone.svg'></IonImg>
+                      <IonImg src='/icone.svg'></IonImg>
                   </IonButton>
               </IonButtons>
 
