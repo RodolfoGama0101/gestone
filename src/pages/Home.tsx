@@ -15,30 +15,8 @@ import {
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
+import HeaderComponent from '../components/Header';
 import Login from './Login';
-
-
-const HeaderComponent: React.FC = () => {
-  return (
-      <IonHeader>
-          <IonToolbar>
-              <IonButtons slot='start'>
-                  <IonButton href='#'>
-                      <IonImg src='/icone.svg'></IonImg>
-                  </IonButton>
-              </IonButtons>
-
-              <IonButtons slot='end' className='login-button'>
-                  <IonButton href='/Login'>
-                      <IonIcon icon={personCircleOutline}></IonIcon>
-                  </IonButton>
-              </IonButtons>
-
-              <IonTitle>GESTONE</IonTitle>
-          </IonToolbar>
-      </IonHeader>
-  )
-}
 
 const Home: React.FC = () => {
   return (

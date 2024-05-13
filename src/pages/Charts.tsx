@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import HeaderComponent from '../components/header/HeaderComponent';
+import HeaderComponent from '../components/Header';
 import './Charts.css';
 
 const Charts: React.FC = () => {
