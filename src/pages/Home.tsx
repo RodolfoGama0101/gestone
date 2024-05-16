@@ -32,7 +32,7 @@ const Home: React.FC = () => {
         <IonGrid>
           <IonRow>
             {/* Saldo */}
-            <IonCol>
+            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
               <IonButton color={'light'} expand='block' fill='solid'>
                 <IonGrid>
                   <IonRow className='ion-align-items-center'>
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
             </IonCol>
 
             {/* Receitas */}
-            <IonCol>
+            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
               <IonButton color={'light'} expand='block'>
                 <IonGrid>
                   <IonRow className='ion-align-items-center'>
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
             </IonCol>
 
             {/* Despesas */}
-            <IonCol>
+            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
               <IonButton color={'light'} expand='block'>
                 <IonGrid>
                   <IonRow className='ion-align-items-center'>
