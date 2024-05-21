@@ -11,7 +11,9 @@ import {
   IonText, 
   IonToolbar, 
   IonImg, 
-  IonTitle
+  IonTitle, 
+  IonMenu, 
+  IonMenuButton
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
@@ -97,7 +99,6 @@ const Home: React.FC = () => {
           </IonRow>
         </IonGrid>
       </IonContent>
-
     </IonPage>
   );
 };

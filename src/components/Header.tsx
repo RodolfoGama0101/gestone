@@ -1,26 +1,53 @@
-import { IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonImg } from "@ionic/react";
-import { personCircleOutline } from "ionicons/icons";
+import {
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonIcon,
+    IonTitle,
+    IonMenu,
+    IonMenuButton,
+    IonContent,
+    IonList,
+    IonItemSliding,
+    IonItem,
+    IonAvatar,
+    IonLabel,
+    IonItemOption,
+    IonItemOptions,
+} from "@ionic/react";
+import { exitOutline, logOut, personCircleOutline, pin, share, trash } from "ionicons/icons";
 import "./Header.css";
 
 const HeaderComponent: React.FC = () => {
     return (
-        <IonHeader>
-            <IonToolbar>
-                <IonButtons slot='start'>
-                    <IonButton href='#'>
-                        <IonImg src='/icone.svg'></IonImg>
-                    </IonButton>
-                </IonButtons>
-  
-                <IonButtons slot='end' className='login-button'>
-                    <IonButton href='/Login'>
-                        <IonIcon icon={personCircleOutline}></IonIcon>
-                    </IonButton>
-                </IonButtons>
-  
-                <IonTitle>GESTONE</IonTitle>
-            </IonToolbar>
-        </IonHeader>
+        <>
+            <IonMenu contentId="main-content" side="end">
+                <IonHeader>
+                    <IonToolbar>
+                        <IonTitle>Menu Content</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent className="ion-padding">
+                    <IonList>
+                        <IonItem button={true}>
+                            <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
+                            <IonLabel>Logout</IonLabel>
+                        </IonItem>
+                    </IonList>
+                </IonContent>
+            </IonMenu>
+
+            <IonHeader id="main-content">
+                <IonToolbar>
+                    <IonButtons slot="end">
+                        <IonMenuButton>
+                            <IonIcon icon={personCircleOutline}></IonIcon>
+                        </IonMenuButton>
+                    </IonButtons>
+                    <IonTitle>Gestone</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+        </>
     )
 }
 
