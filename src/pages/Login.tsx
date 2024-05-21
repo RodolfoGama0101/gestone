@@ -16,7 +16,9 @@ import {
   IonToolbar,
   IonButtons, 
   IonBackButton, 
-  IonTitle
+  IonTitle,
+  IonLabel,
+  
 } from "@ionic/react";
 import './Login.css';
 import { checkmark } from 'ionicons/icons';
@@ -24,15 +26,6 @@ import { checkmark } from 'ionicons/icons';
 const Login: React.FC = () => {
   return (
     <>
-    <IonHeader>
-      <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="/Home"></IonBackButton>
-        </IonButtons>
-        <IonTitle>Back Button</IonTitle>
-      </IonToolbar>
-    </IonHeader>
-
     <IonContent>
         <IonGrid fixed={true} className="ion-width">
           <IonRow class="ion-justify-content-center">
@@ -51,8 +44,13 @@ const Login: React.FC = () => {
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
                 
+                  <div className="ion-text-center">
+                    <IonText><a href="/Home" >Esqueçeu a senha </a></IonText>
+                  </div>       
+                             
 
                 </IonCardContent>
+                
               </IonCard>
             </IonCol>
           </IonRow>
