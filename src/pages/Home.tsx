@@ -8,9 +8,16 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonText
+  IonText,
+  IonMenu,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonMenuButton
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import HeaderComponent from '../components/Header';
 import Login from './Login';
@@ -19,14 +26,42 @@ const Home: React.FC = () => {
   return (
     <IonPage>
 
-      <HeaderComponent></HeaderComponent>
+      <IonMenu contentId="main-content" side="end">
+        <IonHeader className="ion-no-border">
+          <IonToolbar>
+            <IonTitle>Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonList>
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
+              <IonLabel>Logout</IonLabel>
+            </IonItem>
+          </IonList>
+        </IonContent>
+      </IonMenu>
+
+      <IonHeader id="main-content" className="ion-no-border">
+        <IonToolbar>
+          <IonButtons slot="end" className="ion-margin-right">
+            <IonMenuButton>
+              <IonIcon icon={personCircleOutline}></IonIcon>
+            </IonMenuButton>
+          </IonButtons>
+
+          <IonText className='ion-margin-left'>
+            <h1 className='ion-text-start ion-margin-start'>Olá Rodolfo!</h1>
+          </IonText>
+        </IonToolbar>
+      </IonHeader>
 
       <IonContent fullscreen>
-        <IonText>
-          <h1 className='ion-text-start ion-margin-start'>Dashboard</h1>
-        </IonText>
-
         <IonGrid>
+
+          <IonText className='ion-margin-left'>
+            <h1 className='ion-text-start ion-margin-start'>Dashboard</h1>
+          </IonText>
           <IonRow>
             {/* Saldo */}
             <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>

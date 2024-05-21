@@ -40,18 +40,11 @@ const HeaderComponent: React.FC = () => {
 
             <IonHeader id="main-content" className="ion-no-border">
                 <IonToolbar>
-                    <IonButtons slot="end">
+                    <IonButtons slot="end" className="ion-margin-right">
                         <IonMenuButton>
                             <IonIcon icon={personCircleOutline}></IonIcon>
                         </IonMenuButton>
                     </IonButtons>
-                    <IonButtons slot='start'>
-                        <IonButton href='#'>
-                            <IonImg src='/icone.svg'></IonImg>
-                        </IonButton>
-                    </IonButtons>
-
-                    <IonTitle>GESTONE</IonTitle>
                 </IonToolbar>
             </IonHeader>
         </>

@@ -7,10 +7,12 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact
+  setupIonicReact, 
+  IonFab, 
+  IonFabButton
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { addCircleOutline, homeOutline, barChartOutline} from 'ionicons/icons';
+import { addCircleOutline, homeOutline, barChartOutline, add } from 'ionicons/icons';
 import Home from './pages/Home';
 import Add from './pages/Add';
 import Charts from './pages/Charts';
@@ -59,17 +61,21 @@ const App: React.FC = () => (
             <Redirect to="/Home" />
           </Route>
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+
+        <IonTabBar slot="bottom" >
           <IonTabButton tab="Home" href="/Home">
             <IonIcon aria-hidden="true" icon={homeOutline} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
 
           <IonTabButton tab="Add" href="/Add">
-            <IonIcon aria-hidden="true" icon={addCircleOutline} color='sucess'/>
-            <IonLabel>Add</IonLabel>
+            <IonFab>
+              <IonFabButton>
+                <IonIcon icon={add}></IonIcon>
+              </IonFabButton>
+            </IonFab>
           </IonTabButton>
-          
+
           <IonTabButton tab="Charts" href="/Charts">
             <IonIcon aria-hidden="true" icon={barChartOutline} />
             <IonLabel>Grafics</IonLabel>
