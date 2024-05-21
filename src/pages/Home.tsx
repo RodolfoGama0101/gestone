@@ -8,12 +8,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonText, 
-  IonToolbar, 
-  IonImg, 
-  IonTitle, 
-  IonMenu, 
-  IonMenuButton
+  IonText
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';

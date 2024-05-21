@@ -12,8 +12,9 @@ import {
     IonItem,
     IonAvatar,
     IonLabel,
-    IonItemOption,
-    IonItemOptions,
+    IonText,
+    IonImg, 
+    IonButton
 } from "@ionic/react";
 import { exitOutline, logOut, personCircleOutline, pin, share, trash } from "ionicons/icons";
 import "./Header.css";
@@ -22,7 +23,7 @@ const HeaderComponent: React.FC = () => {
     return (
         <>
             <IonMenu contentId="main-content" side="end">
-                <IonHeader>
+                <IonHeader className="ion-no-border">
                     <IonToolbar>
                         <IonTitle>Menu</IonTitle>
                     </IonToolbar>
@@ -32,20 +33,25 @@ const HeaderComponent: React.FC = () => {
                         <IonItem button={true} href="/Login">
                             <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
                             <IonLabel>Logout</IonLabel>
-
                         </IonItem>
                     </IonList>
                 </IonContent>
             </IonMenu>
 
-            <IonHeader id="main-content">
+            <IonHeader id="main-content" className="ion-no-border">
                 <IonToolbar>
                     <IonButtons slot="end">
                         <IonMenuButton>
                             <IonIcon icon={personCircleOutline}></IonIcon>
                         </IonMenuButton>
                     </IonButtons>
-                    <IonTitle>Gestone</IonTitle>
+                    <IonButtons slot='start'>
+                        <IonButton href='#'>
+                            <IonImg src='/icone.svg'></IonImg>
+                        </IonButton>
+                    </IonButtons>
+
+                    <IonTitle>GESTONE</IonTitle>
                 </IonToolbar>
             </IonHeader>
         </>
