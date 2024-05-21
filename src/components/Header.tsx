@@ -34,6 +34,10 @@ const HeaderComponent: React.FC = () => {
                             <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
                             <IonLabel>Logout</IonLabel>
                         </IonItem>
+                        <IonItem button={true} href="/Login">
+                            <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
+                            <IonLabel>Logout</IonLabel>
+                        </IonItem>
                     </IonList>
                 </IonContent>
             </IonMenu>
