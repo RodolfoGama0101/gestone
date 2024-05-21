@@ -24,14 +24,15 @@ const HeaderComponent: React.FC = () => {
             <IonMenu contentId="main-content" side="end">
                 <IonHeader>
                     <IonToolbar>
-                        <IonTitle>Menu Content</IonTitle>
+                        <IonTitle>Menu</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
                     <IonList>
-                        <IonItem button={true}>
+                        <IonItem button={true} href="/Login">
                             <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
                             <IonLabel>Logout</IonLabel>
+
                         </IonItem>
                     </IonList>
                 </IonContent>
