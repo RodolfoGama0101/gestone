@@ -7,12 +7,13 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact, 
-  IonFab, 
-  IonFabButton
+  setupIonicReact,
+  IonFab,
+  IonFabButton, 
+  IonImg
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { addCircleOutline, homeOutline, barChartOutline, add } from 'ionicons/icons';
+import { homeOutline, barChartOutline, add } from 'ionicons/icons';
 import Home from './pages/Home';
 import Add from './pages/Add';
 import Charts from './pages/Charts';
@@ -62,7 +63,7 @@ const App: React.FC = () => (
           </Route>
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom" >
+        <IonTabBar slot="bottom" color={'bege'}>
           <IonTabButton tab="Home" href="/Home">
             <IonIcon aria-hidden="true" icon={homeOutline} />
             <IonLabel>Home</IonLabel>
@@ -70,8 +71,8 @@ const App: React.FC = () => (
 
           <IonTabButton tab="Add" href="/Add">
             <IonFab>
-              <IonFabButton>
-                <IonIcon icon={add}></IonIcon>
+              <IonFabButton color={'bege'}>
+                <IonImg src='/icone.svg' />
               </IonFabButton>
             </IonFab>
           </IonTabButton>

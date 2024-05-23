@@ -2,8 +2,24 @@
     font-size: 50px;
     border: 3px solid;
     border-radius: 100%;
+    color: black;
 }
 
 ion-button {
-    --border-radius: 25px;
+    /* --border-radius: 0; */
+    --box-shadow: 4px 4px black;
 }
+
+ion-card {
+    /* border-radius: 0; */
+    box-shadow: 4px 4px black;
+}
+
+.nome {
+    margin-top: 0;
+}
+
+.dashboard {
+    padding-left: 5px;
+}
+
