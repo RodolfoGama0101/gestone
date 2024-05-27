@@ -17,10 +17,10 @@ import {
   IonLabel,
   IonMenuButton,
   IonCard,
-  IonCardContent, 
-  
+  IonCardContent,
+
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, cardOutline, alertCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import HeaderComponent from '../components/Header';
 import Login from './Login';
@@ -37,7 +37,27 @@ const Home: React.FC = () => {
         </IonHeader>
         <IonContent className="ion-padding" color={'light'}>
           <IonList >
-            <IonItem button={true} href="/Login" color={'light'}>
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={document}></IonIcon>
+              <IonLabel>Dados Pessoais</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
+              <IonLabel>Sua Conta</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={cardOutline}></IonIcon>
+              <IonLabel>Cartões</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline}></IonIcon>
+              <IonLabel>Support</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
               <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
               <IonLabel>Logout</IonLabel>
             </IonItem>
