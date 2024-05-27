@@ -1,3 +1,5 @@
+import React, {useState} from 'react';
+
 import {
   IonContent,
   IonHeader,
@@ -26,6 +28,12 @@ import HeaderComponent from '../components/Header';
 import Login from './Login';
 
 const Home: React.FC = () => {
+  const [contador, setContador] = useState(0);
+
+  const handleClick = () => {
+    setContador(contador + 1);
+  };
+
   return (
     <IonPage>
       {/* Menu Content */}
@@ -92,7 +100,7 @@ const Home: React.FC = () => {
               <IonRow>
                 {/* Saldo */}
                 <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'verdeclaro'} expand='block' fill='solid'>
+                  <IonButton color={'verdeclaro'} expand='block' fill='solid' onClick={handleClick}>
                     <IonGrid>
                       <IonRow className='ion-align-items-center'>
                         <IonCol>
@@ -100,7 +108,7 @@ const Home: React.FC = () => {
                             <p>Saldo</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ 20,00</h1>
+                            <h1>R$ {contador}</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
