@@ -24,15 +24,10 @@ import {
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, cardOutline, alertCircleOutline } from 'ionicons/icons';
 import './Home.css';
-import HeaderComponent from '../components/Header';
 import Login from './Login';
 
 const Home: React.FC = () => {
-  const [contador, setContador] = useState(0);
-
-  const handleClick = () => {
-    setContador(contador + 1);
-  };
+  const [nome, setNome] = useState("Rodolfo Gama");
 
   return (
     <IonPage>
@@ -53,11 +48,6 @@ const Home: React.FC = () => {
             <IonItem button={true} href="/Login">
               <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
               <IonLabel>Sua Conta</IonLabel>
-            </IonItem>
-
-            <IonItem button={true} href="/Login">
-              <IonIcon aria-hidden="true" slot="start" icon={cardOutline}></IonIcon>
-              <IonLabel>Cartões</IonLabel>
             </IonItem>
 
             <IonItem button={true} href="/Login">
@@ -84,7 +74,7 @@ const Home: React.FC = () => {
 
           <IonText className='ion-margin-left'>
             <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-            <h1 className='nome ion-text-start ion-margin-start'>Rodolfo Gama</h1>
+            <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
