@@ -47,7 +47,7 @@ const Home: React.FC = () => {
 
       {/* Header */}
       <IonHeader id="main-content" className="ion-no-border">
-        <IonToolbar color={'bege'}>
+        <IonToolbar color={'light'}>
           <IonButtons slot="end" className="ion-margin-right">
             <IonMenuButton>
               <IonIcon icon={personCircleOutline} size='large'></IonIcon>
@@ -56,13 +56,13 @@ const Home: React.FC = () => {
 
           <IonText className='ion-margin-left'>
             <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-            <h1 className='nome ion-text-start ion-margin-start'>Rodolfo Gama</h1>
+            <h1 className='nome ion-text-start ion-margin-start'>Jubileu Nemeu</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
 
       {/* Card */}
-      <IonContent fullscreen color={'bege'}>
+      <IonContent fullscreen color={'light'}>
         <IonCard color={'verdeescuro'}>
           <IonCardContent>
             <IonGrid>
