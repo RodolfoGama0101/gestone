@@ -18,6 +18,9 @@ import Home from './pages/Home';
 import Add from './pages/Add';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
+import Saldo from './pages/Saldo';
+import Despesas from './pages/Despesas';
+import Receitas from './pages/Receitas';
 import './App.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -55,11 +58,20 @@ const App: React.FC = () => (
           <Route path="/charts">
             <Charts />
           </Route>
-          <Route exact path="/login">
+          <Route path="/login">
             <Login />
           </Route>
+          <Route path="/saldo">
+            <Saldo />
+          </Route>
+          <Route path="/receitas">
+            <Receitas />
+          </Route>
+          <Route path="/despesas">
+            <Despesas />
+          </Route>
           <Route exact path="/">
-            <Redirect to="/Home" />
+            <Redirect to="/home" />
           </Route>
         </IonRouterOutlet>
 
