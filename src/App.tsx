@@ -75,7 +75,7 @@ const App: React.FC = () => (
           </Route>
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom" color={'light'}>
+        <IonTabBar slot="bottom" color={'dark'}>
           <IonTabButton tab="Home" href="/Home">
             <IonIcon aria-hidden="true" icon={homeOutline} />
             <IonLabel>Home</IonLabel>
@@ -83,7 +83,7 @@ const App: React.FC = () => (
 
           <IonTabButton tab="Add" href="/Add">
             <IonFab>
-              <IonFabButton color={'light'}>
+              <IonFabButton color={'dark'}>
                 <IonImg src='/addIcon.svg' />
               </IonFabButton>
             </IonFab>
