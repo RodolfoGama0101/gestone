@@ -50,8 +50,6 @@ const Login: React.FC = () => {
                   <IonButton expand='block' color={'success'} className="ion-margin-top">
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
-                
-
                 </IonCardContent>
               </IonCard>
             </IonCol>

@@ -18,6 +18,9 @@ import Home from './pages/Home';
 import Add from './pages/Add';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
+import Saldo from './pages/Saldo';
+import Despesas from './pages/Despesas';
+import Receitas from './pages/Receitas';
 import './App.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -55,15 +58,24 @@ const App: React.FC = () => (
           <Route path="/charts">
             <Charts />
           </Route>
-          <Route exact path="/login">
+          <Route path="/login">
             <Login />
           </Route>
+          <Route path="/saldo">
+            <Saldo />
+          </Route>
+          <Route path="/receitas">
+            <Receitas />
+          </Route>
+          <Route path="/despesas">
+            <Despesas />
+          </Route>
           <Route exact path="/">
-            <Redirect to="/Home" />
+            <Redirect to="/home" />
           </Route>
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom" color={'bege'}>
+        <IonTabBar slot="bottom" color={'light'}>
           <IonTabButton tab="Home" href="/Home">
             <IonIcon aria-hidden="true" icon={homeOutline} />
             <IonLabel>Home</IonLabel>
@@ -71,8 +83,8 @@ const App: React.FC = () => (
 
           <IonTabButton tab="Add" href="/Add">
             <IonFab>
-              <IonFabButton color={'bege'}>
-                <IonImg src='/icone.svg' />
+              <IonFabButton color={'light'}>
+                <IonImg src='/addIcon.svg' />
               </IonFabButton>
             </IonFab>
           </IonTabButton>

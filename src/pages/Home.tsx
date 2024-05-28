@@ -1,3 +1,5 @@
+import React, {useState} from 'react';
+
 import {
   IonContent,
   IonHeader,
@@ -17,15 +19,16 @@ import {
   IonLabel,
   IonMenuButton,
   IonCard,
-  IonCardContent, 
-  
+  IonCardContent,
+
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, cardOutline, alertCircleOutline } from 'ionicons/icons';
 import './Home.css';
-import HeaderComponent from '../components/Header';
 import Login from './Login';
 
 const Home: React.FC = () => {
+  const [nome, setNome] = useState("Rodolfo Gama");
+
   return (
     <IonPage>
       {/* Menu Content */}
@@ -37,7 +40,22 @@ const Home: React.FC = () => {
         </IonHeader>
         <IonContent className="ion-padding" color={'light'}>
           <IonList >
-            <IonItem button={true} href="/Login" color={'light'}>
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={document}></IonIcon>
+              <IonLabel>Dados Pessoais</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
+              <IonLabel>Sua Conta</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
+              <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline}></IonIcon>
+              <IonLabel>Support</IonLabel>
+            </IonItem>
+
+            <IonItem button={true} href="/Login">
               <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
               <IonLabel>Logout</IonLabel>
             </IonItem>
@@ -47,7 +65,7 @@ const Home: React.FC = () => {
 
       {/* Header */}
       <IonHeader id="main-content" className="ion-no-border">
-        <IonToolbar color={'bege'}>
+        <IonToolbar color={'light'}>
           <IonButtons slot="end" className="ion-margin-right">
             <IonMenuButton>
               <IonIcon icon={personCircleOutline} size='large'></IonIcon>
@@ -56,13 +74,13 @@ const Home: React.FC = () => {
 
           <IonText className='ion-margin-left'>
             <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-            <h1 className='nome ion-text-start ion-margin-start'>Lucas Reis</h1>
+            <h1 className='nome ion-text-start ion-margin-start'>Rodolfo Gama</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
 
       {/* Card */}
-      <IonContent fullscreen color={'bege'}>
+      <IonContent fullscreen color={'light'}>
         <IonCard color={'verdeescuro'}>
           <IonCardContent>
             <IonGrid>
@@ -72,7 +90,7 @@ const Home: React.FC = () => {
               <IonRow>
                 {/* Saldo */}
                 <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'verdeclaro'} expand='block' fill='solid'>
+                  <IonButton color={'verdeclaro'} expand='block' fill='solid' href='Saldo' >
                     <IonGrid>
                       <IonRow className='ion-align-items-center'>
                         <IonCol>
@@ -80,7 +98,7 @@ const Home: React.FC = () => {
                             <p>Saldo</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ 20,00</h1>
+                            <h1>R$ 0</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
@@ -93,7 +111,7 @@ const Home: React.FC = () => {
 
                 {/* Receitas */}
                 <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'verdeclaro'} expand='block'>
+                  <IonButton color={'verdeclaro'} expand='block' href='receitas'>
                     <IonGrid>
                       <IonRow className='ion-align-items-center'>
                         <IonCol>
@@ -101,7 +119,7 @@ const Home: React.FC = () => {
                             <p>Receitas</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ 100,00</h1>
+                            <h1>R$ 0</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
@@ -114,7 +132,7 @@ const Home: React.FC = () => {
 
                 {/* Despesas */}
                 <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'verdeclaro'} expand='block'>
+                  <IonButton color={'verdeclaro'} expand='block' href='despesas'>
                     <IonGrid>
                       <IonRow className='ion-align-items-center'>
                         <IonCol>
@@ -122,7 +140,7 @@ const Home: React.FC = () => {
                             <p>Despesas</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ 80,00</h1>
+                            <h1>R$ 0</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
