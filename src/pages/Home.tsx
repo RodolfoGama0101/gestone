@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 
           <IonText className='ion-margin-left'>
             <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-            <h1 className='nome ion-text-start ion-margin-start'>Rodolfo Gama</h1>
+            <h1 className='nome ion-text-start ion-margin-start'>Lucas Reis</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
