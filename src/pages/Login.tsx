@@ -1,4 +1,3 @@
-import React from "react";
 import {
   IonContent,
   IonIcon,
@@ -12,29 +11,45 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonHeader,
-  IonToolbar,
-  IonButtons, 
-  IonBackButton, 
-  IonTitle
+  IonImg
 } from "@ionic/react";
 import './Login.css';
-import { checkmark } from 'ionicons/icons';
+import { checkmark, link, navigate } from 'ionicons/icons';
+import React, { useState, useEffect } from 'react';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login: React.FC = () => {
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  function loginUser() {
+    console.log(email, senha);
+
+    var usuario = null;
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, senha)
+      .then((userCredential) => {
+        // Signed in 
+        usuario = userCredential.user;
+        window.location.href = "/Home";
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+  }
+
   return (
     <>
-    <IonHeader>
-      <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="/Home"></IonBackButton>
-        </IonButtons>
-        <IonTitle>Back Button</IonTitle>
-      </IonToolbar>
-    </IonHeader>
+      <IonContent color={'dark'}>
 
-    <IonContent>
-        <IonGrid fixed={true} className="ion-width">
+        <IonGrid fixed={true}>
+          <IonRow class="ion-justify-content-center">
+            <IonImg src="./versao104.png" className="gestone-start-login" />
+          </IonRow>
           <IonRow class="ion-justify-content-center">
             <IonCol sizeXl="5">
               <IonCard>
@@ -43,11 +58,11 @@ const Login: React.FC = () => {
                 </IonCardHeader>
 
                 <IonCardContent>
-                  <IonInput label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="solid"></IonInput>
+                  <IonInput color={"dark"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="solid" onIonChange={(e: any) => setEmail(e.target.value)}></IonInput>
 
-                  <IonInput label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid'></IonInput>
+                  <IonInput color={"dark"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
 
-                  <IonButton expand='block' color={'success'} className="ion-margin-top">
+                  <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(loginUser)}>
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
                 </IonCardContent>
@@ -56,7 +71,7 @@ const Login: React.FC = () => {
           </IonRow>
 
         </IonGrid>
-    </IonContent>
+      </IonContent>
     </>
   );
 };

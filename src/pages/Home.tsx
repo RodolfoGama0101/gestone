@@ -24,9 +24,21 @@ import {
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, alertCircleOutline } from 'ionicons/icons';
 import './Home.css';
+import Login from './Login';
+import { getAuth, signOut } from "firebase/auth";
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("Rodolfo Gama");
+
+  function logout() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      window.location.href = "/";
+    }).catch((error) => {
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
+  }
 
   return (
     <IonPage>
@@ -54,7 +66,7 @@ const Home: React.FC = () => {
             <IonLabel>Support</IonLabel>
           </IonItem>
 
-          <IonItem button={true} href="/Login" color={'dark'}>
+          <IonItem button={true} href="/Login" color={'dark'} onClick={logout}>
             <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
             <IonLabel>Logout</IonLabel>
           </IonItem>
