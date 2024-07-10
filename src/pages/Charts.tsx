@@ -1,7 +1,7 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import HeaderComponent from '../components/Header';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './Charts.css';
 import FooterTabBar from '../components/FooterTabBar';
+import { personCircleOutline } from 'ionicons/icons';
 
 
 const Charts: React.FC = () => {

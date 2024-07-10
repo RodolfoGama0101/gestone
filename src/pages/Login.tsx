@@ -11,7 +11,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg, 
+  IonImg,
   IonTabBar
 } from "@ionic/react";
 import './Login.css';
@@ -69,9 +69,9 @@ const Login: React.FC = () => {
                   <SignGoogle></SignGoogle>
 
                   <div className="ion-text-center">
-                  <IonText>
-                    <a href="/Cadastro" >Fazer cadastro</a>
-                  </IonText>
+                    <IonText>
+                      <a href="/Cadastro" >Fazer cadastro</a>
+                    </IonText>
                   </div>
 
                 </IonCardContent>

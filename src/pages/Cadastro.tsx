@@ -14,30 +14,47 @@ import {
 
 } from "@ionic/react";
 import './Cadastro.css';
-import React, { useState, useEffect } from 'react';
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailLink } from "firebase/auth";
+import React, { useState } from 'react';
+import { createUserWithEmailAndPassword} from "firebase/auth";
+import { auth, db } from "../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const Cadastro: React.FC = () => {
 
-    var [nome, setNome] = useState("");
-    var [email, setEmail] = useState("");
-    var [senha, setSenha] = useState("");
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confirmaSenha, setConfirmaSenha] = useState("");
 
-    // Cadastro com email e senha
-    function fazerCadastro() {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, senha)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                window.location.href = "./Home";
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode + " - " + errorMessage)
-            });
-    }
+    const fazerCadastro = async (e: any) => {
+        e.preventDefault();
+
+        if (senha == confirmaSenha) {
+            await createUserWithEmailAndPassword(auth, email, senha)
+                .then(async () => {
+                    const user = auth.currentUser;
+                    // console.log(user);
+                    if (user) {
+                        await setDoc(doc(db, "Users", user.uid), {
+                            email: user.email,
+                            firstName: nome
+                        });
+                    }
+
+                    window.alert("User Registered Successfully!!");
+
+                    window.location.href = "./Login";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    window.alert(errorMessage);
+                })
+        } else {
+            window.alert("As senhas não conferem");
+        }
+    };
 
     return (
         <>
@@ -59,6 +76,8 @@ const Cadastro: React.FC = () => {
                                     <IonInput color={"dark"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="solid" onIonChange={(e: any) => setEmail(e.target.value)}></IonInput>
 
                                     <IonInput color={"dark"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
+
+                                    <IonInput color={"dark"} label='Confirme sua senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid' onIonChange={(e: any) => setConfirmaSenha(e.target.value)}></IonInput>
 
                                     <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(fazerCadastro)}>
                                         <IonText> <h2>Cadastrar</h2> </IonText>

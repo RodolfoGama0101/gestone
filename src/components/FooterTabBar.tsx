@@ -15,7 +15,7 @@ const FooterTabBar: React.FC = () => {
                             </IonButton>
                         </IonCol>
 
-                        <IonCol>
+                        <IonCol className="">
                             <IonFab className="">
                                 <IonFabButton href="/Add">
                                     <IonImg src='/addIcon.svg' />

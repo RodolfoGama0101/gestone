@@ -4,14 +4,15 @@ import {
     IonTitle,
     IonContent,
     IonToolbar,
-    IonCard, 
-    IonButtons, 
-    IonBackButton
+    IonCard,
+    IonButtons,
+    IonBackButton,
+    IonPage
 } from "@ionic/react";
 
 const Despesas: React.FC = () => {
     return (
-        <>
+        <IonPage>
             <IonHeader className="ion-no-border">
                 <IonToolbar>
                     <IonButtons slot="start">
@@ -22,9 +23,9 @@ const Despesas: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonCard></IonCard>
+                
             </IonContent>
-        </>
+        </IonPage>
     )
 }
 
