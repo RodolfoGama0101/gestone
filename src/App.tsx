@@ -1,26 +1,19 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonIcon,
-  IonLabel,
   IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
   setupIonicReact,
-  IonFab,
-  IonFabButton,
-  IonImg
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { homeOutline, barChartOutline, add } from 'ionicons/icons';
 import Home from './pages/Home';
-import Add from './pages/Add';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
+import Cadastro from './pages/Cadastro';
 import Saldo from './pages/Saldo';
 import Despesas from './pages/Despesas';
 import Receitas from './pages/Receitas';
+import Menu from './components/Menu';
+
 import './App.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -42,26 +35,41 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { } from 'firebase/firestore'; // Firestore
+import { } from 'firebase/auth'; // Authentication
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA9jwO8zMER2O5-CHiW1lGtzaYTM_5QqXg",
+  authDomain: "gestone-d508a.firebaseapp.com",
+  projectId: "gestone-d508a",
+  storageBucket: "gestone-d508a.appspot.com",
+  messagingSenderId: "382008916816",
+  appId: "1:382008916816:web:19f74b882d17a6d6fc8a55",
+  measurementId: "G-Y4RN9ZK20K"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/home">
+      <Menu />
+      <IonRouterOutlet id="main-content">
+        <Route exact path="/home">
           <Home />
-        </Route>
-        <Route path="/add">
-          <Add />
         </Route>
         <Route path="/charts">
           <Charts />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/saldo">
           <Saldo />
@@ -71,104 +79,17 @@ const App: React.FC = () => (
         </Route>
         <Route path="/despesas">
           <Despesas />
-        </Route>  
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+        <Route path="/cadastro">
+          <Cadastro />
+        </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
-
-
-
-  // <IonApp>
-  //   <IonReactRouter>
-  //     <Route exact path="/">
-  //       <Redirect to="/login" />
-  //     </Route>
-  //     <Route path="/login">
-  //       <Login />
-  //     </Route>
-
-  //     <IonTabs>
-  //       <IonRouterOutlet>
-  //         <Route path="/home">
-  //           <Home />
-  //         </Route>
-  //         <Route path="/add">
-  //           <Add />
-  //         </Route>
-  //         <Route path="/charts">
-  //           <Charts />
-  //         </Route>
-
-
-  //       </IonRouterOutlet>
-
-  //       <IonTabBar slot="bottom" color={'dark'}>
-  //         <IonTabButton tab="Home" href="/Home">
-  //           <IonIcon aria-hidden="true" icon={homeOutline} />
-  //           <IonLabel>Home</IonLabel>
-  //         </IonTabButton>
-
-  //         <IonTabButton tab="Add" href="/Add">
-  //           <IonFab>
-  //             <IonFabButton color={'dark'}>
-  //               <IonImg src='/addIcon.svg' />
-  //             </IonFabButton>
-  //           </IonFab>
-  //         </IonTabButton>
-
-  //         <IonTabButton tab="Charts" href="/Charts">
-  //           <IonIcon aria-hidden="true" icon={barChartOutline} />
-  //           <IonLabel>Grafics</IonLabel>
-  //         </IonTabButton>
-  //       </IonTabBar>
-  //     </IonTabs>
-  //   </IonReactRouter>
-  // </IonApp>
-
-  // <IonApp>
-  //   <IonReactRouter>
-  //     <Route exact path="/">
-  //       <Redirect to="/login" />
-  //     </Route>
-  //     <Route path="/login">
-  //       <Login />
-  //     </Route>
-
-  //     <IonTabs>
-  //       <IonRouterOutlet>
-
-  //         {/*
-  //         Use the render method to reduce the number of renders your component will have due to a route change.
-
-  //         Use the component prop when your component depends on the RouterComponentProps passed in automatically.
-  //       */}
-  //         <Route path="/home" render={() => <Home />} exact={true} />
-  //         <Route path="/add" render={() => <Add />} exact={true} />
-  //         <Route path="/charts" render={() => <Charts />} exact={true} />
-  //       </IonRouterOutlet>
-
-  //       <IonTabBar slot="bottom" color={'dark'}>
-  //         <IonTabButton tab="Home" href="/Home">
-  //           <IonIcon aria-hidden="true" icon={homeOutline} />
-  //           <IonLabel>Home</IonLabel>
-  //         </IonTabButton>
-
-  //         <IonTabButton tab="Add" href="/Add">
-  //           <IonFab>
-  //             <IonFabButton color={'dark'}>
-  //               <IonImg src='/addIcon.svg' />
-  //             </IonFabButton>
-  //           </IonFab>
-  //         </IonTabButton>
-
-  //         <IonTabButton tab="Charts" href="/Charts">
-  //           <IonIcon aria-hidden="true" icon={barChartOutline} />
-  //           <IonLabel>Charts</IonLabel>
-  //         </IonTabButton>
-  //       </IonTabBar>
-  //     </IonTabs>
-  //   </IonReactRouter>
-  // </IonApp>
+  
 );
 
 export default App;
