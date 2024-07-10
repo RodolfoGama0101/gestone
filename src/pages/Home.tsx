@@ -20,12 +20,16 @@ import {
   IonMenuButton,
   IonCard,
   IonCardContent,
+  IonFooter,
+  IonFab,
+  IonFabButton,
+  IonImg,
 
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, alertCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, document, personOutline, alertCircleOutline, homeOutline, barChartOutline } from 'ionicons/icons';
 import './Home.css';
-import Login from './Login';
 import { getAuth, signOut } from "firebase/auth";
+import FooterTabBar from '../components/FooterTabBar';
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("Rodolfo Gama");
@@ -166,6 +170,8 @@ const Home: React.FC = () => {
           </IonCardContent>
         </IonCard>
       </IonContent>
+      
+      <FooterTabBar></FooterTabBar>
     </IonPage>
   );
 };

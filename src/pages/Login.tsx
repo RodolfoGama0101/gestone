@@ -11,12 +11,13 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg
+  IonImg, 
+  IonTabBar
 } from "@ionic/react";
 import './Login.css';
-import { checkmark, link, navigate } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import SignGoogle from "../components/SignGoogle";
 
 const Login: React.FC = () => {
 
@@ -38,7 +39,7 @@ const Login: React.FC = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage);
+        window.alert(errorMessage);
       });
   }
 
@@ -46,7 +47,7 @@ const Login: React.FC = () => {
     <>
       <IonContent color={'dark'}>
 
-        <IonGrid fixed={true}>
+        <IonGrid fixed={false}>
           <IonRow class="ion-justify-content-center">
             <IonImg src="./versao104.png" className="gestone-start-login" />
           </IonRow>
@@ -65,6 +66,7 @@ const Login: React.FC = () => {
                   <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(loginUser)}>
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
+                  <SignGoogle></SignGoogle>
                 </IonCardContent>
               </IonCard>
             </IonCol>

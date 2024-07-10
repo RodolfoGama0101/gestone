@@ -1,3 +1,7 @@
 .gestone-start-login {
-    width: 60%;
+    width: 30%;
+}
+
+ion-tab {
+    display: none;
 }
