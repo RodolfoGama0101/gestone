@@ -1,5 +1,4 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import HeaderComponent from '../components/Header';
 import './Charts.css';
 import FooterTabBar from '../components/FooterTabBar';
 
