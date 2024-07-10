@@ -3,10 +3,11 @@ import { barChartOutline, homeOutline } from "ionicons/icons";
 
 const FooterTabBar: React.FC = () => {
     return (
+        
         <IonFooter>
-            <IonToolbar>
+            <IonToolbar color={'dark'}>
                 <IonGrid>
-                    <IonRow>
+                    <IonRow className="ion-text-center">
                         <IonCol>
                             <IonButton href="/Home">
                                 <IonIcon aria-hidden="true" icon={homeOutline} />
@@ -30,8 +31,6 @@ const FooterTabBar: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-
-
             </IonToolbar>
         </IonFooter>
     );

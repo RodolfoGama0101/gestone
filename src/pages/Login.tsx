@@ -67,6 +67,13 @@ const Login: React.FC = () => {
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
                   <SignGoogle></SignGoogle>
+
+                  <div className="ion-text-center">
+                  <IonText>
+                    <a href="/Cadastro" >Fazer cadastro</a>
+                  </IonText>
+                  </div>
+
                 </IonCardContent>
               </IonCard>
             </IonCol>
