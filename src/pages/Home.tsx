@@ -58,7 +58,7 @@ const Home: React.FC = () => {
     <>
       <Menu></Menu>
       <IonPage id="main-content">
-        
+
         {/* Header */}
         <IonHeader className="ion-no-border">
 
