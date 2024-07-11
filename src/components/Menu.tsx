@@ -41,7 +41,6 @@ const Menu: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" color={'dark'}>
-        <IonButton>Teste</IonButton>
         <IonItem button={true} href="/dados-pessoais" color={'dark'}>
           <IonIcon aria-hidden="true" slot="start" icon={document}></IonIcon>
           <IonLabel>Dados Pessoais</IonLabel>

@@ -10,26 +10,24 @@ import {
   IonRow,
   IonCol,
   IonText,
-  IonMenu,
   IonToolbar,
   IonMenuButton,
   IonCard,
   IonCardContent,
-  IonTitle,
-  IonItem,
-  IonLabel
+  IonSelect,
+  IonSelectOption
 } from '@ionic/react';
-import { alertCircleOutline, arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline, personOutline, document } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline} from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 
 import { auth, db } from '../firebase/firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import Menu from '../components/Menu';
 
 const Home: React.FC = () => {
-  const [nome, setNome] = useState("Rodolfo Gama");
+  const [nome, setNome] = useState("");
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -56,7 +54,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Menu></Menu>
+      <Menu />
+
       <IonPage id="main-content">
 
         {/* Header */}
@@ -67,6 +66,10 @@ const Home: React.FC = () => {
               <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
               <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
             </IonText>
+            <IonSelect>
+              <IonSelectOption></IonSelectOption>
+            </IonSelect>
+
             <IonButtons slot="end" className="ion-margin-right">
               <IonMenuButton>
                 <IonIcon icon={personCircleOutline} size='large' />
