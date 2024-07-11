@@ -17,7 +17,7 @@ import {
   IonSelect,
   IonSelectOption
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline} from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 
@@ -62,19 +62,42 @@ const Home: React.FC = () => {
         <IonHeader className="ion-no-border">
 
           <IonToolbar color={'dark'}>
-            <IonText className='ion-margin-left'>
-              <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-              <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
-            </IonText>
-            <IonSelect>
-              <IonSelectOption></IonSelectOption>
-            </IonSelect>
-
-            <IonButtons slot="end" className="ion-margin-right">
-              <IonMenuButton>
-                <IonIcon icon={personCircleOutline} size='large' />
-              </IonMenuButton>
-            </IonButtons>
+            <IonGrid>
+              <IonRow>
+                <IonCol>
+                  {/* User name */}
+                  <IonText className='ion-margin-left'>
+                    <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
+                    <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
+                  </IonText>
+                </IonCol>
+                <IonCol>
+                  {/* Select month */}
+                  <IonSelect aria-label="Meses" interface="popover" placeholder="Selecione um mês" fill="outline" >
+                    <IonSelectOption>Janeiro</IonSelectOption>
+                    <IonSelectOption>Fevereiro</IonSelectOption>
+                    <IonSelectOption>Março</IonSelectOption>
+                    <IonSelectOption>Abril</IonSelectOption>
+                    <IonSelectOption>Maio</IonSelectOption>
+                    <IonSelectOption>Junho</IonSelectOption>
+                    <IonSelectOption>Julho</IonSelectOption>
+                    <IonSelectOption>Agosto</IonSelectOption>
+                    <IonSelectOption>Setembro</IonSelectOption>
+                    <IonSelectOption>Outubro</IonSelectOption>
+                    <IonSelectOption>Novembro</IonSelectOption>
+                    <IonSelectOption>Dezembro</IonSelectOption>
+                  </IonSelect>
+                </IonCol>
+                <IonCol>
+                  {/* Menu button */}
+                  <IonButtons className="ion-margin-right">
+                    <IonMenuButton>
+                      <IonIcon icon={personCircleOutline} size='large' />
+                    </IonMenuButton>
+                  </IonButtons>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
           </IonToolbar>
         </IonHeader>
 
