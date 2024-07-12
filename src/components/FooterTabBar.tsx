@@ -9,7 +9,7 @@ const FooterTabBar: React.FC = () => {
                 <IonGrid>
                     <IonRow className="ion-text-center">
                         <IonCol>
-                            <IonButton href="/Home">
+                            <IonButton href="/Home" color={"dark"}>
                                 <IonIcon aria-hidden="true" icon={homeOutline} />
                                 <IonLabel>Home</IonLabel>
                             </IonButton>
@@ -17,14 +17,14 @@ const FooterTabBar: React.FC = () => {
 
                         <IonCol className="">
                             <IonFab className="">
-                                <IonFabButton href="/Add">
+                                <IonFabButton href="/Add" color={"dark"}>
                                     <IonImg src='/addIcon.svg' />
                                 </IonFabButton>
                             </IonFab>
                         </IonCol>
 
                         <IonCol>
-                            <IonButton href="/Charts">
+                            <IonButton href="/Charts" color={"dark"}>
                                 <IonIcon aria-hidden="true" icon={barChartOutline} />
                                 <IonLabel>Charts</IonLabel>
                             </IonButton>
