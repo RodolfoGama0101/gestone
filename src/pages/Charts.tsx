@@ -2,24 +2,29 @@ import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButto
 import './Charts.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { personCircleOutline } from 'ionicons/icons';
+import Verifica from '../firebase/verifica';
 
 
 const Charts: React.FC = () => {
+  Verifica();
+
   return (
     <IonPage>
       {/* Header */}
-      <IonHeader className="ion-no-border">
-        <IonToolbar color={'dark'}>
-          <IonButtons slot="end" className="ion-margin-right">
-            <IonMenuButton>
-              <IonIcon icon={personCircleOutline} size='large'></IonIcon>
-            </IonMenuButton>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/Home"></IonBackButton>
           </IonButtons>
           <IonText className='ion-text-center'>
             <h1>Grafics</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
+
+      <IonContent>
+
+      </IonContent>
 
       <FooterTabBar></FooterTabBar>
     </IonPage>

@@ -16,13 +16,28 @@ import {
 } from "@ionic/react";
 import './Login.css';
 import React, { useState, useEffect } from 'react';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
+import { auth } from "../firebase/firebase";
 
 const Login: React.FC = () => {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+
+  const [user, setUser] = useState(Object);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+
+      if (user) {
+          window.location.href = '/home';
+      }
+    });
+  }, []);
+
+
 
   function loginUser() {
     console.log(email, senha);

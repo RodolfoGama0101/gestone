@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -28,29 +28,30 @@ import Menu from '../components/Menu';
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("");
+  const [user, setUser] = useState(Object);
 
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      setUser(user);
 
-      const docRef = doc(db, "Users", uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        const docData = docSnap.data();
-        setNome(docData.firstName);
-      } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
+      if (user) {
+        const uid = user.uid;
+        const docRef = doc(db, "Users", uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const docData = docSnap.data();
+          setNome(docData.firstName);
+        } else {
+          console.log("No such document!");
+        }
       }
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+    });
+  }, []);
+
+  if (!user) {
+    window.location.href = '/login'; 
+    return null; 
+  }
 
   return (
     <>

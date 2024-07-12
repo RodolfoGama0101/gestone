@@ -2,11 +2,13 @@ import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, Io
 import HeaderComponent from '../components/Header';
 import './Add.css';
 import FooterTabBar from '../components/FooterTabBar';
+import Verifica from '../firebase/verifica';
 
 const Add: React.FC = () => {
+  Verifica();
+
   return (
     <IonPage>
-
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">

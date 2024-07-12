@@ -8,8 +8,11 @@ import {
     IonButtons,
     IonBackButton
 } from "@ionic/react";
+import Verifica from "../firebase/verifica";
 
 const Saldo: React.FC = () => {
+    Verifica();
+
     return (
         <>
             <IonHeader className="ion-no-border">
