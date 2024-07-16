@@ -6,10 +6,7 @@ import {
   IonTitle,
   IonItem,
   IonIcon,
-  IonLabel,
-  IonButtons,
-  IonMenuButton,
-  IonButton,
+  IonLabel
 
 } from '@ionic/react';
 import { signOut } from 'firebase/auth';
@@ -17,8 +14,7 @@ import {
   document,
   personOutline,
   alertCircleOutline,
-  exitOutline,
-  personCircleOutline,
+  exitOutline
 } from 'ionicons/icons';
 import { auth } from '../firebase/firebase';
 
@@ -59,14 +55,6 @@ const Menu: React.FC = () => {
         </IonItem>
       </IonContent>
     </IonMenu>
-
-
-
-    // <IonButtons slot="end" className="ion-margin-right">
-    //   <IonMenuButton>
-    //     <IonIcon icon={personCircleOutline} size='large' />
-    //   </IonMenuButton>
-    // </IonButtons>
   );
 };
 

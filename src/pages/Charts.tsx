@@ -1,7 +1,6 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonToolbar } from '@ionic/react';
 import './Charts.css';
 import FooterTabBar from '../components/FooterTabBar';
-import { personCircleOutline } from 'ionicons/icons';
 import Verifica from '../firebase/verifica';
 
 

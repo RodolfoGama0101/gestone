@@ -177,6 +177,7 @@ const Home: React.FC = () => {
               </IonGrid>
             </IonCardContent>
           </IonCard>
+
         </IonContent>
 
         <FooterTabBar></FooterTabBar>
