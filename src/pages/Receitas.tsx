@@ -18,7 +18,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
-import { addDoc, collection, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -26,7 +26,7 @@ const Receitas: React.FC = () => {
     interface ReceitasData {
         id: string;
         data: Date;
-        valorReceita: number; 
+        valorReceita: number;
         descricao: string;
     }
 
@@ -41,23 +41,23 @@ const Receitas: React.FC = () => {
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const uid = user.uid;
-            setUid(uid);
-    
-            const coll = collection(db, 'Receitas');
-            const q = query(coll, where("uid", "==", uid));
-    
-            const snapshot = await getAggregateFromServer(q, {
-                receitaTotal: sum('valorReceita')
-            });
-    
-            setReceitaTotal(snapshot.data().receitaTotal);
-          }
+            if (user) {
+                const uid = user.uid;
+                setUid(uid);
+
+                const coll = collection(db, 'Receitas');
+                const q = query(coll, where("uid", "==", uid));
+
+                const snapshot = await getAggregateFromServer(q, {
+                    receitaTotal: sum('valorReceita')
+                });
+
+                setReceitaTotal(snapshot.data().receitaTotal);
+            }
         });
 
         imprimirReceitas();
-      });
+    });
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
@@ -82,13 +82,14 @@ const Receitas: React.FC = () => {
         const receitasData = queryDocs.docs.map((doc) => {
             const docId = doc.id;
             const docData = doc.data();
+            const data = new Date(docData.data.seconds * 1000);
 
             // Combine docId and docData into a single object
 
             const combinedData: ReceitasData = {
                 id: docId,
-                data: docData.data, // Use firstName se existir, caso contrário, deixe como string vazia
-                valorReceita: docData.valorReceita, 
+                data: data,
+                valorReceita: docData.valorReceita,
                 descricao: docData.descricao
             };
 
@@ -96,6 +97,10 @@ const Receitas: React.FC = () => {
         });
 
         setReceitas(receitasData);
+    }
+
+    async function excluirReceita() {
+        await deleteDoc(doc(db, "cities", "DC"));
     }
 
     return (
@@ -129,7 +134,7 @@ const Receitas: React.FC = () => {
                             <IonCard key={receita.id} color={"dark"}>
                                 <IonCardContent>
                                     <IonCardTitle>{"R$ " + receita.valorReceita}</IonCardTitle>
-                                    <IonCardSubtitle>{receita.data.toString()}</IonCardSubtitle>
+                                    <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
                                     <IonCardContent>{receita.descricao}</IonCardContent>
                                 </IonCardContent>
                             </IonCard>
