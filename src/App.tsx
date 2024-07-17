@@ -6,7 +6,6 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
-import Add from './pages/Add';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
@@ -46,9 +45,6 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/home">
           <Home />
-        </Route>
-        <Route path="/add">
-          <Add />
         </Route>
         <Route path="/charts">
           <Charts />
