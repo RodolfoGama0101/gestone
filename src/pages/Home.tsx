@@ -86,21 +86,26 @@ const Home: React.FC = () => {
       <IonPage id="main-content">
 
         {/* Header */}
-        <IonHeader className="ion-no-border">
-
-          <IonToolbar color={'dark'}>
-            <IonGrid>
-              <IonRow>
-                <IonCol>
-                  {/* User name */}
-                  <IonText className='ion-margin-left'>
-                    <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-                    <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
-                  </IonText>
-                </IonCol>
-                <IonCol>
-                  {/* Select month */}
-                  <IonSelect aria-label="Meses" interface="popover" placeholder="Selecione um mês" fill="outline" >
+        <IonHeader className="ion-no-border">      
+          <IonToolbar color={'dark'}> 
+            {/* User name */}
+            <IonText className='ion-margin-left'>
+              <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>  
+            </IonText>
+            {/* Menu button */}
+            <IonButtons slot='end'>
+              <IonMenuButton>
+                <IonIcon icon={personCircleOutline} size='large' />
+              </IonMenuButton>
+            </IonButtons>
+            <IonText>
+              <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
+            </IonText>
+          </IonToolbar>
+          <IonGrid >
+            <IonRow class="ion-justify-content-center">
+              <IonCol sizeXl='3'>
+                <IonSelect aria-label="Meses" interface="popover" placeholder="Selecione um mês" fill="outline" >
                     <IonSelectOption>Janeiro</IonSelectOption>
                     <IonSelectOption>Fevereiro</IonSelectOption>
                     <IonSelectOption>Março</IonSelectOption>
@@ -113,20 +118,12 @@ const Home: React.FC = () => {
                     <IonSelectOption>Outubro</IonSelectOption>
                     <IonSelectOption>Novembro</IonSelectOption>
                     <IonSelectOption>Dezembro</IonSelectOption>
-                  </IonSelect>
-                </IonCol>
-                <IonCol>
-                  {/* Menu button */}
-                  <IonButtons className="ion-margin-right">
-                    <IonMenuButton>
-                      <IonIcon icon={personCircleOutline} size='large' />
-                    </IonMenuButton>
-                  </IonButtons>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonToolbar>
+                </IonSelect>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         </IonHeader>
+
 
         {/* Card */}
         <IonContent fullscreen color={'dark'}>
