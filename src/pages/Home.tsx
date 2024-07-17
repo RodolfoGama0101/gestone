@@ -30,6 +30,7 @@ const Home: React.FC = () => {
   const [nome, setNome] = useState("");
   const [user, setUser] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
+  const [despesaTotal, setDespesaTotal] = useState(Number);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -46,14 +47,25 @@ const Home: React.FC = () => {
           console.log("No such document!");
         }
 
-        const coll = collection(db, 'Receitas');
-        const q = query(coll, where("uid", "==", uid));
+        // Receita
+        const collReceitas = collection(db, 'Receitas');
+        const qReceitas = query(collReceitas, where("uid", "==", uid));
 
-        const snapshot = await getAggregateFromServer(q, {
+        const snapshotReceitas = await getAggregateFromServer(qReceitas, {
             receitaTotal: sum('valorReceita')
         });
 
-        setReceitaTotal(snapshot.data().receitaTotal);
+        setReceitaTotal(snapshotReceitas.data().receitaTotal);
+
+        // Despesa
+        const collDespesas = collection(db, 'Despesas');
+        const qDespesas = query(collDespesas, where("uid", "==", uid));
+
+        const snapshotDespesas = await getAggregateFromServer(qDespesas, {
+            despesaTotal: sum('valorDespesa')
+        });
+
+        setDespesaTotal(snapshotDespesas.data().despesaTotal);
       }
     });
 
@@ -135,7 +147,7 @@ const Home: React.FC = () => {
                               <p>Saldo</p>
                             </IonText>
                             <IonText className='ion-text-start'>
-                              <h1>R$ 0</h1>
+                              <h1>R$ {receitaTotal - despesaTotal}</h1>
                             </IonText>
                           </IonCol>
                           <IonCol>
@@ -146,7 +158,7 @@ const Home: React.FC = () => {
                     </IonButton>
                   </IonCol>
 
-                  {/* Receitas */}
+                  {/* Despesas */}
                   <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
                     <IonButton color={'light'} expand='block' href='receitas' className='card-button'>
                       <IonGrid>
@@ -177,7 +189,7 @@ const Home: React.FC = () => {
                               <p>Despesas</p>
                             </IonText>
                             <IonText className='ion-text-start'>
-                              <h1>R$ 0</h1>
+                              <h1>R$ {despesaTotal}</h1>
                             </IonText>
                           </IonCol>
                           <IonCol>

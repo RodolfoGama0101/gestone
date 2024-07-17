@@ -55,7 +55,9 @@ const Receitas: React.FC = () => {
             setReceitaTotal(snapshot.data().receitaTotal);
           }
         });
-      }, []);
+
+        imprimirReceitas();
+      });
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
@@ -120,8 +122,6 @@ const Receitas: React.FC = () => {
                         <IonButton className="btn-add-receita" color={'success'} onClick={addReceita}>Adicionar receita</IonButton>
                     </IonCardContent>
                 </IonCard>
-
-                <IonButton onClick={imprimirReceitas} className="ion-margin">Imprimir receitas</IonButton>
 
                 <IonCard>
                     {receitas.map(receita => {
