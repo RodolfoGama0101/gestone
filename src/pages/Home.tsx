@@ -48,7 +48,6 @@ const Home: React.FC = () => {
 
         const coll = collection(db, 'Receitas');
         const q = query(coll, where("uid", "==", uid));
-        const queryDocs = await getDocs(q);
 
         const snapshot = await getAggregateFromServer(q, {
             receitaTotal: sum('valorReceita')

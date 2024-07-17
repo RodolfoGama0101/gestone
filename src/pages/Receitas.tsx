@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     IonHeader,
     IonTitle,
@@ -13,7 +13,8 @@ import {
     IonTextarea,
     IonCardContent,
     IonCardTitle,
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonText
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
@@ -36,13 +37,25 @@ const Receitas: React.FC = () => {
     const [descricao, setDescricao] = useState();
     const [uid, setUid] = useState("");
     const [receitas, setReceitas] = useState<ReceitasData[]>(Array);
+    const [receitaTotal, setReceitaTotal] = useState(Number);
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
+    useEffect(() => {
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
             const uid = user.uid;
             setUid(uid);
-        }
-    });
+    
+            const coll = collection(db, 'Receitas');
+            const q = query(coll, where("uid", "==", uid));
+    
+            const snapshot = await getAggregateFromServer(q, {
+                receitaTotal: sum('valorReceita')
+            });
+    
+            setReceitaTotal(snapshot.data().receitaTotal);
+          }
+        });
+      }, []);
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
@@ -63,8 +76,6 @@ const Receitas: React.FC = () => {
         const snapshot = await getAggregateFromServer(q, {
             receitaTotal: sum('valorReceita')
         });
-
-        console.log("Receita total: " + snapshot.data().receitaTotal);
 
         const receitasData = queryDocs.docs.map((doc) => {
             const docId = doc.id;
@@ -97,6 +108,10 @@ const Receitas: React.FC = () => {
             </IonHeader>
 
             <IonContent color={'dark'}>
+                <IonText>
+                    <h1 className="ion-margin">{receitaTotal}</h1>
+                </IonText>
+
                 <IonCard color={'dark'} className="card-add-receita">
                     <IonCardContent>
                         <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
@@ -106,7 +121,7 @@ const Receitas: React.FC = () => {
                     </IonCardContent>
                 </IonCard>
 
-                <IonButton onClick={imprimirReceitas}>Imprimir receitas</IonButton>
+                <IonButton onClick={imprimirReceitas} className="ion-margin">Imprimir receitas</IonButton>
 
                 <IonCard>
                     {receitas.map(receita => {
