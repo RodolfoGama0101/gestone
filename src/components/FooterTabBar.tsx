@@ -1,5 +1,5 @@
-import { IonButton, IonCol, IonFab, IonFabButton, IonFooter, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonToolbar } from "@ionic/react";
-import { barChartOutline, homeOutline } from "ionicons/icons";
+import { IonButton, IonCol, IonFab, IonFabButton, IonFooter, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
+import { barChartOutline, homeOutline, close, trendingDown, trendingUpSharp, repeat } from "ionicons/icons";
 
 const FooterTabBar: React.FC = () => {
     return (
@@ -17,7 +17,7 @@ const FooterTabBar: React.FC = () => {
 
                         <IonCol className="">
                             <IonFab className="">
-                                <IonFabButton href="/Add" color={"dark"}>
+                                <IonFabButton color={"dark"} id="open-action-sheet">
                                     <IonImg src='/addIcon.svg' />
                                 </IonFabButton>
                             </IonFab>
@@ -32,7 +32,48 @@ const FooterTabBar: React.FC = () => {
                     </IonRow>
                 </IonGrid>
             </IonToolbar>
+
+            <IonActionSheet
+                className="custom-action-sheet"
+                trigger="open-action-sheet"
+                buttons={[
+                    {
+                    icon: trendingDown,
+                    text: 'Despesa',
+                    role: 'destructive',
+                    handler: () => {
+                        window.location.href = "/Despesas";
+                    },
+                    },
+                    {
+                    icon: trendingUpSharp,
+                    text: 'Receita',
+                    role: 'destructive',
+                    handler: () => {
+                        window.location.href = "/Receitas";
+                    },
+                    },
+                    {
+                    icon: repeat,
+                    text: 'Transferências',
+                    role: 'destructive',
+                    handler: () => {
+                        window.location.href = "/Transferencia";
+                    },
+                    },
+                    {
+            
+                    icon: close,
+                    text: 'Cancel',
+                    role: 'cancel',
+                    },
+                ]}
+            ></IonActionSheet>
+            
         </IonFooter>
+
+        
+        
     );
 }
 
