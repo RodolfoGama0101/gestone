@@ -148,7 +148,7 @@ const Home: React.FC = () => {
                             </IonText>
                           </IonCol>
                           <IonCol>
-                            <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                            <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons saldo-button'></IonIcon>
                           </IonCol>
                         </IonRow>
                       </IonGrid>
@@ -157,7 +157,7 @@ const Home: React.FC = () => {
 
                   {/* Despesas */}
                   <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                    <IonButton color={'light'} expand='block' href='receitas' className='card-button'>
+                    <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
                       <IonGrid>
                         <IonRow className='ion-align-items-center'>
                           <IonCol>
@@ -178,7 +178,7 @@ const Home: React.FC = () => {
 
                   {/* Despesas */}
                   <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                    <IonButton color={'light'} expand='block' href='despesas' className='card-button'>
+                    <IonButton color={'danger'} expand='block' href='despesas' className='card-button'>
                       <IonGrid>
                         <IonRow className='ion-align-items-center'>
                           <IonCol>
