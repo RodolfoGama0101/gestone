@@ -23,12 +23,13 @@ import FooterTabBar from '../components/FooterTabBar';
 
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("");
   const [user, setUser] = useState(Object);
+  const [receitaTotal, setReceitaTotal] = useState(Number);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -44,14 +45,28 @@ const Home: React.FC = () => {
         } else {
           console.log("No such document!");
         }
+
+        const coll = collection(db, 'Receitas');
+        const q = query(coll, where("uid", "==", uid));
+        const queryDocs = await getDocs(q);
+
+        const snapshot = await getAggregateFromServer(q, {
+            receitaTotal: sum('valorReceita')
+        });
+
+        setReceitaTotal(snapshot.data().receitaTotal);
       }
     });
+
+    
   }, []);
 
   if (!user) {
     window.location.href = '/login'; 
     return null; 
   }
+
+  
 
   return (
     <>
@@ -142,7 +157,7 @@ const Home: React.FC = () => {
                               <p>Receitas</p>
                             </IonText>
                             <IonText className='ion-text-start'>
-                              <h1>R$ 0</h1>
+                              <h1>R$ {receitaTotal}</h1>
                             </IonText>
                           </IonCol>
                           <IonCol>

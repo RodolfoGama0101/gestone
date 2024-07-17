@@ -17,7 +17,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getAggregateFromServer, getDocs, query, setDoc, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -32,7 +32,7 @@ const Receitas: React.FC = () => {
     Verifica();
 
     const [data, setData] = useState(Date);
-    const [valorReceita, setValorReceita] = useState();
+    const [valorReceita, setValorReceita] = useState(Number);
     const [descricao, setDescricao] = useState();
     const [uid, setUid] = useState("");
     const [receitas, setReceitas] = useState<ReceitasData[]>(Array);
@@ -47,7 +47,7 @@ const Receitas: React.FC = () => {
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
             data: data,
-            valorReceita: valorReceita,
+            valorReceita: Number(valorReceita),
             descricao: descricao,
             uid: uid
         });
@@ -56,22 +56,28 @@ const Receitas: React.FC = () => {
     }
 
     async function imprimirReceitas() {
-        const q = query(collection(db, "Receitas"), where("uid", "==", uid))
-        const querySnapshot = await getDocs(q);
+        const coll = collection(db, 'Receitas');
+        const q = query(coll, where("uid", "==", uid));
+        const queryDocs = await getDocs(q);
 
-        const receitasData = querySnapshot.docs.map((doc) => {
+        const snapshot = await getAggregateFromServer(q, {
+            receitaTotal: sum('valorReceita')
+        });
+
+        console.log("Receita total: " + snapshot.data().receitaTotal);
+
+        const receitasData = queryDocs.docs.map((doc) => {
             const docId = doc.id;
             const docData = doc.data();
-            
+
             // Combine docId and docData into a single object
 
             const combinedData: ReceitasData = {
                 id: docId,
                 data: docData.data, // Use firstName se existir, caso contrário, deixe como string vazia
-                valorReceita: docData.valorReceita, // Certifique-se de que a propriedade 'email' está presente no Firestore
+                valorReceita: docData.valorReceita, 
                 descricao: docData.descricao
             };
-
 
             return combinedData;
         });
