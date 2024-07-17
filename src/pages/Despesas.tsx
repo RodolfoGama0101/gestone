@@ -62,7 +62,7 @@ const Despesas: React.FC = () => {
 
     async function addDespesa() {
         const docRef = await addDoc(collection(db, "Despesas"), {
-            data: data,
+            data: new Date(data),
             valorDespesa: Number(valorDespesa),
             descricao: descricao,
             uid: uid
@@ -124,10 +124,10 @@ const Despesas: React.FC = () => {
                     </IonCardContent>
                 </IonCard>
 
-                <IonCard>
+                <IonCard color={"danger"}>
                     {despesas.map(despesa => {
                         return (
-                            <IonCard key={despesa.id}>
+                            <IonCard key={despesa.id} color={"dark"}>
                                 <IonCardContent>
                                     <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
                                     <IonCardSubtitle>{despesa.data.toString()}</IonCardSubtitle>

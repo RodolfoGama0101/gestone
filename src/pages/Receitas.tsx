@@ -18,7 +18,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
-import { addDoc, collection, doc, getAggregateFromServer, getDocs, query, setDoc, sum, where } from "firebase/firestore";
+import { addDoc, collection, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -26,7 +26,7 @@ const Receitas: React.FC = () => {
     interface ReceitasData {
         id: string;
         data: Date;
-        valorReceita?: number; // Make firstName optional if it might not exist in some documents
+        valorReceita: number; 
         descricao: string;
     }
 
@@ -61,7 +61,7 @@ const Receitas: React.FC = () => {
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
-            data: data,
+            data: new Date(data),
             valorReceita: Number(valorReceita),
             descricao: descricao,
             uid: uid
@@ -123,10 +123,10 @@ const Receitas: React.FC = () => {
                     </IonCardContent>
                 </IonCard>
 
-                <IonCard>
+                <IonCard color={"success"}>
                     {receitas.map(receita => {
                         return (
-                            <IonCard key={receita.id}>
+                            <IonCard key={receita.id} color={"dark"}>
                                 <IonCardContent>
                                     <IonCardTitle>{"R$ " + receita.valorReceita}</IonCardTitle>
                                     <IonCardSubtitle>{receita.data.toString()}</IonCardSubtitle>
