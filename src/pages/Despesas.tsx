@@ -14,12 +14,14 @@ import {
     IonButton,
     IonText,
     IonCardTitle,
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonIcon
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
+import { trashOutline } from "ionicons/icons";
 
 const Despesas: React.FC = () => {
     Verifica();
@@ -99,6 +101,10 @@ const Despesas: React.FC = () => {
         setDespesas(despesaData);
     }
 
+    async function excluirDespesa(id: any) {
+        await deleteDoc(doc(db, "Despesas", id));
+    }
+
     return (
         <IonPage>
             <IonHeader className="">
@@ -132,6 +138,7 @@ const Despesas: React.FC = () => {
                                     <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
                                     <IonCardSubtitle>{despesa.data.toString()}</IonCardSubtitle>
                                     <IonCardContent>{despesa.descricao}</IonCardContent>
+                                    <IonButton onClick={() => excluirDespesa(despesa.id)}><IonIcon icon={trashOutline}></IonIcon>Excluir</IonButton>
                                 </IonCardContent>
                             </IonCard>
                         )

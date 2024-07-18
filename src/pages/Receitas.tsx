@@ -14,13 +14,15 @@ import {
     IonCardContent,
     IonCardTitle,
     IonCardSubtitle,
-    IonText
+    IonText,
+    IonIcon
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { trashOutline } from "ionicons/icons";
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -99,8 +101,8 @@ const Receitas: React.FC = () => {
         setReceitas(receitasData);
     }
 
-    async function excluirReceita() {
-        await deleteDoc(doc(db, "cities", "DC"));
+    async function excluirReceita(id: any) {
+        await deleteDoc(doc(db, "Receitas", id));
     }
 
     return (
@@ -136,6 +138,7 @@ const Receitas: React.FC = () => {
                                     <IonCardTitle>{"R$ " + receita.valorReceita}</IonCardTitle>
                                     <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
                                     <IonCardContent>{receita.descricao}</IonCardContent>
+                                    <IonButton onClick={() => excluirReceita(receita.id)}><IonIcon icon={trashOutline}></IonIcon>Excluir</IonButton>
                                 </IonCardContent>
                             </IonCard>
                         )
