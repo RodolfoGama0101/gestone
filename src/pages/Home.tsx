@@ -12,9 +12,10 @@ import {
   IonToolbar,
   IonMenuButton,
   IonCard,
-  IonCardContent
+  IonCardContent,
+  IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 
@@ -114,21 +115,33 @@ const Home: React.FC = () => {
 
           <IonGrid color='dark'>
             <IonRow class="ion-justify-content-center">
-              <IonCol sizeXl='3'>
-                <IonButtons>
-                  <IonButton onClick={() => setSelectedMonth(0)}>Jan</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(1)}>Fev</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(2)}>Mar</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(3)}>Abr</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(4)}>Mai</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(5)}>Jun</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(6)}>Jul</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(7)}>Ago</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(8)}>Set</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(9)}>Out</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(10)}>Nov</IonButton>
-                  <IonButton onClick={() => setSelectedMonth(11)}>Dez</IonButton>
-                </IonButtons>
+              <IonCol className="ion-text-center">
+                <IonButton id='trigger-button' className='select-month-btn' color={'success'}><IonIcon icon={chevronDownOutline}></IonIcon></IonButton>
+                <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
+                  <IonButtons>
+                    <IonGrid>
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(0)}>Jan</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(1)}>Fev</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(2)}>Mar</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(3)}>Abr</IonButton></IonCol>
+                      </IonRow>
+
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(4)}>Mai</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(5)}>Jun</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(6)}>Jul</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(7)}>Ago</IonButton></IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(8)}>Set</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(9)}>Out</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(10)}>Nov</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => setSelectedMonth(11)}>Dez</IonButton></IonCol>
+                      </IonRow>
+                    </IonGrid>
+                  </IonButtons>
+                </IonPopover>
               </IonCol>
             </IonRow>
           </IonGrid>

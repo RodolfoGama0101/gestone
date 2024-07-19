@@ -41,3 +41,14 @@ ion-card {
 .card-1 {
     border-radius: 25px;
 }
+
+.select-mes {
+    --width: 300px;
+}
+
+.select-month-btn {
+    width: 110px;
+    height: 50px;
+    --border-radius: 15px;
+    box-shadow: 3px;
+}
