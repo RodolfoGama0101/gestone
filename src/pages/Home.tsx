@@ -139,8 +139,16 @@ const Home: React.FC = () => {
               <IonCol className="ion-text-center">
                 <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{numeroParaMes(selectedMonth)}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
                 <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
+                  <IonContent color={'success'} className='ion-text-center year-select'>
+                    <IonText>2024</IonText>
+                  </IonContent>
                   <IonButtons>
                     <IonGrid>
+                     
+                        
+                     
+                      
+
                       <IonRow>
                         <IonCol><IonButton onClick={() => setSelectedMonth(0)}>Jan</IonButton></IonCol>
                         <IonCol><IonButton onClick={() => setSelectedMonth(1)}>Fev</IonButton></IonCol>

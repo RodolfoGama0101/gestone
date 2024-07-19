@@ -53,3 +53,8 @@ ion-card {
 .icon-select-month {
     margin-left: 3px;
 }
+
+.year-select{
+    margin: 0px;
+    height: 20px;
+}
