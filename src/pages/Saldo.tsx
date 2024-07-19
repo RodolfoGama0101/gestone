@@ -9,6 +9,7 @@ import {
     IonBackButton
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
+import SelectMonthYear from "../components/SelectMonthYear";
 
 const Saldo: React.FC = () => {
     Verifica();
@@ -25,7 +26,7 @@ const Saldo: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonCard></IonCard>
+                <SelectMonthYear></SelectMonthYear>
             </IonContent>
         </>
     )

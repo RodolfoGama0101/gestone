@@ -138,7 +138,7 @@ const Receitas: React.FC = () => {
                                     <IonCardTitle>{"R$ " + receita.valorReceita}</IonCardTitle>
                                     <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
                                     <IonCardContent>{receita.descricao}</IonCardContent>
-                                    <IonButton onClick={() => excluirReceita(receita.id)}><IonIcon icon={trashOutline}></IonIcon>Excluir</IonButton>
+                                    <IonButton onClick={() => excluirReceita(receita.id)} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
                                 </IonCardContent>
                             </IonCard>
                         )

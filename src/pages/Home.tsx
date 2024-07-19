@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   IonContent,
-  IonHeader,
   IonPage,
   IonButtons,
   IonButton,
@@ -13,9 +12,7 @@ import {
   IonToolbar,
   IonMenuButton,
   IonCard,
-  IonCardContent,
-  IonSelect,
-  IonSelectOption
+  IonCardContent
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
@@ -23,14 +20,21 @@ import FooterTabBar from '../components/FooterTabBar';
 
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from 'firebase/firestore';
+import { collection, doc, getAggregateFromServer, getDoc, query, sum, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
+import SelectMonthYear from '../components/SelectMonthYear';
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("");
   const [user, setUser] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+
+  if (!user) {
+    window.location.href = '/login';
+    return null;
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -52,7 +56,7 @@ const Home: React.FC = () => {
         const qReceitas = query(collReceitas, where("uid", "==", uid));
 
         const snapshotReceitas = await getAggregateFromServer(qReceitas, {
-            receitaTotal: sum('valorReceita')
+          receitaTotal: sum('valorReceita')
         });
 
         setReceitaTotal(snapshotReceitas.data().receitaTotal);
@@ -60,37 +64,57 @@ const Home: React.FC = () => {
         // Despesa
         const collDespesas = collection(db, 'Despesas');
         const qDespesas = query(collDespesas, where("uid", "==", uid));
+        // const qDespesasEMes = query(qDespesas, where("data", "==", selectedMonth));
 
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
-            despesaTotal: sum('valorDespesa')
+          despesaTotal: sum('valorDespesa')
         });
 
         setDespesaTotal(snapshotDespesas.data().despesaTotal);
       }
     });
-
-    
   }, []);
 
-  if (!user) {
-    window.location.href = '/login'; 
-    return null; 
-  }
+  // useEffect(() => {
+  //   const collectionRef = collection(db, 'Receitas');
+  //   const q = query(collectionRef, where('month', '==', selectedMonth));
 
-  
+  //   query.get().then((querySnapshot) => {
+  //     const receitas = [];
+  //     querySnapshot.forEach((doc) => {
+  //       receitas.push(doc.data());
+  //     });
+
+  //     // Update UI with receitas data
+  //   });
+  // }, [selectedMonth]);
+
+  // const handleMonthChange = (event) => {
+  //   setSelectedMonth(parseInt(event.target.value));
+  // };
+
+  // useEffect(() => {
+  //   const storedMonth = localStorage.getItem('selectedMonth');
+  //   if (storedMonth !== null) {
+  //     setSelectedMonth(parseInt(storedMonth));
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('selectedMonth', selectedMonth);
+  // }, [selectedMonth]);
 
   return (
     <>
       <Menu />
 
       <IonPage id="main-content">
-
-        {/* Header */}
-        <IonHeader className="ion-no-border">      
-          <IonToolbar color={'dark'}> 
+        <IonContent fullscreen color={'dark'}>
+          {/* Header */}
+          <IonToolbar color={'dark'}>
             {/* User name */}
             <IonText className='ion-margin-left'>
-              <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>  
+              <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
             </IonText>
             {/* Menu button */}
             <IonButtons slot='end'>
@@ -102,31 +126,16 @@ const Home: React.FC = () => {
               <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
             </IonText>
           </IonToolbar>
+
           <IonGrid >
             <IonRow class="ion-justify-content-center">
               <IonCol sizeXl='3'>
-                <IonSelect aria-label="Meses" interface="popover" placeholder="Selecione um mês" fill="outline" >
-                    <IonSelectOption>Janeiro</IonSelectOption>
-                    <IonSelectOption>Fevereiro</IonSelectOption>
-                    <IonSelectOption>Março</IonSelectOption>
-                    <IonSelectOption>Abril</IonSelectOption>
-                    <IonSelectOption>Maio</IonSelectOption>
-                    <IonSelectOption>Junho</IonSelectOption>
-                    <IonSelectOption>Julho</IonSelectOption>
-                    <IonSelectOption>Agosto</IonSelectOption>
-                    <IonSelectOption>Setembro</IonSelectOption>
-                    <IonSelectOption>Outubro</IonSelectOption>
-                    <IonSelectOption>Novembro</IonSelectOption>
-                    <IonSelectOption>Dezembro</IonSelectOption>
-                </IonSelect>
+                <SelectMonthYear></SelectMonthYear>
               </IonCol>
             </IonRow>
           </IonGrid>
-        </IonHeader>
 
-
-        {/* Card */}
-        <IonContent fullscreen color={'dark'}>
+          {/* Card */}
           <IonCard color={'medium'} className='card-1'>
             <IonCardContent>
               <IonGrid>
@@ -200,7 +209,6 @@ const Home: React.FC = () => {
               </IonGrid>
             </IonCardContent>
           </IonCard>
-
         </IonContent>
 
         <FooterTabBar></FooterTabBar>

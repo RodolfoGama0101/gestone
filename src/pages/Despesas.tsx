@@ -85,12 +85,13 @@ const Despesas: React.FC = () => {
         const despesaData = queryDocs.docs.map((doc) => {
             const docId = doc.id;
             const docData = doc.data();
+            const data = new Date(docData.data.seconds * 1000);
 
             // Combine docId and docData into a single object
 
             const combinedData: DespesasData = {
                 id: docId,
-                data: docData.data, // Use firstName se existir, caso contrário, deixe como string vazia
+                data: data, // Use firstName se existir, caso contrário, deixe como string vazia
                 valorDespesa: docData.valorDespesa, 
                 descricao: docData.descricao
             };
@@ -136,10 +137,9 @@ const Despesas: React.FC = () => {
                             <IonCard key={despesa.id} color={"dark"}>
                                 <IonCardContent>
                                     <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
-                                    <IonCardSubtitle>{despesa.data.toString()}</IonCardSubtitle>
+                                    <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
                                     <IonCardContent>{despesa.descricao}</IonCardContent>
-                                    <IonButton onClick={() => excluirDespesa(despesa.id)}><IonIcon icon={trashOutline}></IonIcon>Excluir</IonButton>
-                                </IonCardContent>
+                                    <IonButton onClick={() => excluirDespesa(despesa.id)} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>                                </IonCardContent>
                             </IonCard>
                         )
                     })}
