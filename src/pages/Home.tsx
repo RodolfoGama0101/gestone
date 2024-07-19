@@ -14,7 +14,7 @@ import {
   IonCard,
   IonCardContent
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, exitOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 
@@ -22,14 +22,13 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, query, sum, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
-import SelectMonthYear from '../components/SelectMonthYear';
 
 const Home: React.FC = () => {
   const [nome, setNome] = useState("");
   const [user, setUser] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [selectedMonth, setSelectedMonth] = useState(Number);
 
   if (!user) {
     window.location.href = '/login';
@@ -75,23 +74,9 @@ const Home: React.FC = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const collectionRef = collection(db, 'Receitas');
-  //   const q = query(collectionRef, where('month', '==', selectedMonth));
-
-  //   query.get().then((querySnapshot) => {
-  //     const receitas = [];
-  //     querySnapshot.forEach((doc) => {
-  //       receitas.push(doc.data());
-  //     });
-
-  //     // Update UI with receitas data
-  //   });
-  // }, [selectedMonth]);
-
-  // const handleMonthChange = (event) => {
-  //   setSelectedMonth(parseInt(event.target.value));
-  // };
+  useEffect(() => {
+    console.log(selectedMonth);
+  }, [selectedMonth])
 
   // useEffect(() => {
   //   const storedMonth = localStorage.getItem('selectedMonth');
@@ -127,10 +112,23 @@ const Home: React.FC = () => {
             </IonText>
           </IonToolbar>
 
-          <IonGrid >
+          <IonGrid color='dark'>
             <IonRow class="ion-justify-content-center">
               <IonCol sizeXl='3'>
-                <SelectMonthYear></SelectMonthYear>
+                <IonButtons>
+                  <IonButton onClick={() => setSelectedMonth(0)}>Jan</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(1)}>Fev</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(2)}>Mar</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(3)}>Abr</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(4)}>Mai</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(5)}>Jun</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(6)}>Jul</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(7)}>Ago</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(8)}>Set</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(9)}>Out</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(10)}>Nov</IonButton>
+                  <IonButton onClick={() => setSelectedMonth(11)}>Dez</IonButton>
+                </IonButtons>
               </IonCol>
             </IonRow>
           </IonGrid>
