@@ -90,6 +90,27 @@ const Home: React.FC = () => {
   //   localStorage.setItem('selectedMonth', selectedMonth);
   // }, [selectedMonth]);
 
+
+
+  function numeroParaMes(numero: number) {
+    const meses = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ];
+
+    return meses[numero];
+  }
+
   return (
     <>
       <Menu />
@@ -116,7 +137,7 @@ const Home: React.FC = () => {
           <IonGrid color='dark'>
             <IonRow class="ion-justify-content-center">
               <IonCol className="ion-text-center">
-                <IonButton id='trigger-button' className='select-month-btn' color={'success'}><IonIcon icon={chevronDownOutline}></IonIcon></IonButton>
+                <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{numeroParaMes(selectedMonth)}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
                 <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
                   <IonButtons>
                     <IonGrid>

@@ -47,8 +47,9 @@ ion-card {
 }
 
 .select-month-btn {
-    width: 110px;
-    height: 50px;
-    --border-radius: 15px;
-    box-shadow: 3px;
+    --border-radius: 25px;
+}
+
+.icon-select-month {
+    margin-left: 3px;
 }
