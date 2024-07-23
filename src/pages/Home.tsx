@@ -24,12 +24,12 @@ import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, up
 import Menu from '../components/Menu';
 
 const Home: React.FC = () => {
-  const [nome, setNome] = useState(String);
+  const [nome, setNome] = useState();
   const [user, setUser] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
-  const [selectedMonth, setSelectedMonth] = useState(Number);
-  const [mesSelecionado, setMesSelecionado] = useState(Number);
+  const [selectedMonth, setSelectedMonth] = useState(0);
+  const [mesSelecionado, setMesSelecionado] = useState("");
 
   if (!user) {
     window.location.href = '/login';
@@ -86,32 +86,28 @@ const Home: React.FC = () => {
     if (docSnap.exists()) {
       const selecaoMes = docSnap.data().mes;
       console.log(selecaoMes);
-      setMesSelecionado(selecaoMes)
-      // return meses[selecaoMes];
+
+      const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+      ];
+  
+      const mes = selecaoMes;
+  
+      setMesSelecionado(meses[mes]);
     } else {
       console.error("Documento 'MesSelecao' não encontrado para o usuário:", uid);
     }
-  }
-
-  function numEmMes() {
-    const meses = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro"
-    ];
-
-    const mes = mesSelecionado;
-
-    return meses[mes];
   }
 
   async function armazenarMesSelecionado() {
@@ -125,6 +121,8 @@ const Home: React.FC = () => {
         mes: selectedMonth
       });
 
+      imprimirMes();
+
       console.log("armazenarMesSelecionado()");
     } else {
       await setDoc(docRef, {
@@ -137,10 +135,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     armazenarMesSelecionado();
   }, [selectedMonth])
-
-  useEffect(() => {
-    imprimirMes();
-  }, [])
 
   return (
     <>
@@ -168,7 +162,7 @@ const Home: React.FC = () => {
           <IonGrid color='dark'>
             <IonRow class="ion-justify-content-center">
               <IonCol className="ion-text-center">
-                <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{numEmMes()}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
+                <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
                 <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
                   <IonContent color={'success'} className='ion-text-center year-select'>
                     <IonText>2024</IonText>
@@ -176,24 +170,24 @@ const Home: React.FC = () => {
                   <IonButtons>
                     <IonGrid>
                       <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(0), imprimirMes() }}>Jan</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(1), imprimirMes() }}>Fev</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(2), imprimirMes() }}>Mar</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(3), imprimirMes() }}>Abr</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
                       </IonRow>
 
                       <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(4), imprimirMes() }}>Mai</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(5), imprimirMes() }}>Jun</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(6), imprimirMes() }}>Jul</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(7), imprimirMes() }}>Ago</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
                       </IonRow>
 
                       <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(8), imprimirMes() }}>Set</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(9), imprimirMes() }}>Out</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(10), imprimirMes() }}>Nov</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(11), imprimirMes() }}>Dez</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
                       </IonRow>
                     </IonGrid>
                   </IonButtons>
