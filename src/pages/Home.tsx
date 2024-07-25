@@ -15,7 +15,7 @@ import {
   IonCardContent,
   IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline, time } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -71,10 +71,36 @@ const Home: React.FC = () => {
         });
 
         setDespesaTotal(snapshotDespesas.data().despesaTotal);
+
+        // Imprimir mês 
+        const docRefMesSelecao = doc(db, "MesSelecao", uid);
+        const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+
+        if (docSnapMesSelecao.exists()) {
+          const selecaoMes = docSnapMesSelecao.data().mes;
+          // console.log(selecaoMes);
+
+          const meses = [
+            "Janeiro",
+            "Fevereiro",
+            "Março",
+            "Abril",
+            "Maio",
+            "Junho",
+            "Julho",
+            "Agosto",
+            "Setembro",
+            "Outubro",
+            "Novembro",
+            "Dezembro"
+          ];
+
+          const mes = selecaoMes;
+
+          setMesSelecionado(meses[mes]);
+        }
       }
     });
-
-    
   }, [])
 
   async function imprimirMes() {
@@ -85,7 +111,7 @@ const Home: React.FC = () => {
 
     if (docSnap.exists()) {
       const selecaoMes = docSnap.data().mes;
-      console.log(selecaoMes);
+      // console.log(selecaoMes);
 
       const meses = [
         "Janeiro",
@@ -101,9 +127,9 @@ const Home: React.FC = () => {
         "Novembro",
         "Dezembro"
       ];
-  
+
       const mes = selecaoMes;
-  
+
       setMesSelecionado(meses[mes]);
     } else {
       console.error("Documento 'MesSelecao' não encontrado para o usuário:", uid);
@@ -123,12 +149,14 @@ const Home: React.FC = () => {
 
       imprimirMes();
 
-      console.log("armazenarMesSelecionado()");
+      // console.log("armazenarMesSelecionado()");
     } else {
       await setDoc(docRef, {
         uid: uid,
         mes: selectedMonth
       });
+
+      imprimirMes();
     }
   }
 
