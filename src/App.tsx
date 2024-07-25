@@ -1,26 +1,18 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonIcon,
-  IonLabel,
   IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
   setupIonicReact,
-  IonFab,
-  IonFabButton, 
-  IonImg
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { homeOutline, barChartOutline, add } from 'ionicons/icons';
 import Home from './pages/Home';
-import Add from './pages/Add';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
+import Cadastro from './pages/Cadastro';
 import Saldo from './pages/Saldo';
 import Despesas from './pages/Despesas';
 import Receitas from './pages/Receitas';
+
 import './App.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -47,56 +39,36 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route path="/add">
-            <Add />
-          </Route>
-          <Route path="/charts">
-            <Charts />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/saldo">
-            <Saldo />
-          </Route>
-          <Route path="/receitas">
-            <Receitas />
-          </Route>
-          <Route path="/despesas">
-            <Despesas />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
+      <IonRouterOutlet>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+        <Route path="/charts">
+          <Charts />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/saldo">
+          <Saldo />
+        </Route>
+        <Route path="/receitas">
+          <Receitas />
+        </Route>
+        <Route path="/despesas">
+          <Despesas />
+        </Route>
 
-        <IonTabBar slot="bottom" color={'dark'}>
-          <IonTabButton tab="Home" href="/Home">
-            <IonIcon aria-hidden="true" icon={homeOutline} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="Add" href="/Add">
-            <IonFab>
-              <IonFabButton color={'dark'}>
-                <IonImg src='/addIcon.svg' />
-              </IonFabButton>
-            </IonFab>
-          </IonTabButton>
-
-          <IonTabButton tab="Charts" href="/Charts">
-            <IonIcon aria-hidden="true" icon={barChartOutline} />
-            <IonLabel>Grafics</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+        <Route path="/cadastro">
+          <Cadastro />
+        </Route>
+      </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
+
 );
 
 export default App;

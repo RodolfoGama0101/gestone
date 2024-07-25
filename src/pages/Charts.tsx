@@ -1,16 +1,31 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import HeaderComponent from '../components/Header';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonToolbar } from '@ionic/react';
 import './Charts.css';
+import FooterTabBar from '../components/FooterTabBar';
+import Verifica from '../firebase/verifica';
+
 
 const Charts: React.FC = () => {
+  Verifica();
+
   return (
     <IonPage>
+      {/* Header */}
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/Home"></IonBackButton>
+          </IonButtons>
+          <IonText className='ion-text-center'>
+            <h1>Grafics</h1>
+          </IonText>
+        </IonToolbar>
+      </IonHeader>
 
-      <HeaderComponent></HeaderComponent>
+      <IonContent>
 
-      <IonContent fullscreen>
-        <h1 className='ion-text-center'>Charts</h1>
       </IonContent>
+
+      <FooterTabBar></FooterTabBar>
     </IonPage>
   );
 };

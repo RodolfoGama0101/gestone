@@ -9,8 +9,8 @@
     font-size: 50px;
     border: 3px solid;
     border-radius: 100%;
-    color: black;
 }
+
 
 /* ion-button {
     --border-radius: 20px;
@@ -40,4 +40,21 @@ ion-card {
 
 .card-1 {
     border-radius: 25px;
+}
+
+.select-mes {
+    --width: 300px;
+}
+
+.select-month-btn {
+    --border-radius: 25px;
+}
+
+.icon-select-month {
+    margin-left: 3px;
+}
+
+.year-select{
+    margin: 0px;
+    height: 20px;
 }
