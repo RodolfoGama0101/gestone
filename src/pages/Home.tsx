@@ -28,13 +28,29 @@ const Home: React.FC = () => {
   const [user, setUser] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
-  const [selectedMonth, setSelectedMonth] = useState(0);
+  const [selectedMonth, setSelectedMonth] = useState(Number);
   const [mesSelecionado, setMesSelecionado] = useState("");
+  const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
 
   if (!user) {
     window.location.href = '/login';
     return null;
   }
+
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+  ];
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -53,7 +69,7 @@ const Home: React.FC = () => {
 
         // Receita
         const collReceitas = collection(db, 'Receitas');
-        const qReceitas = query(collReceitas, where("uid", "==", uid));
+        const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
 
         const snapshotReceitas = await getAggregateFromServer(qReceitas, {
           receitaTotal: sum('valorReceita')
@@ -64,7 +80,6 @@ const Home: React.FC = () => {
         // Despesa
         const collDespesas = collection(db, 'Despesas');
         const qDespesas = query(collDespesas, where("uid", "==", uid));
-        // const qDespesasEMes = query(qDespesas, where("data", "==", selectedMonth));
 
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
           despesaTotal: sum('valorDespesa')
@@ -80,28 +95,14 @@ const Home: React.FC = () => {
           const selecaoMes = docSnapMesSelecao.data().mes;
           // console.log(selecaoMes);
 
-          const meses = [
-            "Janeiro",
-            "Fevereiro",
-            "Março",
-            "Abril",
-            "Maio",
-            "Junho",
-            "Julho",
-            "Agosto",
-            "Setembro",
-            "Outubro",
-            "Novembro",
-            "Dezembro"
-          ];
-
           const mes = selecaoMes;
 
+          setDataMesSelecionado(selecaoMes);
           setMesSelecionado(meses[mes]);
-        }
+        } 
       }
     });
-  }, [])
+  })
 
   async function imprimirMes() {
     const uid = user.uid;
@@ -113,29 +114,16 @@ const Home: React.FC = () => {
       const selecaoMes = docSnap.data().mes;
       // console.log(selecaoMes);
 
-      const meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-      ];
+      const mes = new Date(selecaoMes);
+      setDataMesSelecionado(mes.getMonth());
 
-      const mes = selecaoMes;
-
-      setMesSelecionado(meses[mes]);
+      setMesSelecionado(meses[selecaoMes]);
     } else {
       console.error("Documento 'MesSelecao' não encontrado para o usuário:", uid);
     }
   }
 
+  // Contém erro de IndexOf
   async function armazenarMesSelecionado() {
     const uid = user.uid;
 

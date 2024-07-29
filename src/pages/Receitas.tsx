@@ -64,6 +64,7 @@ const Receitas: React.FC = () => {
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
             data: new Date(data),
+            mes: new Date(data).getMonth(),
             valorReceita: Number(valorReceita),
             descricao: descricao,
             uid: uid
