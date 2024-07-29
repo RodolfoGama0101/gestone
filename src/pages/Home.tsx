@@ -79,7 +79,7 @@ const Home: React.FC = () => {
 
         // Despesa
         const collDespesas = collection(db, 'Despesas');
-        const qDespesas = query(collDespesas, where("uid", "==", uid));
+        const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
 
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
           despesaTotal: sum('valorDespesa')
