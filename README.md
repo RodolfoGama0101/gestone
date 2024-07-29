@@ -1,7 +1,7 @@
 # Gestone 
 ### O gerenciador de suas finanças
 
-Veja como está ficando o projeto: [https://gestone-2qa3jy.vercel.app/](https://gestone.vercel.app/)
+Veja como está ficando o projeto: [[https://gestone-d508a.web.app/home](https://gestone-d508a.web.app/home)]
 
 ## Execução do projeto para desenvolvimento
 Prosiga com os seguintes passos: <br>
