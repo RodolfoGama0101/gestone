@@ -4,18 +4,19 @@ import { auth, db } from "../firebase/firebase";
 import { IonButton, IonContent, IonIcon } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
 import "./SignGoogle.css"
+import { useState } from "react";
 
 const SignGoogle: React.FC = () => {
+
     function googleLogin() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider).then(async (result) => {
-            console.log(result);
             const user = result.user;
             if (result.user) {
-                await setDoc(doc(db, "Users", user.uid), {
-                    email: user.email,
-                    firstName: user.displayName
-                });
+                // await setDoc(doc(db, "Users", user.uid), {
+                //     email: user.email,
+                //     firstName: user.displayName
+                // });
                 // window.alert("User logged in Successfully");
                 window.location.href = "/home";
             }

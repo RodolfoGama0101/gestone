@@ -24,18 +24,12 @@ import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, up
 import Menu from '../components/Menu';
 
 const Home: React.FC = () => {
-  const [nome, setNome] = useState();
-  const [user, setUser] = useState(Object);
+  const [userInfo, setUserInfo] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
   const [selectedMonth, setSelectedMonth] = useState(Number);
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
-
-  if (!user) {
-    window.location.href = '/login';
-    return null;
-  }
 
   const meses = [
     "Janeiro",
@@ -54,18 +48,15 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
-      setUser(user);
+      setUserInfo(user);
+
+      if (!user) {
+        window.location.href = '/login';
+        return null;
+      }
 
       if (user) {
         const uid = user.uid;
-        const docRef = doc(db, "Users", uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const docData = docSnap.data();
-          setNome(docData.firstName);
-        } else {
-          console.log("No such document!");
-        }
 
         // Receita
         const collReceitas = collection(db, 'Receitas');
@@ -99,13 +90,13 @@ const Home: React.FC = () => {
 
           setDataMesSelecionado(selecaoMes);
           setMesSelecionado(meses[mes]);
-        } 
+        }
       }
     });
   })
 
   async function imprimirMes() {
-    const uid = user.uid;
+    const uid = userInfo.uid;
 
     const docRef = doc(db, "MesSelecao", uid);
     const docSnap = await getDoc(docRef);
@@ -125,7 +116,7 @@ const Home: React.FC = () => {
 
   // Contém erro de IndexOf
   async function armazenarMesSelecionado() {
-    const uid = user.uid;
+    const uid = userInfo.uid;
 
     const docRef = doc(db, "MesSelecao", uid);
     const docSnap = await getDoc(docRef);
@@ -171,7 +162,7 @@ const Home: React.FC = () => {
               </IonMenuButton>
             </IonButtons>
             <IonText>
-              <h1 className='nome ion-text-start ion-margin-start'>{nome}</h1>
+              <h1 className='nome ion-text-start ion-margin-start'>{userInfo.displayName}</h1>
             </IonText>
           </IonToolbar>
 

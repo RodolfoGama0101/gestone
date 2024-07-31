@@ -19,7 +19,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { trashOutline } from "ionicons/icons";
@@ -40,6 +40,7 @@ const Receitas: React.FC = () => {
     const [uid, setUid] = useState("");
     const [receitas, setReceitas] = useState<ReceitasData[]>(Array);
     const [receitaTotal, setReceitaTotal] = useState(Number);
+    const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -47,8 +48,22 @@ const Receitas: React.FC = () => {
                 const uid = user.uid;
                 setUid(uid);
 
+                async function selectedMonth() {
+                    const docRefMesSelecao = doc(db, "MesSelecao", uid);
+                    const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+            
+                    if (docSnapMesSelecao.exists()) {
+                        const selecaoMes = docSnapMesSelecao.data().mes;
+                        // console.log(selecaoMes);
+            
+                        setDataMesSelecionado(selecaoMes);
+            
+                        console.log("Deu bom!");
+                    }
+                }
+
                 const coll = collection(db, 'Receitas');
-                const q = query(coll, where("uid", "==", uid));
+                const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
 
                 const snapshot = await getAggregateFromServer(q, {
                     receitaTotal: sum('valorReceita')
@@ -60,6 +75,8 @@ const Receitas: React.FC = () => {
 
         imprimirReceitas();
     });
+
+    
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {

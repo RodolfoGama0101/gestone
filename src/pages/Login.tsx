@@ -28,7 +28,7 @@ const Login: React.FC = () => {
   const [user, setUser] = useState(Object);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, (user) => {
       setUser(user);
 
       if (user) {
@@ -36,8 +36,6 @@ const Login: React.FC = () => {
       }
     });
   }, []);
-
-
 
   function loginUser() {
     console.log(email, senha);
