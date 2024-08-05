@@ -19,7 +19,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDocs, query, sum, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { trashOutline } from "ionicons/icons";
 
@@ -33,23 +33,32 @@ const Despesas: React.FC = () => {
         descricao: string;
     }
 
-    Verifica();
-
     const [data, setData] = useState(Date);
     const [valorDespesa, setValorDespesa] = useState(Number);
     const [descricao, setDescricao] = useState();
     const [uid, setUid] = useState("");
     const [despesas, setDespesas] = useState<DespesasData[]>(Array);
     const [despesaTotal, setDespesaTotal] = useState(Number);
+    const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             const uid = user.uid;
             setUid(uid);
-    
+            
+            // Mês selecionado
+            const docRefMesSelecao = doc(db, "MesSelecao", uid);
+            const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+
+            if (docSnapMesSelecao.exists()) {
+                const selecaoMes = docSnapMesSelecao.data().mes;
+
+                setDataMesSelecionado(selecaoMes);
+            }
+
             const coll = collection(db, 'Despesas');
-            const q = query(coll, where("uid", "==", uid));
+            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
     
             const snapshot = await getAggregateFromServer(q, {
                 despesaTotal: sum('valorDespesa')
@@ -58,9 +67,12 @@ const Despesas: React.FC = () => {
             setDespesaTotal(snapshot.data().despesaTotal);
           }
         });
-
-        imprimirDespesas()
       });
+
+      useEffect(() => {
+        imprimirDespesas();
+        console.log("imprimirReceitas();");
+    }, [despesaTotal])
 
     async function addDespesa() {
         const docRef = await addDoc(collection(db, "Despesas"), {
@@ -70,13 +82,11 @@ const Despesas: React.FC = () => {
             descricao: descricao,
             uid: uid
         });
-
-        window.alert("Despesa adicionada com sucesso!");
     }
 
     async function imprimirDespesas() {
         const coll = collection(db, 'Despesas');
-        const q = query(coll, where("uid", "==", uid));
+        const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
         const queryDocs = await getDocs(q);
 
         const snapshot = await getAggregateFromServer(q, {
@@ -128,7 +138,7 @@ const Despesas: React.FC = () => {
                         <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                         <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
                         <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                        <IonButton className="btn-add-receita" color={'danger'} onClick={addDespesa}>Adicionar despesa</IonButton>
+                        <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa(), imprimirDespesas()}}>Adicionar despesa</IonButton>
                     </IonCardContent>
                 </IonCard>
 
@@ -140,7 +150,7 @@ const Despesas: React.FC = () => {
                                     <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
                                     <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
                                     <IonCardContent>{despesa.descricao}</IonCardContent>
-                                    <IonButton onClick={() => excluirDespesa(despesa.id)} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>                                </IonCardContent>
+                                    <IonButton onClick={() => {excluirDespesa(despesa.id)}} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>                                </IonCardContent>
                             </IonCard>
                         )
                     })}

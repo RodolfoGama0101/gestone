@@ -48,20 +48,17 @@ const Receitas: React.FC = () => {
                 const uid = user.uid;
                 setUid(uid);
 
-                async function selectedMonth() {
-                    const docRefMesSelecao = doc(db, "MesSelecao", uid);
-                    const docSnapMesSelecao = await getDoc(docRefMesSelecao);
-            
-                    if (docSnapMesSelecao.exists()) {
-                        const selecaoMes = docSnapMesSelecao.data().mes;
-                        // console.log(selecaoMes);
-            
-                        setDataMesSelecionado(selecaoMes);
-            
-                        console.log("Deu bom!");
-                    }
+                // Mês selecionado
+                const docRefMesSelecao = doc(db, "MesSelecao", uid);
+                const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+
+                if (docSnapMesSelecao.exists()) {
+                    const selecaoMes = docSnapMesSelecao.data().mes;
+
+                    setDataMesSelecionado(selecaoMes);
                 }
 
+                // Query receita total
                 const coll = collection(db, 'Receitas');
                 const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
 
@@ -72,11 +69,14 @@ const Receitas: React.FC = () => {
                 setReceitaTotal(snapshot.data().receitaTotal);
             }
         });
-
-        imprimirReceitas();
     });
 
-    
+    useEffect(() => {
+        imprimirReceitas();
+        console.log("imprimirReceitas();");
+    }, [receitaTotal])
+
+
 
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
@@ -92,7 +92,7 @@ const Receitas: React.FC = () => {
 
     async function imprimirReceitas() {
         const coll = collection(db, 'Receitas');
-        const q = query(coll, where("uid", "==", uid));
+        const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
         const queryDocs = await getDocs(q);
 
         const snapshot = await getAggregateFromServer(q, {
@@ -144,7 +144,7 @@ const Receitas: React.FC = () => {
                         <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
                         <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
                         <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                        <IonButton className="btn-add-receita" color={'success'} onClick={addReceita}>Adicionar receita</IonButton>
+                        <IonButton className="btn-add-receita" color={'success'} onClick={() => {addReceita(), imprimirReceitas()}}>Adicionar receita</IonButton>
                     </IonCardContent>
                 </IonCard>
 
