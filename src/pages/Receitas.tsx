@@ -74,12 +74,6 @@ const Receitas: React.FC = () => {
         });
     });
 
-    // useEffect(() => {
-    //     imprimirReceitas();
-    //     console.log("imprimirReceitas();");
-    // }, [receitaTotal])
-
-
     async function addReceita() {
         const docRef = await addDoc(collection(db, "Receitas"), {
             data: new Date(data),
@@ -93,6 +87,7 @@ const Receitas: React.FC = () => {
         setUpdateReceita(!updateReceita);
     }
 
+    // Imprimir receitas
     useEffect(() => {
         const imprimirReceitas = async () => {
             const coll = collection(db, 'Receitas');

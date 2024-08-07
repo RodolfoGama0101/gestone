@@ -40,6 +40,7 @@ const Despesas: React.FC = () => {
     const [despesas, setDespesas] = useState<DespesasData[]>(Array);
     const [despesaTotal, setDespesaTotal] = useState(Number);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
+    const [updateDespesa, setUpdateDespesa] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -69,11 +70,6 @@ const Despesas: React.FC = () => {
         });
       });
 
-      useEffect(() => {
-        imprimirDespesas();
-        console.log("imprimirReceitas();");
-    }, [despesaTotal])
-
     async function addDespesa() {
         const docRef = await addDoc(collection(db, "Despesas"), {
             data: new Date(data),
@@ -82,39 +78,42 @@ const Despesas: React.FC = () => {
             descricao: descricao,
             uid: uid
         });
+
+        window.alert("Despesa adicionada com sucesso!");
+        setUpdateDespesa(!updateDespesa);
     }
 
-    async function imprimirDespesas() {
-        const coll = collection(db, 'Despesas');
-        const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
-        const queryDocs = await getDocs(q);
+    useEffect(() => {
+        const imprimirDespesas = async () => {
+            const coll = collection(db, 'Despesas');
+            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+            const queryDocs = await getDocs(q);
 
-        const snapshot = await getAggregateFromServer(q, {
-            despesaTotalTotal: sum('valorDespesa')
-        });
+            const despesasData = queryDocs.docs.map((doc) => {
+                const docId = doc.id;
+                const docData = doc.data();
+                const data = new Date(docData.data.seconds * 1000);
 
-        const despesaData = queryDocs.docs.map((doc) => {
-            const docId = doc.id;
-            const docData = doc.data();
-            const data = new Date(docData.data.seconds * 1000);
+                const combinedData = {
+                    id: docId,
+                    data: data,
+                    valorDespesa: docData.valorDespesa,
+                    descricao: docData.descricao
+                };
 
-            // Combine docId and docData into a single object
+                return combinedData;
+            });
 
-            const combinedData: DespesasData = {
-                id: docId,
-                data: data, // Use firstName se existir, caso contrário, deixe como string vazia
-                valorDespesa: docData.valorDespesa, 
-                descricao: docData.descricao
-            };
+            setDespesas(despesasData);
+        };
 
-            return combinedData;
-        });
-
-        setDespesas(despesaData);
-    }
+        imprimirDespesas();
+    }, [uid, dataMesSelecionado, updateDespesa]);
 
     async function excluirDespesa(id: any) {
         await deleteDoc(doc(db, "Despesas", id));
+
+        setUpdateDespesa(!updateDespesa);
     }
 
     return (
@@ -138,7 +137,7 @@ const Despesas: React.FC = () => {
                         <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                         <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
                         <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                        <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa(), imprimirDespesas()}}>Adicionar despesa</IonButton>
+                        <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa()}}>Adicionar despesa</IonButton>
                     </IonCardContent>
                 </IonCard>
 
