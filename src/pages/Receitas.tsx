@@ -15,7 +15,9 @@ import {
     IonCardTitle,
     IonCardSubtitle,
     IonText,
-    IonIcon
+    IonIcon,
+    IonSelect,
+    IonSelectOption
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
@@ -36,11 +38,12 @@ const Receitas: React.FC = () => {
 
     const [data, setData] = useState(Date);
     const [valorReceita, setValorReceita] = useState(Number);
-    const [descricao, setDescricao] = useState();
+    const [descricao, setDescricao] = useState(String);
     const [uid, setUid] = useState("");
     const [receitas, setReceitas] = useState<ReceitasData[]>(Array);
     const [receitaTotal, setReceitaTotal] = useState(Number);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
+    const [updateReceita, setUpdateReceita] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -71,11 +74,10 @@ const Receitas: React.FC = () => {
         });
     });
 
-    useEffect(() => {
-        imprimirReceitas();
-        console.log("imprimirReceitas();");
-    }, [receitaTotal])
-
+    // useEffect(() => {
+    //     imprimirReceitas();
+    //     console.log("imprimirReceitas();");
+    // }, [receitaTotal])
 
 
     async function addReceita() {
@@ -88,39 +90,39 @@ const Receitas: React.FC = () => {
         });
 
         window.alert("Receita adicionada com sucesso!");
+        setUpdateReceita(!updateReceita);
     }
 
-    async function imprimirReceitas() {
-        const coll = collection(db, 'Receitas');
-        const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
-        const queryDocs = await getDocs(q);
+    useEffect(() => {
+        const imprimirReceitas = async () => {
+            const coll = collection(db, 'Receitas');
+            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+            const queryDocs = await getDocs(q);
 
-        const snapshot = await getAggregateFromServer(q, {
-            receitaTotal: sum('valorReceita')
-        });
+            const receitasData = queryDocs.docs.map((doc) => {
+                const docId = doc.id;
+                const docData = doc.data();
+                const data = new Date(docData.data.seconds * 1000);
 
-        const receitasData = queryDocs.docs.map((doc) => {
-            const docId = doc.id;
-            const docData = doc.data();
-            const data = new Date(docData.data.seconds * 1000);
+                const combinedData = {
+                    id: docId,
+                    data: data,
+                    valorReceita: docData.valorReceita,
+                    descricao: docData.descricao
+                };
 
-            // Combine docId and docData into a single object
+                return combinedData;
+            });
 
-            const combinedData: ReceitasData = {
-                id: docId,
-                data: data,
-                valorReceita: docData.valorReceita,
-                descricao: docData.descricao
-            };
+            setReceitas(receitasData);
+        };
 
-            return combinedData;
-        });
-
-        setReceitas(receitasData);
-    }
+        imprimirReceitas();
+    }, [uid, dataMesSelecionado, updateReceita]);
 
     async function excluirReceita(id: any) {
         await deleteDoc(doc(db, "Receitas", id));
+        setUpdateReceita(!updateReceita);
     }
 
     return (
@@ -143,8 +145,8 @@ const Receitas: React.FC = () => {
                     <IonCardContent>
                         <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
                         <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                        <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                        <IonButton className="btn-add-receita" color={'success'} onClick={() => {addReceita(), imprimirReceitas()}}>Adicionar receita</IonButton>
+                        <IonInput label="Descrição" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                        <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita() }}>Adicionar receita</IonButton>
                     </IonCardContent>
                 </IonCard>
 

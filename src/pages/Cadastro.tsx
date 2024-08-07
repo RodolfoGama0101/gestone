@@ -88,7 +88,6 @@ const Cadastro: React.FC = () => {
                     </IonRow>
                 </IonGrid>
             </IonContent>
-
         </>
     );
 };
