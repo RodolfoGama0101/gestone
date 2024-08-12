@@ -10,14 +10,16 @@ const SignGoogle: React.FC = () => {
     function googleLogin() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider).then(async (result) => {
-            const user = result.user;
             if (result.user) {
-                // await setDoc(doc(db, "Users", user.uid), {
-                //     email: user.email,
-                //     firstName: user.displayName
-                // });
+                const user = result.user;
+
+                await setDoc(doc(db, "Users", user.uid), {
+                    email: user.email,
+                    firstName: user.displayName
+                });
+
+                window.alert("Deu bom!")
                 // window.alert("User logged in Successfully");
-                window.location.href = "/home";
             }
         });
     }

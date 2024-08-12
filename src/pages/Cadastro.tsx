@@ -15,7 +15,7 @@ import {
 } from "@ionic/react";
 import './Cadastro.css';
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -33,7 +33,7 @@ const Cadastro: React.FC = () => {
             await createUserWithEmailAndPassword(auth, email, senha)
                 .then(async () => {
                     const user = auth.currentUser;
-                    // console.log(user);
+
                     if (user) {
                         await setDoc(doc(db, "Users", user.uid), {
                             email: user.email,
