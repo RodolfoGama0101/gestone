@@ -15,7 +15,10 @@ import {
     IonText,
     IonCardTitle,
     IonCardSubtitle,
-    IonIcon
+    IonIcon,
+    IonGrid,
+    IonCol,
+    IonRow,
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
@@ -118,8 +121,8 @@ const Despesas: React.FC = () => {
 
     return (
         <IonPage>
-            <IonHeader className="">
-                <IonToolbar color={'dark'}>
+            <IonHeader>
+                <IonToolbar color={'danger'}>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/Home"></IonBackButton>
                     </IonButtons>
@@ -128,32 +131,38 @@ const Despesas: React.FC = () => {
             </IonHeader>
 
             <IonContent color={'dark'}>
-                <IonText>
-                    <h1 className="ion-margin">{despesaTotal}</h1>
-                </IonText>
+                <IonGrid>
+                    <IonText>
+                        <h1 className="ion-margin">R$ {despesaTotal}</h1>
+                    </IonText>
+                    <IonRow class="ion-justify-content-center">
+                        <IonCard color={'dark2'} className="card-add-receita">
+                            <IonCardContent>
+                                <IonInput label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
+                                <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                                <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
+                                <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa()}}>Adicionar despesa</IonButton>
+                            </IonCardContent>
+                        
 
-                <IonCard color={'dark'} className="card-add-receita">
-                    <IonCardContent>
-                        <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
-                        <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                        <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                        <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa()}}>Adicionar despesa</IonButton>
-                    </IonCardContent>
-                </IonCard>
-
-                <IonCard color={"danger"}>
-                    {despesas.map(despesa => {
-                        return (
-                            <IonCard key={despesa.id} color={"dark"}>
-                                <IonCardContent>
-                                    <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
-                                    <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
-                                    <IonCardContent>{despesa.descricao}</IonCardContent>
-                                    <IonButton onClick={() => {excluirDespesa(despesa.id)}} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>                                </IonCardContent>
-                            </IonCard>
-                        )
-                    })}
-                </IonCard>
+                            <IonCardContent>
+                                <IonCard color={"danger"}>
+                                    {despesas.map(despesa => {
+                                        return (
+                                            <IonCard key={despesa.id} color={"dark2"}>
+                                                <IonCardContent>
+                                                    <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
+                                                    <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
+                                                    <IonCardContent>{despesa.descricao}</IonCardContent>
+                                                    <IonButton onClick={() => {excluirDespesa(despesa.id)}} color={"dark2"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>                                </IonCardContent>
+                                            </IonCard>
+                                        )
+                                    })}
+                                </IonCard>
+                            </IonCardContent>
+                        </IonCard>
+                    </IonRow>
+                </IonGrid>
             </IonContent>
         </IonPage>
     )

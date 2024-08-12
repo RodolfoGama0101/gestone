@@ -1,5 +1,6 @@
 import { IonButton, IonCol, IonFab, IonFabButton, IonFooter, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
 import { barChartOutline, homeOutline, close, trendingDown, trendingUpSharp, repeat } from "ionicons/icons";
+import './ExploreContainer.css';
 
 const FooterTabBar: React.FC = () => {
     return (
@@ -15,8 +16,8 @@ const FooterTabBar: React.FC = () => {
                             </IonButton>
                         </IonCol>
 
-                        <IonCol className="">
-                            <IonFab className="">
+                        <IonCol className="center-image">
+                            <IonFab>
                                 <IonFabButton color={"dark"} id="open-action-sheet">
                                     <IonImg src='/addIcon.svg' />
                                 </IonFabButton>
