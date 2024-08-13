@@ -2,3 +2,9 @@
     display: block;
     margin: 0 auto;
 }
+
+.btn-add {
+    --box-shadow: none;
+    --border-width: 0;
+    border: none;
+}
