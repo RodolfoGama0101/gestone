@@ -1,31 +1,29 @@
 import { IonButton, IonCol, IonFab, IonFabButton, IonFooter, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
 import { barChartOutline, homeOutline, close, trendingDown, trendingUpSharp, repeat } from "ionicons/icons";
-import './ExploreContainer.css';
+import './FooterTab.css';
 
 const FooterTabBar: React.FC = () => {
     return (
 
         <IonFooter>
-            <IonToolbar color={'dark'}>
-                <IonGrid>
+            <IonToolbar color={'dark2'} className="toolbar">
+                <IonGrid className="grid">
                     <IonRow>
-                        <IonCol className="ion-text-center">
-                            <IonButton href="/Home" color={"dark"}>
+                        <IonCol className="bnt">
+                            <IonButton href="/Home" color={"light"} fill="clear" size="large">
                                 <IonIcon aria-hidden="true" icon={homeOutline} />
-                                <IonLabel>Home</IonLabel>
                             </IonButton>
                         </IonCol>
 
-                        <IonCol class="ion-text-center">
-                            <IonButton id="open-action-sheet" color={"dark"} style={{ border: 'none', boxShadow: 'none' }}>
-                                <IonImg src='/addIcon.svg' />
+                        <IonCol class="bnt">
+                            <IonButton id="open-action-sheet" mode="ios" color={"dark2"} fill="clear" size="small">
+                                <IonImg src='/addIcon.svg'/>
                             </IonButton>
                         </IonCol>
 
-                        <IonCol className="ion-text-center">
-                            <IonButton href="/Charts" color={"dark"}>
+                        <IonCol className="bnt">
+                            <IonButton href="/Charts" color={"light"} fill="clear" size="large">
                                 <IonIcon aria-hidden="true" icon={barChartOutline} />
-                                <IonLabel>Charts</IonLabel>
                             </IonButton>
                         </IonCol>
                     </IonRow>
@@ -34,7 +32,7 @@ const FooterTabBar: React.FC = () => {
 
             <IonActionSheet
                 className="custom-action-sheet"
-                trigger="open-action-sheet"
+                trigger="open-action-sheet"            
                 buttons={[
                     {
                         icon: trendingDown,
@@ -65,6 +63,7 @@ const FooterTabBar: React.FC = () => {
                         icon: close,
                         text: 'Cancel',
                         role: 'cancel',
+                    
                     },
                 ]}
             ></IonActionSheet>

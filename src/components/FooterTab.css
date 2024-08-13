@@ -1,10 +1,8 @@
-.center-image {
-    display: block;
-    margin: 0 auto;
+.grid{
+    padding: 0px;
 }
 
-.btn-add {
-    --box-shadow: none;
-    --border-width: 0;
-    border: none;
+.bnt{
+    padding: 0px;
+    text-align: center;
 }
