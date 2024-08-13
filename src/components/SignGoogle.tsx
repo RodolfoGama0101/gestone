@@ -7,21 +7,28 @@ import "./SignGoogle.css"
 
 const SignGoogle: React.FC = () => {
 
-    function googleLogin() {
+    async function googleLogin() {
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider).then(async (result) => {
-            if (result.user) {
+
+        signInWithPopup(auth, provider)
+            .then(async (result) => {
                 const user = result.user;
 
-                await setDoc(doc(db, "Users", user.uid), {
-                    email: user.email,
-                    firstName: user.displayName
+                const refDoc = doc(db, "MesSelecao", user.uid);
+                await setDoc(refDoc, {
+                    uid: user.uid,
+                    mes: new Date().getMonth()
                 });
 
-                window.alert("Deu bom!")
-                // window.alert("User logged in Successfully");
-            }
-        });
+                if (user) {
+                    window.location.href = '/home';
+                }
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.customData.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+            });
     }
 
     return (

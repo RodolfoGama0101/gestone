@@ -15,9 +15,10 @@ import {
 } from "@ionic/react";
 import './Cadastro.css';
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import updateUserName from "../firebase/updateUserName";
 
 const Cadastro: React.FC = () => {
 
@@ -35,13 +36,15 @@ const Cadastro: React.FC = () => {
                     const user = auth.currentUser;
 
                     if (user) {
-                        await setDoc(doc(db, "Users", user.uid), {
-                            email: user.email,
-                            firstName: nome
+                        updateUserName(nome);
+
+                        // Armazena o mês atual para início
+                        const refDoc = doc(db, "MesSelecao", user.uid);
+                        await setDoc(refDoc, {
+                            uid: user.uid,
+                            mes: new Date().getMonth()
                         });
                     }
-
-                    window.alert("User Registered Successfully!!");
 
                     window.location.href = "./Login";
                 })
