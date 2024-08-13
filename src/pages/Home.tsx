@@ -218,7 +218,7 @@ return (
                             <p>Saldo</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ {receitaTotal - despesaTotal}</h1>
+                            <h1>R$ {(receitaTotal - despesaTotal).toFixed(2)}</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
@@ -239,7 +239,7 @@ return (
                             <p>Receitas</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ {receitaTotal}</h1>
+                            <h1>R$ {receitaTotal.toFixed(2)}</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
@@ -260,7 +260,7 @@ return (
                             <p>Despesas</p>
                           </IonText>
                           <IonText className='ion-text-start'>
-                            <h1>R$ {despesaTotal}</h1>
+                            <h1>R$ {despesaTotal.toFixed(2)}</h1>
                           </IonText>
                         </IonCol>
                         <IonCol>
