@@ -9,9 +9,10 @@ import Home from './pages/Home';
 import Charts from './pages/Charts';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
-import Saldo from './pages/Saldo';
 import Despesas from './pages/Despesas';
+import Conta from './pages/Conta';
 import Receitas from './pages/Receitas';
+
 
 import './App.css'
 
@@ -52,9 +53,6 @@ const App: React.FC = () => (
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/saldo">
-          <Saldo />
-        </Route>
         <Route path="/receitas">
           <Receitas />
         </Route>
@@ -64,6 +62,9 @@ const App: React.FC = () => (
 
         <Route path="/cadastro">
           <Cadastro />
+        </Route>
+        <Route path="/conta">
+          <Conta />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

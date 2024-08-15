@@ -210,7 +210,7 @@ return (
               <IonRow>
                 {/* Saldo */}
                 <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'light'} expand='block' href='Saldo' className='card-button'>
+                  <IonButton color={'light'} expand='block' href='Transferencias' className='card-button'>
                     <IonGrid>
                       <IonRow className='ion-align-items-center'>
                         <IonCol>
