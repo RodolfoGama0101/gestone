@@ -27,6 +27,8 @@ const Cadastro: React.FC = () => {
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState("");
 
+    
+
     const fazerCadastro = async (e: any) => {
         e.preventDefault();
 
@@ -45,8 +47,6 @@ const Cadastro: React.FC = () => {
                             mes: new Date().getMonth()
                         });
                     }
-
-                    window.location.href = "./Login";
                 })
                 .catch((error) => {
                     const errorCode = error.code;

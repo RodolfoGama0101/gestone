@@ -79,6 +79,7 @@ const Login: React.FC = () => {
                   <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(loginUser)}>
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
+                  
                   <SignGoogle></SignGoogle>
 
                   <div className="ion-text-center">

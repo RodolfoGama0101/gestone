@@ -75,7 +75,7 @@ const Despesas: React.FC = () => {
 
     async function addDespesa() {
         const dateTime = new Date(data).getTime();
-        window.alert(data);
+        // window.alert(data);
 
         const docRef = await addDoc(collection(db, "Despesas"), {
             data: new Date(data),
@@ -85,7 +85,7 @@ const Despesas: React.FC = () => {
             uid: uid
         });
 
-        window.alert("Despesa adicionada com sucesso!");
+        // window.alert("Despesa adicionada com sucesso!");
         setUpdateDespesa(!updateDespesa);
     }
 
