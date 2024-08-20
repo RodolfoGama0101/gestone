@@ -55,7 +55,7 @@ const FooterTabBar: React.FC = () => {
                         text: 'Transferências',
                         role: 'destructive',
                         handler: () => {
-                            window.location.href = "/Transferencia";
+                            window.location.href = "/Transferencias";
                         },
                     },
                     {
