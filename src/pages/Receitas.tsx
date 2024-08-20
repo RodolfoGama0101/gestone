@@ -65,8 +65,8 @@ const Receitas: React.FC = () => {
                 }
 
                 // Query receita total
-                const coll = collection(db, 'Receitas');
-                const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+                const coll = collection(db, 'UserFinance');
+                const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
 
                 const snapshot = await getAggregateFromServer(q, {
                     receitaTotal: sum('valorReceita')
@@ -78,10 +78,11 @@ const Receitas: React.FC = () => {
     });
 
     async function addReceita() {
-        const docRef = await addDoc(collection(db, "Receitas"), {
+        const docRef = await addDoc(collection(db, "UserFinance"), {
             data: new Date(data),
             mes: new Date(data).getMonth(),
             valorReceita: Number(valorReceita),
+            tipo: "receita",
             descricao: descricao,
             uid: uid
         });
@@ -93,8 +94,8 @@ const Receitas: React.FC = () => {
     // Imprimir receitas
     useEffect(() => {
         const imprimirReceitas = async () => {
-            const coll = collection(db, 'Receitas');
-            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+            const coll = collection(db, 'UserFinance');
+            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
             const queryDocs = await getDocs(q);
 
             const receitasData = queryDocs.docs.map((doc) => {
@@ -119,7 +120,7 @@ const Receitas: React.FC = () => {
     }, [uid, dataMesSelecionado, updateReceita]);
 
     async function excluirReceita(id: any) {
-        await deleteDoc(doc(db, "Receitas", id));
+        await deleteDoc(doc(db, "UserFinance", id));
         setUpdateReceita(!updateReceita);
     }
 
@@ -166,11 +167,6 @@ const Receitas: React.FC = () => {
                                 </IonCardContent>
                             </IonCard>
                     </IonRow>
-                    
-                    
-                           
-                      
-
                 </IonGrid>
             </IonContent>
         </IonPage>

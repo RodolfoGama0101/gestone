@@ -61,8 +61,8 @@ const Despesas: React.FC = () => {
                     setDataMesSelecionado(selecaoMes);
                 }
 
-                const coll = collection(db, 'Despesas');
-                const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+                const coll = collection(db, 'UserFinance');
+                const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
 
                 const snapshot = await getAggregateFromServer(q, {
                     despesaTotal: sum('valorDespesa')
@@ -75,12 +75,12 @@ const Despesas: React.FC = () => {
 
     async function addDespesa() {
         const dateTime = new Date(data).getTime();
-        window.alert(data);
 
-        const docRef = await addDoc(collection(db, "Despesas"), {
+        const docRef = await addDoc(collection(db, "UserFinance"), {
             data: new Date(data),
             mes: new Date(data).getMonth(),
             valorDespesa: Number(valorDespesa),
+            tipo: "despesa",
             descricao: descricao,
             uid: uid
         });
@@ -91,8 +91,8 @@ const Despesas: React.FC = () => {
 
     useEffect(() => {
         const imprimirDespesas = async () => {
-            const coll = collection(db, 'Despesas');
-            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+            const coll = collection(db, 'UserFinance');
+            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
             const queryDocs = await getDocs(q);
 
             const despesasData = queryDocs.docs.map((doc) => {
@@ -114,10 +114,10 @@ const Despesas: React.FC = () => {
         };
 
         imprimirDespesas();
-    }, [uid, dataMesSelecionado, updateDespesa]);
+    }, [uid, dataMesSelecionado, updateDespesa])
 
     async function excluirDespesa(id: any) {
-        await deleteDoc(doc(db, "Despesas", id));
+        await deleteDoc(doc(db, "UserFinance", id));
 
         setUpdateDespesa(!updateDespesa);
     }

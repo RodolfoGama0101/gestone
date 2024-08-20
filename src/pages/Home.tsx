@@ -59,8 +59,8 @@ const Home: React.FC = () => {
         const uid = user.uid;
 
         // Receita
-        const collReceitas = collection(db, 'Receitas');
-        const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+        const collReceitas = collection(db, 'UserFinance');
+        const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
 
         const snapshotReceitas = await getAggregateFromServer(qReceitas, {
           receitaTotal: sum('valorReceita')
@@ -69,8 +69,8 @@ const Home: React.FC = () => {
         setReceitaTotal(snapshotReceitas.data().receitaTotal);
 
         // Despesa
-        const collDespesas = collection(db, 'Despesas');
-        const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+        const collDespesas = collection(db, 'UserFinance');
+        const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
 
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
           despesaTotal: sum('valorDespesa')
