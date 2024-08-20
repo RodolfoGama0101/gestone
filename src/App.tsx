@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Transferencias from './pages/Transferencias';
 
 setupIonicReact();
 
@@ -59,12 +60,14 @@ const App: React.FC = () => (
         <Route path="/despesas">
           <Despesas />
         </Route>
-
         <Route path="/cadastro">
           <Cadastro />
         </Route>
         <Route path="/conta">
           <Conta />
+        </Route>
+        <Route path="/transferencias">
+          <Transferencias />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

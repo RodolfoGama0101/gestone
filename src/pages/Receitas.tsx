@@ -87,7 +87,7 @@ const Receitas: React.FC = () => {
             uid: uid
         });
 
-        window.alert("Receita adicionada com sucesso!");
+        // window.alert("Receita adicionada com sucesso!");
         setUpdateReceita(!updateReceita);
     }
 

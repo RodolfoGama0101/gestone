@@ -75,7 +75,6 @@ const Despesas: React.FC = () => {
 
     async function addDespesa() {
         const dateTime = new Date(data).getTime();
-        window.alert(data);
 
         const docRef = await addDoc(collection(db, "UserFinance"), {
             data: new Date(data),

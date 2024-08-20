@@ -1,0 +1,13 @@
+/* .cards-transferencias {
+    height: 120px;
+} */
+
+.btn-cards-transferencia {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.edit-btn, .delete-btn {
+    width: 130px;
+}
