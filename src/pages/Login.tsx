@@ -66,7 +66,7 @@ const Login: React.FC = () => {
           </IonRow>
           <IonRow class="ion-justify-content-center">
             <IonCol sizeXl="5">
-              <IonCard>
+              <IonCard >
                 <IonCardHeader>
                   <IonCardTitle className="ion-text-center" color={"success"}>FAZER LOGIN</IonCardTitle>
                 </IonCardHeader>
