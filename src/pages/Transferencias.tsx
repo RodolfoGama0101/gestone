@@ -1,5 +1,5 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { createOutline, trashOutline } from "ionicons/icons";
@@ -13,7 +13,8 @@ const Transferencias: React.FC = () => {
     interface SaldoData {
         id: string;
         data: Date;
-        valor: Number;
+        valor: number;
+        tipo: string;
         descricao: string;
     }
 
@@ -21,12 +22,45 @@ const Transferencias: React.FC = () => {
     const [saldo, setSaldo] = useState<SaldoData[]>(Array);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateSaldo, setUpdateSaldo] = useState(false);
+    const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
+    const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
+    
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
                 setUid(uid);
+
+                // Mês selecionado
+                const docRefMesSelecao = doc(db, "MesSelecao", uid);
+                const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+
+                if (docSnapMesSelecao.exists()) {
+                    const selecaoMes = docSnapMesSelecao.data().mes;
+
+                    setDataMesSelecionado(selecaoMes);
+                }
+
+                // Valor total receitas
+                const collReceitas = collection(db, 'UserFinance');
+                const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
+
+                const snapshotReceitas = await getAggregateFromServer(qReceitas, {
+                    receitaTotal: sum('valor')
+                });
+
+                setValorTotalReceitas(snapshotReceitas.data().receitaTotal);
+
+                // Valor total despesas
+                const collDespesas = collection(db, 'UserFinance');
+                const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
+
+                const snapshotDespesas = await getAggregateFromServer(qDespesas, {
+                    despesaTotal: sum('valor')
+                });
+
+                setValorTotalDespesas(snapshotDespesas.data().despesaTotal);
             }
         });
     });
@@ -45,7 +79,8 @@ const Transferencias: React.FC = () => {
                 const combinedData = {
                     id: docId,
                     data: data,
-                    valor: docData.valorDespesa,
+                    valor: docData.valor,
+                    tipo: docData.tipo,
                     descricao: docData.descricao
                 };
 
@@ -71,19 +106,25 @@ const Transferencias: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/Home"></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Despesas</IonTitle>
+                    <IonTitle>Saldo</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent>
+                <IonText>
+                    <h1 className="ion-margin">{valorTotalReceitas - valorTotalDespesas}</h1>
+                </IonText>
+
                 <IonList>
                     {saldo.map(transferencias => {
+                        const itemColor = transferencias.tipo === "receita" ? "success" : "danger";
+                        const negativo = transferencias.tipo === "receita" ? "" : "-";
                         return (
                             <IonItem key={transferencias.id} color={""}>
                                 <IonGrid>
                                     <IonRow>
                                         <IonCol>
-                                            <IonTitle>{"R$ " + transferencias.valor}</IonTitle>
+                                            <IonTitle>{"R$ " + negativo + transferencias.valor}</IonTitle>
 
                                             <IonText>
                                                 <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>

@@ -2,27 +2,49 @@ import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButto
 import './Charts.css';
 import FooterTabBar from '../components/FooterTabBar';
 import Verifica from '../firebase/verifica';
+import Chart from 'react-google-charts';
 
 
 const Charts: React.FC = () => {
   Verifica();
 
+  const options = {
+    title: "Teste supremo",
+    is3D: true,
+  };
+
+  const data = [
+    ["Task", "Hours per Day"],
+    ["Work", 10],
+    ["Eat", 2],
+    ["Commute", 2],
+    ["Watch TV", 2],
+    ["Sleep", 7],
+  ];
+
   return (
     <IonPage>
       {/* Header */}
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color={"dark"}>
           <IonButtons slot="start">
             <IonBackButton defaultHref="/Home"></IonBackButton>
           </IonButtons>
-          <IonText className='ion-text-center'>
-            <h1>Grafics</h1>
+          <IonText>
+            <h1 className='ion-margin'>Grafics</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
-
+      <IonContent color={"dark"}>
+        <Chart
+          chartType="PieChart"
+          data={data}
+          options={options}
+          width={"100%"}
+          height={"400px"}
+          className='chart'
+        />
       </IonContent>
 
       <FooterTabBar></FooterTabBar>

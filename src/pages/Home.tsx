@@ -22,6 +22,7 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
+import { Chart } from "react-google-charts";
 
 const Home: React.FC = () => {
   const [userInfo, setUserInfo] = useState(Object);
@@ -63,7 +64,7 @@ const Home: React.FC = () => {
         const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
 
         const snapshotReceitas = await getAggregateFromServer(qReceitas, {
-          receitaTotal: sum('valorReceita')
+          receitaTotal: sum('valor')
         });
 
         setReceitaTotal(snapshotReceitas.data().receitaTotal);
@@ -73,7 +74,7 @@ const Home: React.FC = () => {
         const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
 
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
-          despesaTotal: sum('valorDespesa')
+          despesaTotal: sum('valor')
         });
 
         setDespesaTotal(snapshotDespesas.data().despesaTotal);
@@ -136,150 +137,152 @@ const Home: React.FC = () => {
     }
   }
 
-useEffect(() => {
-  armazenarMesSelecionado();
-}, [selectedMonth])
+  useEffect(() => {
+    armazenarMesSelecionado();
+  }, [selectedMonth])
 
-return (
-  <>
-    <Menu />
+  
 
-    <IonPage id="main-content">
-      <IonContent fullscreen color={'dark'}>
-        {/* Header */}
-        <IonToolbar color={'dark'}>
-          {/* User name */}
-          <IonText className='ion-margin-left'>
-            <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
-          </IonText>
-          {/* Menu button */}
-          <IonButtons slot='end'>
-            <IonMenuButton>
-              <IonIcon icon={personCircleOutline} size='large' />
-            </IonMenuButton>
-          </IonButtons>
-          <IonText>
-            <h1 className='nome ion-text-start ion-margin-start'>{userInfo.displayName}</h1>
-          </IonText>
-        </IonToolbar>
+  return (
+    <>
+      <Menu />
 
-        <IonGrid color='dark'>
-          <IonRow class="ion-justify-content-center">
-            <IonCol className="ion-text-center">
-              <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
-              <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
-                <IonContent color={'success'} className='ion-text-center year-select'>
-                  <IonText>2024</IonText>
-                </IonContent>
-                <IonButtons>
-                  <IonGrid>
-                    <IonRow>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
-                    </IonRow>
+      <IonPage id="main-content">
+        <IonContent fullscreen color={'dark'}>
+          {/* Header */}
+          <IonToolbar color={'dark'}>
+            {/* User name */}
+            <IonText className='ion-margin-left'>
+              <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
+            </IonText>
+            {/* Menu button */}
+            <IonButtons slot='end'>
+              <IonMenuButton>
+                <IonIcon icon={personCircleOutline} size='large' />
+              </IonMenuButton>
+            </IonButtons>
+            <IonText>
+              <h1 className='nome ion-text-start ion-margin-start'>{userInfo.displayName}</h1>
+            </IonText>
+          </IonToolbar>
 
-                    <IonRow>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
-                    </IonRow>
-
-                    <IonRow>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
-                      <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
-                    </IonRow>
-                  </IonGrid>
-                </IonButtons>
-              </IonPopover>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-
-        {/* Card */}
-        <IonCard color={'medium'} className='card-1'>
-          <IonCardContent>
-            <IonGrid>
-              <IonText className='ion-margin-left'>
-                <h1 className='dashboard ion-text-start'>Dashboard</h1>
-              </IonText>
-              <IonRow>
-                {/* Saldo */}
-                <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'light'} expand='block' href='Transferencias' className='card-button'>
+          <IonGrid color='dark'>
+            <IonRow class="ion-justify-content-center">
+              <IonCol className="ion-text-center">
+                <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
+                <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
+                  <IonContent color={'success'} className='ion-text-center year-select'>
+                    <IonText>2024</IonText>
+                  </IonContent>
+                  <IonButtons>
                     <IonGrid>
-                      <IonRow className='ion-align-items-center'>
-                        <IonCol>
-                          <IonText className='ion-text-start ion-text-uppercase'>
-                            <p>Saldo</p>
-                          </IonText>
-                          <IonText className='ion-text-start'>
-                            <h1>R$ {(receitaTotal - despesaTotal).toFixed(2)}</h1>
-                          </IonText>
-                        </IonCol>
-                        <IonCol>
-                          <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons saldo-button'></IonIcon>
-                        </IonCol>
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
+                      </IonRow>
+
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
+                      </IonRow>
+
+                      <IonRow>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
+                        <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
                       </IonRow>
                     </IonGrid>
-                  </IonButton>
-                </IonCol>
+                  </IonButtons>
+                </IonPopover>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
 
-                {/* Despesas */}
-                <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
-                    <IonGrid>
-                      <IonRow className='ion-align-items-center'>
-                        <IonCol>
-                          <IonText className='ion-text-start ion-text-uppercase'>
-                            <p>Receitas</p>
-                          </IonText>
-                          <IonText className='ion-text-start'>
-                            <h1>R$ {receitaTotal.toFixed(2)}</h1>
-                          </IonText>
-                        </IonCol>
-                        <IonCol>
-                          <IonIcon icon={arrowUp} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
-                        </IonCol>
-                      </IonRow>
-                    </IonGrid>
-                  </IonButton>
-                </IonCol>
+          {/* Card */}
+          <IonCard color={'medium'} className='card-1'>
+            <IonCardContent>
+              <IonGrid>
+                <IonText className='ion-margin-left'>
+                  <h1 className='dashboard ion-text-start'>Dashboard</h1>
+                </IonText>
+                <IonRow>
+                  {/* Saldo */}
+                  <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                    <IonButton color={'light'} expand='block' href='Transferencias' className='card-button'>
+                      <IonGrid>
+                        <IonRow className='ion-align-items-center'>
+                          <IonCol>
+                            <IonText className='ion-text-start ion-text-uppercase'>
+                              <p>Saldo</p>
+                            </IonText>
+                            <IonText className='ion-text-start'>
+                              <h1>R$ {(receitaTotal - despesaTotal).toFixed(2)}</h1>
+                            </IonText>
+                          </IonCol>
+                          <IonCol>
+                            <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons saldo-button'></IonIcon>
+                          </IonCol>
+                        </IonRow>
+                      </IonGrid>
+                    </IonButton>
+                  </IonCol>
 
-                {/* Despesas */}
-                <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                  <IonButton color={'danger'} expand='block' href='despesas' className='card-button'>
-                    <IonGrid>
-                      <IonRow className='ion-align-items-center'>
-                        <IonCol>
-                          <IonText className='ion-text-start ion-text-uppercase'>
-                            <p>Despesas</p>
-                          </IonText>
-                          <IonText className='ion-text-start'>
-                            <h1>R$ {despesaTotal.toFixed(2)}</h1>
-                          </IonText>
-                        </IonCol>
-                        <IonCol>
-                          <IonIcon icon={arrowDown} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
-                        </IonCol>
-                      </IonRow>
-                    </IonGrid>
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonCardContent>
-        </IonCard>
-      </IonContent>
+                  {/* Despesas */}
+                  <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                    <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
+                      <IonGrid>
+                        <IonRow className='ion-align-items-center'>
+                          <IonCol>
+                            <IonText className='ion-text-start ion-text-uppercase'>
+                              <p>Receitas</p>
+                            </IonText>
+                            <IonText className='ion-text-start'>
+                              <h1>R$ {receitaTotal.toFixed(2)}</h1>
+                            </IonText>
+                          </IonCol>
+                          <IonCol>
+                            <IonIcon icon={arrowUp} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                          </IonCol>
+                        </IonRow>
+                      </IonGrid>
+                    </IonButton>
+                  </IonCol>
 
-      <FooterTabBar></FooterTabBar>
-    </IonPage>
-  </>
-);
+                  {/* Despesas */}
+                  <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                    <IonButton color={'danger'} expand='block' href='despesas' className='card-button'>
+                      <IonGrid>
+                        <IonRow className='ion-align-items-center'>
+                          <IonCol>
+                            <IonText className='ion-text-start ion-text-uppercase'>
+                              <p>Despesas</p>
+                            </IonText>
+                            <IonText className='ion-text-start'>
+                              <h1>R$ {despesaTotal.toFixed(2)}</h1>
+                            </IonText>
+                          </IonCol>
+                          <IonCol>
+                            <IonIcon icon={arrowDown} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                          </IonCol>
+                        </IonRow>
+                      </IonGrid>
+                    </IonButton>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonCardContent>
+          </IonCard>
+        </IonContent>
+
+        <FooterTabBar></FooterTabBar>
+      </IonPage>
+    </>
+  );
 };
 
 export default Home;
