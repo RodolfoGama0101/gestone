@@ -32,7 +32,7 @@ const Despesas: React.FC = () => {
     interface DespesasData {
         id: string;
         data: Date;
-        valorDespesa: Number;
+        valor: Number;
         descricao: string;
     }
 
@@ -79,7 +79,7 @@ const Despesas: React.FC = () => {
         const docRef = await addDoc(collection(db, "UserFinance"), {
             data: new Date(data),
             mes: new Date(data).getMonth(),
-            valorDespesa: Number(valorDespesa),
+            valor: Number(valorDespesa),
             tipo: "despesa",
             descricao: descricao,
             uid: uid
@@ -103,7 +103,7 @@ const Despesas: React.FC = () => {
                 const combinedData = {
                     id: docId,
                     data: data,
-                    valorDespesa: docData.valorDespesa,
+                    valor: docData.valor,
                     descricao: docData.descricao
                 };
 
@@ -153,7 +153,7 @@ const Despesas: React.FC = () => {
                                         return (
                                             <IonCard key={despesa.id} color={"dark2"}>
                                                 <IonCardContent>
-                                                    <IonCardTitle>{"R$ " + despesa.valorDespesa}</IonCardTitle>
+                                                    <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
                                                     <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
                                                     <IonCardContent>{despesa.descricao}</IonCardContent>
                                                     <IonButton onClick={() => {excluirDespesa(despesa.id)}} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>

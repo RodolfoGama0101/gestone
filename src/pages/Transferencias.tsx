@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -13,7 +13,7 @@ const Transferencias: React.FC = () => {
     interface SaldoData {
         id: string;
         data: Date;
-        valorDespesa: Number;
+        valor: Number;
         descricao: string;
     }
 
@@ -45,7 +45,7 @@ const Transferencias: React.FC = () => {
                 const combinedData = {
                     id: docId,
                     data: data,
-                    valorDespesa: docData.valorDespesa,
+                    valor: docData.valorDespesa,
                     descricao: docData.descricao
                 };
 
@@ -76,7 +76,47 @@ const Transferencias: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonCard color={"medium"}>
+                <IonList>
+                    {saldo.map(transferencias => {
+                        return (
+                            <IonItem key={transferencias.id} color={""}>
+                                <IonGrid>
+                                    <IonRow>
+                                        <IonCol>
+                                            <IonTitle>{"R$ " + transferencias.valor}</IonTitle>
+
+                                            <IonText>
+                                                <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>
+                                            </IonText>
+
+                                            <IonText>
+                                                <p className="ion-no-margin">{transferencias.descricao}</p>
+                                            </IonText>
+                                        </IonCol>
+                                        <IonCol size="auto">
+                                            {/* Edit button */}
+                                            <IonButton onClick={() => { }} color={"dark"} className="edit-btn">
+                                                <IonIcon icon={createOutline} color={'light'}></IonIcon>
+                                                <IonText color={'light'}>Editar</IonText>
+                                            </IonButton>
+                                            {/* Delete button */}
+                                            <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"danger"} className="delete-btn">
+                                                <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                <IonText color={'light'}>Excluir</IonText>
+                                            </IonButton>
+                                        </IonCol>
+                                    </IonRow>
+                                </IonGrid>
+
+
+
+                            </IonItem>
+                        )
+                    })}
+                </IonList>
+
+
+                {/* <IonCard color={"medium"}>
                     {saldo.map(transferencias => {
                         return (
                             <IonCard key={transferencias.id} color={"dark2"} className="cards-transferencias">
@@ -89,12 +129,12 @@ const Transferencias: React.FC = () => {
                                                 <IonCardContent>{transferencias.descricao}</IonCardContent>
                                             </IonCol>
                                             <IonCol size="auto" className="btn-cards-transferencia">
-                                                {/* Edit button */}
+                                                {/ Edit button /}
                                                 <IonButton onClick={() => {  }} color={"dark"} className="edit-btn">
                                                     <IonIcon icon={createOutline} color={'medium'}></IonIcon>
                                                     <IonText color={'medium'}>Editar</IonText>
                                                 </IonButton>
-                                                {/* Delete button */}
+                                                {/* Delete button /}
                                                 <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"dark"} className="delete-btn">
                                                     <IonIcon icon={trashOutline} color={'danger'}></IonIcon>
                                                     <IonText color={'danger'}>Excluir</IonText>
@@ -105,8 +145,7 @@ const Transferencias: React.FC = () => {
                                 </IonCardContent>
                             </IonCard>
                         )
-                    })}
-                </IonCard>
+                    })} */}
             </IonContent>
         </IonPage>
     )

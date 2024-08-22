@@ -33,7 +33,7 @@ const Receitas: React.FC = () => {
     interface ReceitasData {
         id: string;
         data: Date;
-        valorReceita: number;
+        valor: number;
         descricao: string;
     }
 
@@ -69,9 +69,10 @@ const Receitas: React.FC = () => {
                 const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
 
                 const snapshot = await getAggregateFromServer(q, {
-                    receitaTotal: sum('valorReceita')
+                    receitaTotal: sum('valor')
                 });
 
+                console.log(snapshot.data().receitaTotal)
                 setReceitaTotal(snapshot.data().receitaTotal);
             }
         });
@@ -81,7 +82,7 @@ const Receitas: React.FC = () => {
         const docRef = await addDoc(collection(db, "UserFinance"), {
             data: new Date(data),
             mes: new Date(data).getMonth(),
-            valorReceita: Number(valorReceita),
+            valor: Number(valorReceita),
             tipo: "receita",
             descricao: descricao,
             uid: uid
@@ -106,7 +107,7 @@ const Receitas: React.FC = () => {
                 const combinedData = {
                     id: docId,
                     data: data,
-                    valorReceita: docData.valorReceita,
+                    valor: docData.valor,
                     descricao: docData.descricao
                 };
 
@@ -155,7 +156,7 @@ const Receitas: React.FC = () => {
                                             return (
                                             <IonCard key={receita.id} color={"dark2"}>
                                                 <IonCardContent>
-                                                    <IonCardTitle>{"R$ " + receita.valorReceita}</IonCardTitle>
+                                                    <IonCardTitle>{"R$ " + receita.valor}</IonCardTitle>
                                                     <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
                                                     <IonCardContent>{receita.descricao}</IonCardContent>
                                                     <IonButton onClick={() => excluirReceita(receita.id)} color={"dark2"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
