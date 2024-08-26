@@ -1,26 +1,82 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonToolbar } from '@ionic/react';
 import './Charts.css';
-import FooterTabBar from '../components/FooterTabBar';
 import Verifica from '../firebase/verifica';
-import Chart from 'react-google-charts';
+import { Pie } from 'react-chartjs-2';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import { collection, doc, getAggregateFromServer, getDoc, query, sum, where } from 'firebase/firestore';
+import { auth, db } from '../firebase/firebase';
 
+ChartJS.register(
+  Tooltip, 
+  Legend, 
+  ArcElement
+)
 
 const Charts: React.FC = () => {
   Verifica();
 
-  const options = {
-    title: "Teste supremo",
-    is3D: true,
-  };
+  const [userInfo, setUserInfo] = useState(Object);
+  const [receitaTotal, setReceitaTotal] = useState(Number);
+  const [despesaTotal, setDespesaTotal] = useState(Number);
+  const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
 
-  const data = [
-    ["Task", "Hours per Day"],
-    ["Work", 10],
-    ["Eat", 2],
-    ["Commute", 2],
-    ["Watch TV", 2],
-    ["Sleep", 7],
-  ];
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      setUserInfo(user);
+
+      if (!user) {
+        window.location.href = '/login';
+        return null;
+      }
+
+      if (user) {
+        const uid = user.uid;
+
+        // Receita
+        const collReceitas = collection(db, 'UserFinance');
+        const qReceitas = query(collReceitas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
+
+        const snapshotReceitas = await getAggregateFromServer(qReceitas, {
+          receitaTotal: sum('valor')
+        });
+
+        setReceitaTotal(snapshotReceitas.data().receitaTotal);
+
+        // Despesa
+        const collDespesas = collection(db, 'UserFinance');
+        const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
+
+        const snapshotDespesas = await getAggregateFromServer(qDespesas, {
+          despesaTotal: sum('valor')
+        });
+
+        setDespesaTotal(snapshotDespesas.data().despesaTotal);
+      }
+    })
+  });
+
+  const data = {
+    labels: [
+      'Despesas',
+      'Receitas'
+    ],
+    datasets: [{
+      label: 'R$ ',
+      data: [despesaTotal, receitaTotal],
+      backgroundColor: [
+        'rgb(255, 0, 0)',
+        'rgb(16, 12, 243)'
+      ],
+      hoverOffset: 20
+    }
+  ]
+  };
+  
+  const config = {
+    
+  };
 
   return (
     <IonPage>
@@ -36,18 +92,10 @@ const Charts: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent color={"dark"}>
-        <Chart
-          chartType="PieChart"
-          data={data}
-          options={options}
-          width={"100%"}
-          height={"400px"}
-          className='chart'
-        />
-      </IonContent>
 
-      <FooterTabBar></FooterTabBar>
+      <IonContent color={"dark"}>
+        <Pie options={config} data={data}/>
+      </IonContent>
     </IonPage>
   );
 };
