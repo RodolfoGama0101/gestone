@@ -27,7 +27,7 @@ const Cadastro: React.FC = () => {
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState("");
 
-    
+
 
     const fazerCadastro = async (e: any) => {
         e.preventDefault();
@@ -68,19 +68,19 @@ const Cadastro: React.FC = () => {
                     </IonRow>
                     <IonRow class="ion-justify-content-center">
                         <IonCol sizeXl="5">
-                            <IonCard>
+                            <IonCard color={'dark2'}>
                                 <IonCardHeader>
                                     <IonCardTitle className="ion-text-center" color={"success"}>FAZER CADASTRO</IonCardTitle>
                                 </IonCardHeader>
 
                                 <IonCardContent>
-                                    <IonInput color={"dark"} label='Usuário: ' placeholder="Fulano Silva" clearInput labelPlacement="floating" fill="solid" onIonChange={(e: any) => setNome(e.target.value)}></IonInput>
+                                    <IonInput color={"success"} label='Usuário: ' placeholder="Fulano Silva" clearInput labelPlacement="floating" fill="outline" onIonChange={(e: any) => setNome(e.target.value)}></IonInput>
 
-                                    <IonInput color={"dark"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="solid" onIonChange={(e: any) => setEmail(e.target.value)}></IonInput>
+                                    <IonInput color={"success"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="outline" onIonChange={(e: any) => setEmail(e.target.value)}></IonInput>
 
-                                    <IonInput color={"dark"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
+                                    <IonInput color={"success"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='outline' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
 
-                                    <IonInput color={"dark"} label='Confirme sua senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='solid' onIonChange={(e: any) => setConfirmaSenha(e.target.value)}></IonInput>
+                                    <IonInput color={"success"} label='Confirme sua senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='outline' onIonChange={(e: any) => setConfirmaSenha(e.target.value)}></IonInput>
 
                                     <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(fazerCadastro)}>
                                         <IonText> <h2>Cadastrar</h2> </IonText>

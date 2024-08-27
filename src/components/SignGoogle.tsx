@@ -32,7 +32,7 @@ const SignGoogle: React.FC = () => {
     }
 
     return (
-        <IonButton expand='block' color={'success'} className="ion-margin-top button-google-login" onClick={(googleLogin)}><IonIcon icon={logoGoogle} className="google-logo" />Google</IonButton>
+        <IonButton color={'success'} className="ion-margin-top" shape="round" onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
     );
 }
 

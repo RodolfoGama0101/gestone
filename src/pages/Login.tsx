@@ -28,11 +28,11 @@ const Login: React.FC = () => {
   const [user, setUser] = useState(Object);
 
   useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       setUser(user);
 
       if (user) {
-          window.location.href = '/home';
+        window.location.href = '/home';
       }
     });
   }, []);
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
                   <IonCardTitle className="ion-text-center tittle">FAZER LOGIN</IonCardTitle>
                 </IonCardHeader>
 
-                <IonCardContent>
+                <IonCardContent className="ion-justify-content-center">
                   <IonInput color={"success"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="outline" onIonChange={(e: any) => setEmail(e.target.value)} className="ion-margin-bottom"></IonInput>
 
                   <IonInput color={"success"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='outline' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
@@ -79,15 +79,15 @@ const Login: React.FC = () => {
                   <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(loginUser)}>
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
-                  
-                  <SignGoogle></SignGoogle>
-
-                  <div className="texts-login">
+                  <div className="center-google-btn">
+                    <SignGoogle></SignGoogle>
+                  </div>
+                  <div className="texts-login ">
                     <IonText>
                       <a href="" className="redefinir-senha">Redefinir senha</a>
                     </IonText>
                     <IonText>
-                      <a href="/Cadastro" className="fazer-cadastro">Ainda não tem cadastro? Faça o cadastro aqui</a>
+                      <a href="/Cadastro" className="fazer-cadastro">Faça o seu cadastro aqui</a>
                     </IonText>
                   </div>
 

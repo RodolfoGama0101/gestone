@@ -4,7 +4,7 @@
 .texts-login {
     display: flex;
     justify-content: space-between;
-    margin: 3px;
+    margin: 3%;
 }
 
 .redefinir-senha, .fazer-cadastro {
@@ -16,3 +16,10 @@
     text-decoration: none;
     color: #2ea14d;
 }
+
+.center-google-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
