@@ -1,3 +1,18 @@
 .gestone-start-login {
     width: 30%;
 }
+.texts-login {
+    display: flex;
+    justify-content: space-between;
+    margin: 3px;
+}
+
+.redefinir-senha, .fazer-cadastro {
+    text-decoration: none;
+    color: white;
+}
+
+.redefinir-senha:hover, .fazer-cadastro:hover {
+    text-decoration: none;
+    color: #2ea14d;
+}

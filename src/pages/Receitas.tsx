@@ -27,7 +27,7 @@ import './Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { trashOutline } from "ionicons/icons";
+import { addOutline, trashOutline } from "ionicons/icons";
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -143,6 +143,10 @@ const Receitas: React.FC = () => {
                     </IonText>
                     <IonRow class="ion-justify-content-center">
                             <IonCard color={'dark2'} className="card-add-receita">
+                                <IonButton shape="round" className="btn-add"><IonIcon icon={addOutline} slot="icon-only"/></IonButton>
+
+                                {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
+
                                 <IonCardContent>
                                     <IonInput label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
                                     <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />

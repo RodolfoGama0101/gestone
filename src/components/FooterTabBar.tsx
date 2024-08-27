@@ -8,22 +8,22 @@ const FooterTabBar: React.FC = () => {
         <IonFooter>
             <IonToolbar color={'dark2'} className="toolbar">
                 <IonGrid className="grid">
-                    <IonRow>
-                        <IonCol className="bnt">
-                            <IonButton href="/Home" color={"light"} fill="clear" size="large">
-                                <IonIcon aria-hidden="true" icon={homeOutline} />
+                    <IonRow className="ion-align-items-center">
+                        <IonCol className="bnt ion-align-items-center">
+                            <IonButton href="/Home" color={"light"} fill="clear">
+                                <IonIcon aria-hidden="true" icon={homeOutline} slot="icon-only" className="icons-footer"/>
                             </IonButton>
                         </IonCol>
 
                         <IonCol class="bnt">
-                            <IonButton id="open-action-sheet" mode="ios" color={"dark2"} fill="clear" size="small">
-                                <IonImg src='/addIcon.svg'/>
+                            <IonButton id="open-action-sheet" color={"dark2"} fill="clear">
+                                <IonImg src='/addIcon.svg' slot="icon-only" />
                             </IonButton>
                         </IonCol>
 
-                        <IonCol className="bnt">
-                            <IonButton href="/Charts" color={"light"} fill="clear" size="large">
-                                <IonIcon aria-hidden="true" icon={barChartOutline} />
+                        <IonCol className="bnt ion-align-items-center">
+                            <IonButton href="/Charts" color={"light"} fill="clear">
+                                <IonIcon aria-hidden="true" icon={barChartOutline} slot="icon-only" className="icons-footer"/>
                             </IonButton>
                         </IonCol>
                     </IonRow>

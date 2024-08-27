@@ -138,7 +138,7 @@ const Despesas: React.FC = () => {
                     <IonText>
                         <h1 className="ion-margin">{despesaTotal}</h1>
                     </IonText>
-                    <IonRow class="ion-justufy-content-center">
+                    <IonRow class="ion-justify-content-center">
                         <IonCard color={'dark2'} className="card-add-receita">
                             <IonCardContent>
                                 <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
