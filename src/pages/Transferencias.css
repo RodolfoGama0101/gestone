@@ -11,3 +11,7 @@
 .edit-btn, .delete-btn {
     width: 130px;
 }
+
+.saldo-total-tf {
+    font-size: 45px;
+}

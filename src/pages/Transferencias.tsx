@@ -24,7 +24,7 @@ const Transferencias: React.FC = () => {
     const [updateSaldo, setUpdateSaldo] = useState(false);
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
-    
+
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -106,87 +106,72 @@ const Transferencias: React.FC = () => {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/Home"></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Saldo</IonTitle>
+                    <IonTitle>Transferências</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent>
-                <IonText>
-                    <h1 className="ion-margin">{valorTotalReceitas - valorTotalDespesas}</h1>
-                </IonText>
-
-                <IonList>
-                    {saldo.map(transferencias => {
-                        const itemColor = transferencias.tipo === "receita" ? "success" : "danger";
-                        const negativo = transferencias.tipo === "receita" ? "" : "-";
-                        return (
-                            <IonItem key={transferencias.id} color={""}>
-                                <IonGrid>
-                                    <IonRow>
-                                        <IonCol>
-                                            <IonTitle>{"R$ " + negativo + transferencias.valor}</IonTitle>
-
-                                            <IonText>
-                                                <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>
-                                            </IonText>
-
-                                            <IonText>
-                                                <p className="ion-no-margin">{transferencias.descricao}</p>
-                                            </IonText>
-                                        </IonCol>
-                                        <IonCol size="auto">
-                                            {/* Edit button */}
-                                            <IonButton onClick={() => { }} color={"dark"} className="edit-btn">
-                                                <IonIcon icon={createOutline} color={'light'}></IonIcon>
-                                                <IonText color={'light'}>Editar</IonText>
-                                            </IonButton>
-                                            {/* Delete button */}
-                                            <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"danger"} className="delete-btn">
-                                                <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                <IonText color={'light'}>Excluir</IonText>
-                                            </IonButton>
-                                        </IonCol>
-                                    </IonRow>
-                                </IonGrid>
+            <IonContent color={"dark"}>
+                <IonGrid>
+                    <IonRow>
+                        <IonCol>
+                            <IonText>
+                                <h1 className="ion-margin saldo-total-tf">{valorTotalReceitas - valorTotalDespesas}</h1>
+                            </IonText>
+                        </IonCol>
+                        <IonCol size="auto" className="ion-justify-content-end ion-margin">
+                            <IonButton color={"success"}>Nova Receita</IonButton>
+                            <IonButton color={"danger"}>Nova Despesa</IonButton>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
 
 
 
-                            </IonItem>
-                        )
-                    })}
-                </IonList>
 
+                <IonCard color={"medium"}>
+                    <IonCardContent>
+                        <IonList color={"dark"} className="ion-no-padding list-transferencias">
+                            {saldo.map(transferencias => {
+                                const itemColor = transferencias.tipo === "receita" ? "success" : "danger";
+                                const negativo = transferencias.tipo === "receita" ? "" : "-";
+                                return (
+                                    <IonItem key={transferencias.id} color={"dark"}>
+                                        <IonGrid>
+                                            <IonRow>
+                                                <IonCol>
+                                                    <IonText>
+                                                        <h1 className="ion-no-padding">{"R$ " + negativo + transferencias.valor}</h1>
+                                                    </IonText>
 
-                {/* <IonCard color={"medium"}>
-                    {saldo.map(transferencias => {
-                        return (
-                            <IonCard key={transferencias.id} color={"dark2"} className="cards-transferencias">
-                                <IonCardContent className="ion-no-margin">
-                                    <IonGrid className="ion-align-items-center">
-                                        <IonRow className="ion-align-items-center">
-                                            <IonCol className="ion-align-items-center">
-                                                <IonCardTitle>{"R$ " + transferencias.valorDespesa}</IonCardTitle>
-                                                <IonCardSubtitle>{transferencias.data.toLocaleDateString()}</IonCardSubtitle>
-                                                <IonCardContent>{transferencias.descricao}</IonCardContent>
-                                            </IonCol>
-                                            <IonCol size="auto" className="btn-cards-transferencia">
-                                                {/ Edit button /}
-                                                <IonButton onClick={() => {  }} color={"dark"} className="edit-btn">
-                                                    <IonIcon icon={createOutline} color={'medium'}></IonIcon>
-                                                    <IonText color={'medium'}>Editar</IonText>
-                                                </IonButton>
-                                                {/* Delete button /}
-                                                <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"dark"} className="delete-btn">
-                                                    <IonIcon icon={trashOutline} color={'danger'}></IonIcon>
-                                                    <IonText color={'danger'}>Excluir</IonText>
-                                                </IonButton>
-                                            </IonCol>
-                                        </IonRow>
-                                    </IonGrid>
-                                </IonCardContent>
-                            </IonCard>
-                        )
-                    })} */}
+                                                    <IonText>
+                                                        <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>
+                                                    </IonText>
+
+                                                    <IonText>
+                                                        <p className="ion-no-margin">{transferencias.descricao}</p>
+                                                    </IonText>
+                                                </IonCol>
+                                                <IonCol size="auto">
+                                                    {/* Edit button */}
+                                                    <IonButton onClick={() => { }} color={"dark"} className="edit-btn">
+                                                        <IonIcon icon={createOutline} color={'light'}></IonIcon>
+                                                        <IonText color={'light'}>Editar</IonText>
+                                                    </IonButton>
+                                                    {/* Delete button */}
+                                                    <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"danger"} className="delete-btn">
+                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                        <IonText color={'light'}>Excluir</IonText>
+                                                    </IonButton>
+                                                </IonCol>
+                                            </IonRow>
+                                        </IonGrid>
+                                    </IonItem>
+                                )
+                            })}
+                        </IonList>
+                    </IonCardContent>
+
+                </IonCard>
             </IonContent>
         </IonPage>
     )
