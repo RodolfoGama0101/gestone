@@ -87,7 +87,7 @@ const Charts: React.FC = () => {
             <IonBackButton defaultHref="/Home"></IonBackButton>
           </IonButtons>
           <IonText>
-            <h1 className='ion-margin'>Grafics</h1>
+            <h1 className='ion-margin'>Charts</h1>
           </IonText>
         </IonToolbar>
       </IonHeader>

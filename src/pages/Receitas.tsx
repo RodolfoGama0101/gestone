@@ -20,7 +20,9 @@ import {
     IonRow,
     IonCol,
     IonSelect,
-    IonSelectOption
+    IonSelectOption,
+    IonList,
+    IonItem
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
@@ -28,6 +30,7 @@ import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, get
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { addOutline, trashOutline } from "ionicons/icons";
+import SelectMonth from "../components/SelectMonth";
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -142,35 +145,41 @@ const Receitas: React.FC = () => {
                         <h1 className="ion-margin">R$ {receitaTotal}</h1>
                     </IonText>
                     <IonRow class="ion-justify-content-center">
-                            <IonCard color={'dark2'} className="card-add-receita">
-                                <IonButton shape="round" className="btn-add"><IonIcon icon={addOutline} slot="icon-only"/></IonButton>
+                        <IonCard color={'dark2'} className="card-add-receita">
+                            <IonButton shape="round" className="btn-add"><IonIcon icon={addOutline} slot="icon-only" /></IonButton>
 
-                                {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
+                            {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
 
-                                <IonCardContent>
-                                    <IonInput label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                    <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                    <IonInput label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
-                                    <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita() }}>Adicionar receita</IonButton>
-                                </IonCardContent>
+                            <IonCardContent>
+                                <IonInput label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
+                                <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                                <IonInput label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                                <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita() }}>Adicionar receita</IonButton>
+                            </IonCardContent>
 
-                                <IonCardContent>
-                                    <IonCard color={"success"}>
-                                        {receitas.map(receita => {
-                                            return (
-                                            <IonCard key={receita.id} color={"dark2"}>
-                                                <IonCardContent>
-                                                    <IonCardTitle>{"R$ " + receita.valor}</IonCardTitle>
-                                                    <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
-                                                    <IonCardContent>{receita.descricao}</IonCardContent>
-                                                    <IonButton onClick={() => excluirReceita(receita.id)} color={"dark2"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
-                                                </IonCardContent>
-                                            </IonCard>
-                                        )
-                                        })}
-                                    </IonCard>
-                                </IonCardContent>
-                            </IonCard>
+                            <SelectMonth></SelectMonth>
+
+                            <IonCardContent>
+                                <IonCard color={"success"}>
+                                    <IonCardContent className="card-content-receitas">
+                                        <IonList color={"dark"} className="ion-no-padding list-receitas">
+                                            {receitas.map(receita => {
+                                                return (
+                                                    <IonItem key={receita.id} color={"dark2"}>
+                                                        <IonCardContent>
+                                                            <IonCardTitle>{"R$ " + receita.valor}</IonCardTitle>
+                                                            <IonCardSubtitle>{receita.data.toLocaleDateString()}</IonCardSubtitle>
+                                                            <IonCardContent>{receita.descricao}</IonCardContent>
+                                                            <IonButton onClick={() => excluirReceita(receita.id)} color={"dark2"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
+                                                        </IonCardContent>
+                                                    </IonItem>
+                                                )
+                                            })}
+                                        </IonList>
+                                    </IonCardContent>
+                                </IonCard>
+                            </IonCardContent>
+                        </IonCard>
                     </IonRow>
                 </IonGrid>
             </IonContent>

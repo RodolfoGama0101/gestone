@@ -19,12 +19,17 @@ import {
     IonGrid,
     IonCol,
     IonRow,
+    IonList,
+    IonItem,
+    IonPopover,
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { trashOutline } from "ionicons/icons";
+import { chevronDownOutline, trashOutline } from "ionicons/icons";
+import "./Despesas.css"
+import SelectMonth from "../components/SelectMonth";
 
 const Despesas: React.FC = () => {
     Verifica();
@@ -144,23 +149,30 @@ const Despesas: React.FC = () => {
                                 <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                                 <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
                                 <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
-                                <IonButton className="btn-add-receita" color={'danger'} onClick={() => {addDespesa()}}>Adicionar despesa</IonButton>
+                                <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
                             </IonCardContent>
-                        
+
+                            <SelectMonth></SelectMonth>
+
                             <IonCardContent>
                                 <IonCard color={"danger"}>
-                                    {despesas.map(despesa => {
-                                        return (
-                                            <IonCard key={despesa.id} color={"dark2"}>
-                                                <IonCardContent>
-                                                    <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
-                                                    <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
-                                                    <IonCardContent>{despesa.descricao}</IonCardContent>
-                                                    <IonButton onClick={() => {excluirDespesa(despesa.id)}} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
-                                                </IonCardContent>
-                                            </IonCard>
-                                        )
-                                    })}
+                                    <IonCardContent className="card-content-despesas">
+                                        <IonList color={"dark"} className="ion-no-padding list-despesas">
+                                            {despesas.map(despesa => {
+                                                return (
+                                                    <IonItem key={despesa.id} color={"dark2"}>
+                                                        <IonCardContent>
+                                                            <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
+                                                            <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
+                                                            <IonCardContent>{despesa.descricao}</IonCardContent>
+                                                            <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
+                                                        </IonCardContent>
+                                                    </IonItem>
+                                                )
+                                            })}
+                                        </IonList>
+                                    </IonCardContent>
+
                                 </IonCard>
                             </IonCardContent>
                         </IonCard>

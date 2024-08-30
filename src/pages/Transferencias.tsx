@@ -125,14 +125,10 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-
-
-
                 <IonCard color={"medium"}>
                     <IonCardContent>
                         <IonList color={"dark"} className="ion-no-padding list-transferencias">
                             {saldo.map(transferencias => {
-                                const itemColor = transferencias.tipo === "receita" ? "success" : "danger";
                                 const negativo = transferencias.tipo === "receita" ? "" : "-";
                                 return (
                                     <IonItem key={transferencias.id} color={"dark"}>
