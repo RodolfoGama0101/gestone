@@ -1,18 +1,16 @@
-.gestone-start-login {
-    width: 30%;
-}
+
 .texts-login {
     display: flex;
     justify-content: space-between;
-    margin: 3%;
+    margin: 0.5%;
 }
 
-.redefinir-senha, .fazer-cadastro {
+.redefinir-senha {
     text-decoration: none;
     color: white;
 }
 
-.redefinir-senha:hover, .fazer-cadastro:hover {
+.redefinir-senha:hover{
     text-decoration: none;
     color: #2ea14d;
 }
@@ -21,5 +19,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+    gap: 20px;
+}
+
+.img-login{
+    width: 350px;
+    margin: 0 auto;
+}
   
+.row-login{
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}

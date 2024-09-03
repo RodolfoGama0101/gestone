@@ -2,8 +2,8 @@
 h1 {
     color: #fff;
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
 }
 
 h2 {
@@ -13,17 +13,47 @@ h2 {
     margin-bottom: 2rem;
 }
 
-ion-img {
-    margin: 0 auto;
-    width: 30vw;
-    /* Ajuste o tamanho da imagem conforme necessário */
-}
-
-ion-button {
+.bnt-login{
     margin-top: 1rem;
+    height: 56%;
+    width: 58%;
+    font-size: 1.23em;
+    --border-radius: 5px;
+    
 }
 
-ion-content > .btn-inicial {
+.row-inicial{
+    margin-top: 4.5%; 
+}
+
+
+.content-inicial{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+a{
+    font-size: 86%;
+}
+
+.img-inicial{
+    width: 350px;
+    margin: 0 auto;
+}
+
+.fazer-cadastro {
+    text-decoration: none;
+    color: white;
+    justify-content: center;
+    display: flex;
+}
+
+.fazer-cadastro:hover {
+    text-decoration: none;
+    color: #2ea14d;
 }

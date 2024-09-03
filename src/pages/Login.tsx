@@ -18,6 +18,8 @@ import './Login.css';
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
+import SignGitHub from "../components/SignGitHub";
+import SignMicrosoft from "../components/SignMicrosoft";
 import { auth } from "../firebase/firebase";
 
 const Login: React.FC = () => {
@@ -62,16 +64,16 @@ const Login: React.FC = () => {
 
         <IonGrid fixed={false}>
           <IonRow class="ion-justify-content-center">
-            <IonImg src="./versao104.png" className="gestone-start-login" />
+            <IonImg src="./versao104.png" className="img-inicial" />
           </IonRow>
-          <IonRow class="ion-justify-content-center">
+          <IonRow className="row-login">
             <IonCol sizeXl="5">
               <IonCard color={'dark2'}>
                 <IonCardHeader>
                   <IonCardTitle className="ion-text-center tittle">FAZER LOGIN</IonCardTitle>
                 </IonCardHeader>
 
-                <IonCardContent className="ion-justify-content-center">
+                <IonCardContent>
                   <IonInput color={"success"} label='Login:' placeholder='Email ou CPF' clearInput labelPlacement="floating" fill="outline" onIonChange={(e: any) => setEmail(e.target.value)} className="ion-margin-bottom"></IonInput>
 
                   <IonInput color={"success"} label='Senha:' placeholder='Senha' type='password' clearInput labelPlacement='floating' fill='outline' onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
@@ -79,17 +81,18 @@ const Login: React.FC = () => {
                   <IonButton expand='block' color={'success'} className="ion-margin-top" onClick={(loginUser)}>
                     <IonText> <h2>Entrar</h2> </IonText>
                   </IonButton>
-                  <div className="center-google-btn">
-                    <SignGoogle></SignGoogle>
-                  </div>
                   <div className="texts-login ">
                     <IonText>
                       <a href="" className="redefinir-senha">Redefinir senha</a>
                     </IonText>
-                    <IonText>
-                      <a href="/Cadastro" className="fazer-cadastro">Faça o seu cadastro aqui</a>
-                    </IonText>
                   </div>
+                  
+                  <div className="center-google-btn">
+                    <SignGoogle></SignGoogle>
+                    <SignGitHub></SignGitHub>
+                    <SignMicrosoft></SignMicrosoft>
+                  </div>
+                  
 
                 </IonCardContent>
               </IonCard>

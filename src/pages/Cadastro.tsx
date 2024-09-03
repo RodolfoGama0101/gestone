@@ -64,9 +64,9 @@ const Cadastro: React.FC = () => {
             <IonContent color={"dark"}>
                 <IonGrid fixed={false}>
                     <IonRow class="ion-justify-content-center">
-                        <IonImg src="./versao104.png" className="gestone-start-login" />
+                        <IonImg src="./versao104.png" className="img-cadastro" />
                     </IonRow>
-                    <IonRow class="ion-justify-content-center">
+                    <IonRow class="row-cadastro">
                         <IonCol sizeXl="5">
                             <IonCard color={'dark2'}>
                                 <IonCardHeader>

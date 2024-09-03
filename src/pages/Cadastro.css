@@ -1,0 +1,11 @@
+
+.img-cadastro{
+    width: 350px;
+    margin: 0 auto;
+}
+
+.row-cadastro{
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}
