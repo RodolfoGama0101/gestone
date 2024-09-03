@@ -1,17 +1,11 @@
 /* Inicial.css */
-h1 {
+.text-inicial {
     color: #fff;
     text-align: center;
     font-size: 1.6rem;
     margin-bottom: 0.5rem;
 }
 
-h2 {
-    color: #fff;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
 
 .bnt-login{
     margin-top: 1rem;

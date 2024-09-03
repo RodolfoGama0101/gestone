@@ -11,7 +11,7 @@ const Inicial: React.FC = () => {
                     <IonRow class="row-inicial">                        
                         <IonCol>
                             <IonImg className='img-inicial' src="./versao104.png" /> {/* Substitua por seu caminho da imagem */}
-                            <IonText>
+                            <IonText className='text-inicial'>
                                 <h1>Seja Bem Vindo!</h1>
                             </IonText>
                             <div className='btn-inicial'>
