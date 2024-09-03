@@ -22,12 +22,14 @@ import {
     IonList,
     IonItem,
     IonPopover,
+    IonSelectOption,
+    IonSelect,
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { chevronDownOutline, trashOutline } from "ionicons/icons";
+import { trashOutline } from "ionicons/icons";
 import "./Despesas.css"
 import SelectMonth from "../components/SelectMonth";
 
@@ -41,6 +43,10 @@ const Despesas: React.FC = () => {
         descricao: string;
     }
 
+    interface TagsData {
+        tag: string[]
+    }
+
     const [data, setData] = useState(new Date());
     const [valorDespesa, setValorDespesa] = useState(Number);
     const [descricao, setDescricao] = useState();
@@ -49,6 +55,7 @@ const Despesas: React.FC = () => {
     const [despesaTotal, setDespesaTotal] = useState(Number);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateDespesa, setUpdateDespesa] = useState(false);
+    const [tags, setTags] = useState<TagsData[]>(Array);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -119,6 +126,19 @@ const Despesas: React.FC = () => {
         };
 
         imprimirDespesas();
+
+        async function imprimirTags() {
+            const docRef = doc(db, "TagsDespesas", uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setTags(docSnap.data().tags || []); // Set tags or an empty array if none exist
+            } else {
+                console.log("No such document!");
+            }
+        }
+
+        imprimirTags()
     }, [uid, dataMesSelecionado, updateDespesa])
 
     async function excluirDespesa(id: any) {
@@ -126,6 +146,8 @@ const Despesas: React.FC = () => {
 
         setUpdateDespesa(!updateDespesa);
     }
+
+
 
     return (
         <IonPage>
@@ -148,7 +170,15 @@ const Despesas: React.FC = () => {
                             <IonCardContent>
                                 <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                                 <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea>
+                                {/* <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea> */}
+                                <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover">
+                                    {tags.map(tag => {
+                                        return (
+                                            <IonSelectOption>{ tag.toString() }</IonSelectOption>
+                                        )
+                                    })}
+                                </IonSelect>
+
                                 <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
                             </IonCardContent>
 
