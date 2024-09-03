@@ -35,6 +35,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Transferencias from './pages/Transferencias';
+import Inicial from './pages/Inicial';
 
 setupIonicReact();
 
@@ -42,10 +43,10 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/">
-          <Redirect to="/login" />
+      <Route exact path="/">
+          <Redirect to="/inicial" />
         </Route>
-        <Route exact path="/home">
+        <Route path="/home">
           <Home />
         </Route>
         <Route path="/charts">
@@ -65,6 +66,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/conta">
           <Conta />
+        </Route>
+        <Route path="/inicial">
+          <Inicial />
         </Route>
         <Route path="/transferencias">
           <Transferencias />

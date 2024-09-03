@@ -119,8 +119,8 @@ const Transferencias: React.FC = () => {
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-margin">
-                            <IonButton color={"success"}>Nova Receita</IonButton>
-                            <IonButton color={"danger"}>Nova Despesa</IonButton>
+                            <IonButton color={"success"} href="receitas">Nova Receita</IonButton>
+                            <IonButton color={"danger"} href="despesas">Nova Despesa</IonButton>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
