@@ -5,13 +5,13 @@ const Inicial: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen color="dark">
-                <IonImg src="./versao104.png" /> {/* Substitua por seu caminho da imagem */}
+                <IonImg src="./versao106.png" className='img-inicial'/>
                 <IonText>
-                    <h1>Seja bem-vindo ao GESTONE!</h1>
+                    <h1 className='ion-text-center'>Seja bem-vindo ao GESTONE!</h1>
                 </IonText>
-                <div className='btn-inicial'>
-                    <IonButton color={""} href="/login">Login</IonButton>
-                    <IonButton color={""} href="/cadastro">Cadastro</IonButton>
+                <div className='btns-inicial'>
+                    <IonButton color={"success"} href="/login" className='btn-inicial'>Login</IonButton>
+                    <IonButton color={"success"} href="/cadastro" className='btn-inicial'>Cadastro</IonButton>
                 </div>
 
             </IonContent>
