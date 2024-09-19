@@ -13,7 +13,8 @@ import {
   IonMenuButton,
   IonCard,
   IonCardContent,
-  IonPopover
+  IonPopover,
+  IonImg
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline } from 'ionicons/icons';
 import './Home.css';
@@ -23,6 +24,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 import { Chart } from "react-google-charts";
+import SelectMonth from '../components/SelectMonth';
 
 const Home: React.FC = () => {
   const [userInfo, setUserInfo] = useState(Object);
@@ -31,21 +33,7 @@ const Home: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
-
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro"
-  ];
+  const [userImg, setUserImg] = useState(Object);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -58,6 +46,8 @@ const Home: React.FC = () => {
 
       if (user) {
         const uid = user.uid;
+        const userPhoto = user.photoURL;
+        setUserImg(userPhoto);
 
         // Receita
         const collReceitas = collection(db, 'UserFinance');
@@ -90,59 +80,12 @@ const Home: React.FC = () => {
           const mes = selecaoMes;
 
           setDataMesSelecionado(selecaoMes);
-          setMesSelecionado(meses[mes]);
         }
       }
     });
   })
 
-  async function imprimirMes() {
-    const uid = userInfo.uid;
-
-    const docRef = doc(db, "MesSelecao", uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const selecaoMes = docSnap.data().mes;
-      // console.log(selecaoMes);
-
-      const mes = new Date(selecaoMes);
-      setDataMesSelecionado(mes.getMonth());
-
-      setMesSelecionado(meses[selecaoMes]);
-    } else {
-      console.error("Documento 'MesSelecao' não encontrado para o usuário:", uid);
-    }
-  }
-
-  async function armazenarMesSelecionado() {
-    const refDoc = doc(db, "MesSelecao", userInfo.uid);
-    const snapDoc = await getDoc(refDoc);
-
-    if (snapDoc.exists()) {
-      await updateDoc(refDoc, {
-        mes: selectedMonth
-      });
-
-      imprimirMes();
-
-      // console.log("armazenarMesSelecionado()");
-    } else {
-      await setDoc(refDoc, {
-        uid: userInfo.uid,
-        mes: selectedMonth
-      });
-
-      imprimirMes();
-    }
-  }
-
-  useEffect(() => {
-    armazenarMesSelecionado();
-  }, [selectedMonth])
-
   
-
   return (
     <>
       <Menu />
@@ -158,7 +101,8 @@ const Home: React.FC = () => {
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
-                <IonIcon icon={personCircleOutline} size='large' />
+                <IonImg src={userImg.toString()} className='user-photo'></IonImg>
+                {/* <IonIcon icon={personCircleOutline} size='large' /> */}
               </IonMenuButton>
             </IonButtons>
             <IonText>
@@ -166,42 +110,7 @@ const Home: React.FC = () => {
             </IonText>
           </IonToolbar>
 
-          <IonGrid color='dark'>
-            <IonRow class="ion-justify-content-center">
-              <IonCol className="ion-text-center">
-                <IonButton id='trigger-button' className='select-month-btn' color={'success'}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
-                <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
-                  <IonContent color={'success'} className='ion-text-center year-select'>
-                    <IonText>2024</IonText>
-                  </IonContent>
-                  <IonButtons>
-                    <IonGrid>
-                      <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
-                      </IonRow>
-
-                      <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
-                      </IonRow>
-
-                      <IonRow>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
-                        <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
-                      </IonRow>
-                    </IonGrid>
-                  </IonButtons>
-                </IonPopover>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+          <SelectMonth cor='success'></SelectMonth>
 
           {/* Card */}
           <IonCard color={'medium'} className='card-1'>

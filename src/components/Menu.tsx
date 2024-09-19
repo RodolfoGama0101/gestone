@@ -11,7 +11,6 @@ import {
 } from '@ionic/react';
 import { signOut } from 'firebase/auth';
 import {
-  document,
   personOutline,
   alertCircleOutline,
   exitOutline
@@ -19,6 +18,8 @@ import {
 import { auth } from '../firebase/firebase';
 
 const Menu: React.FC = () => {
+  
+
   function logout() {
     signOut(auth).then(() => {
       window.location.href = "/";
@@ -32,7 +33,7 @@ const Menu: React.FC = () => {
 
     <IonMenu contentId="main-content" side="end">
       <IonHeader className="ion-no-border">
-        <IonToolbar color={'medium'}>
+        <IonToolbar color={'success'}>
           <IonTitle>Menu</IonTitle>
         </IonToolbar>
       </IonHeader>

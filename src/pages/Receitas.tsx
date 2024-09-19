@@ -22,7 +22,8 @@ import {
     IonSelect,
     IonSelectOption,
     IonList,
-    IonItem
+    IonItem,
+    IonModal
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
@@ -50,6 +51,7 @@ const Receitas: React.FC = () => {
     const [receitaTotal, setReceitaTotal] = useState(Number);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateReceita, setUpdateReceita] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -141,23 +143,41 @@ const Receitas: React.FC = () => {
 
             <IonContent color={'dark'}>
                 <IonGrid fixed={false}>
-                    <IonText>
-                        <h1 className="ion-margin">R$ {receitaTotal}</h1>
-                    </IonText>
+                    <IonRow className="ion-align-items-center">
+                        <IonText>
+                            <h1 className="ion-margin">R$ {receitaTotal}</h1>
+                        </IonText>
+
+                        <IonButton shape="round" className="btn-add btn-add-right" color={"success"} onClick={() => setIsOpen(true)}><IonIcon icon={addOutline} slot="icon-only" /></IonButton>
+
+
+                    </IonRow>
                     <IonRow class="ion-justify-content-center">
                         <IonCard color={'dark2'} className="card-add-receita">
-                            <IonButton shape="round" className="btn-add"><IonIcon icon={addOutline} slot="icon-only" /></IonButton>
+                            <IonModal isOpen={isOpen}>
+                                <IonHeader>
+                                    <IonToolbar color="success">
+                                        <IonTitle>Adicionar</IonTitle>
+                                        <IonButtons slot="end">
+                                            <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                        </IonButtons>
+                                    </IonToolbar>
+                                </IonHeader>
+                                <IonContent className="ion-padding" color={'dark2'}>
+                                    <IonCardContent>
+                                        <IonInput required label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
+                                        <IonInput required label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                                        <IonInput required label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                                        <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
+                                    </IonCardContent>
+                                </IonContent>
+                            </IonModal>
 
                             {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
 
-                            <IonCardContent>
-                                <IonInput label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonInput label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
-                                <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita() }}>Adicionar receita</IonButton>
-                            </IonCardContent>
 
-                            <SelectMonth></SelectMonth>
+
+                            <SelectMonth cor="success"></SelectMonth>
 
                             <IonCardContent>
                                 <IonCard color={"success"}>

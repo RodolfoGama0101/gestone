@@ -16,6 +16,10 @@
     height: 50px;
 }
 
+.btn-add-right {
+    margin-left: 80%;
+}
+
 .card-content-receitas {
     padding: 7px;
 }

@@ -58,3 +58,9 @@ ion-card {
     margin: 0px;
     height: 20px;
 }
+
+.user-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

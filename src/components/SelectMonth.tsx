@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-const SelectMonth: React.FC = () => {
+interface SelectMonthProps {
+  cor: string;
+}
+
+const SelectMonth: React.FC<SelectMonthProps> = ({cor}) => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [mesSelecionado, setMesSelecionado] = useState("");
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
@@ -99,9 +103,9 @@ const SelectMonth: React.FC = () => {
         <IonGrid color='dark'>
             <IonRow class="ion-justify-content-center">
                 <IonCol className="ion-text-center">
-                    <IonButton id='trigger-button' className='select-month-btn' color={'danger'}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
+                    <IonButton id='trigger-button' className='select-month-btn' color={cor}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
                     <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
-                        <IonContent color={'danger'} className='ion-text-center year-select'>
+                        <IonContent color={cor} className='ion-text-center year-select'>
                             <IonText>2024</IonText>
                         </IonContent>
                         <IonButtons>

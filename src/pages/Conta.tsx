@@ -34,7 +34,7 @@ const Conta: React.FC = () => {
 
             <IonGrid>
                 <IonRow>
-                    <IonCol>
+                    <IonCol className='user-info'>
                         <IonImg src={userImg.toString()} className='user-photo'/>
                         <IonText>
                             <h1>{userName.toString()}</h1>

@@ -170,8 +170,7 @@ const Despesas: React.FC = () => {
                             <IonCardContent>
                                 <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                                 <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                {/* <IonTextarea fill="outline" label="Descrição:" className="input" onIonChange={(e: any) => setDescricao(e.target.value)}></IonTextarea> */}
-                                <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover">
+                                <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input">
                                     {tags.map(tag => {
                                         return (
                                             <IonSelectOption>{ tag.toString() }</IonSelectOption>
@@ -182,7 +181,7 @@ const Despesas: React.FC = () => {
                                 <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
                             </IonCardContent>
 
-                            <SelectMonth></SelectMonth>
+                            <SelectMonth cor="danger"></SelectMonth>
 
                             <IonCardContent>
                                 <IonCard color={"danger"}>
