@@ -1,4 +1,3 @@
-
 .img-cadastro{
     width: 350px;
     margin: 0 auto;
@@ -8,4 +7,8 @@
     align-items: center;
     justify-content: center;
     text-align: left;
+}
+
+.input-cadastro {
+    margin-bottom: 10px;
 }

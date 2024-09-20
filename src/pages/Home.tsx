@@ -172,8 +172,8 @@ const Home: React.FC = () => {
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
-                <IonImg src={userImg.toString()} className='user-photo'></IonImg>
-                {/* <IonIcon icon={personCircleOutline} size='large' /> */}
+                {/* <IonImg src={userImg.toString()} className='user-photo'></IonImg> */}
+                <IonIcon icon={personCircleOutline} size='large' />
               </IonMenuButton>
             </IonButtons>
             <IonText>
