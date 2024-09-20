@@ -24,6 +24,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 import { Chart } from "react-google-charts";
+import { meses } from '../variables/variables';
 
 const Home: React.FC = () => {
   const [userInfo, setUserInfo] = useState(Object);
@@ -33,21 +34,6 @@ const Home: React.FC = () => {
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
   const [userImg, setUserImg] = useState(Object);
-
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro"
-  ];
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -98,7 +84,7 @@ const Home: React.FC = () => {
         }
       }
     });
-  }, [])
+  })
 
   // Selecionar mês 
   useEffect(() => {
