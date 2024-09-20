@@ -1,5 +1,5 @@
 import { IonButton, IonContent, IonPage, IonText, IonImg, IonGrid, IonRow, IonCol } from '@ionic/react';
-import './Inicial.css'; // Importe o arquivo de estilos CSS
+import './Inicial.css';
 
 const Inicial: React.FC = () => {
     return (
@@ -10,7 +10,7 @@ const Inicial: React.FC = () => {
                     <IonRow class="row-inicial"></IonRow>
                     <IonRow class="row-inicial">                        
                         <IonCol>
-                            <IonImg className='img-inicial' src="./versao104.png" /> {/* Substitua por seu caminho da imagem */}
+                            <IonImg className='img-inicial' src="./versao104.png" />
                             <IonText className='text-inicial'>
                                 <h1>Seja Bem Vindo!</h1>
                             </IonText>
