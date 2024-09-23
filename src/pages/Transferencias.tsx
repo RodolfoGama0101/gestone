@@ -115,7 +115,7 @@ const Transferencias: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin saldo-total-tf">{valorTotalReceitas - valorTotalDespesas}</h1>
+                                <h1 className="ion-margin saldo-total-tf">R$ {valorTotalReceitas - valorTotalDespesas}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-margin">

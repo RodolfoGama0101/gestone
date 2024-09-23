@@ -23,12 +23,13 @@ import {
     IonPopover,
     IonSelectOption,
     IonSelect,
+    IonModal,
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import "./Despesas.css"
 import { meses } from "../variables/variables";
 
@@ -57,6 +58,7 @@ const Despesas: React.FC = () => {
     const [tags, setTags] = useState<TagsData[]>(Array);
     const [userInfo, setUserInfo] = useState(Object);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+    const [isOpen, setIsOpen] = useState(false);
     const [mesSelecionado, setMesSelecionado] = useState("");
 
     useEffect(() => {
@@ -231,88 +233,112 @@ const Despesas: React.FC = () => {
             </IonHeader>
 
             <IonContent color={'dark'}>
-                <IonGrid fixed={false}>
-                    <IonText>
-                        <h1 className="ion-margin">{despesaTotal}</h1>
-                    </IonText>
-                    <IonRow class="ion-justify-content-center">
-                        <IonCard color={'dark2'} className="card-add-receita">
-                            <IonCardContent>
-                                <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
-                                <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input">
-                                    {tags.map(tag => {
-                                        return (
-                                            <IonSelectOption>{ tag.toString() }</IonSelectOption>
-                                        )
-                                    })}
-                                </IonSelect>
-
-                                <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
-                            </IonCardContent>
-
-                            {/* Selecão de mês */}
-                            <IonGrid color='dark'>
-                                <IonRow class="ion-justify-content-center">
-                                    <IonCol className="ion-text-center">
-                                        <IonButton id='trigger-button' className='select-month-btn' color={"danger"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
-                                        <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
-                                            <IonContent color={"danger"} className='ion-text-center year-select'>
-                                                <IonText>2024</IonText>
-                                            </IonContent>
-                                            <IonButtons>
-                                                <IonGrid>
-                                                    <IonRow>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
-                                                    </IonRow>
-
-                                                    <IonRow>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
-                                                    </IonRow>
-
-                                                    <IonRow>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
-                                                        <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
-                                                    </IonRow>
-                                                </IonGrid>
-                                            </IonButtons>
-                                        </IonPopover>
-                                    </IonCol>
-                                </IonRow>
-                            </IonGrid>
-
-                            <IonCardContent>
-                                <IonCard color={"danger"}>
-                                    <IonCardContent className="card-content-despesas">
-                                        <IonList color={"dark"} className="ion-no-padding list-despesas">
-                                            {despesas.map(despesa => {
-                                                return (
-                                                    <IonItem key={despesa.id} color={"dark2"}>
-                                                        <IonCardContent>
-                                                            <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
-                                                            <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
-                                                            <IonCardContent>{despesa.descricao}</IonCardContent>
-                                                            <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
-                                                        </IonCardContent>
-                                                    </IonItem>
-                                                )
-                                            })}
-                                        </IonList>
-                                    </IonCardContent>
-
-                                </IonCard>
-                            </IonCardContent>
-                        </IonCard>
+                <IonGrid>
+                    <IonRow>
+                        <IonCol>
+                            <IonText>
+                                <h1 className="ion-margin">{despesaTotal}</h1>
+                            </IonText>
+                        </IonCol>
+                        <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
+                            <IonButton shape="round" className="btn-add" color={"danger"} onClick={() => setIsOpen(true)}><IonIcon icon={addOutline} slot="icon-only"/></IonButton>
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
+
+
+                <IonCard color={'dark2'} className="card-add-receita">
+                    <IonModal isOpen={isOpen}>
+                        <IonHeader>
+                            <IonToolbar color="danger">
+                                <IonTitle>Adicionar</IonTitle>
+                                <IonButtons slot="end">
+                                    <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                </IonButtons>
+                            </IonToolbar>
+                        </IonHeader>
+                        <IonContent className="ion-padding" color={'dark2'}>
+                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
+                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                            <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input">
+                                {tags.map(tag => {
+                                    return (
+                                        <IonSelectOption>{tag.toString()}</IonSelectOption>
+                                    )
+                                })}
+                            </IonSelect>
+
+                            <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
+                        </IonContent>
+                    </IonModal>
+
+                    {/* Selecão de mês */}
+                    <IonGrid color='dark'>
+                        <IonRow>
+                            <IonCol className="ion-text-center ion-align-self-center">
+                                <IonButton id='trigger-button' className='select-month-btn' color={"danger"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
+                                <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
+                                    <IonContent color={"danger"} className='ion-text-center year-select'>
+                                        <IonText>2024</IonText>
+                                    </IonContent>
+                                    <IonButtons>
+                                        <IonGrid>
+                                            <IonRow>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(2) }}>Mar</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(3) }}>Abr</IonButton></IonCol>
+                                            </IonRow>
+
+                                            <IonRow>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(4) }}>Mai</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(5) }}>Jun</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(6) }}>Jul</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(7) }}>Ago</IonButton></IonCol>
+                                            </IonRow>
+
+                                            <IonRow>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(8) }}>Set</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(9) }}>Out</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
+                                                <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
+                                            </IonRow>
+                                        </IonGrid>
+                                    </IonButtons>
+                                </IonPopover>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
+
+                    <IonCardContent>
+                        <IonCard color={"danger"}>
+                            <IonList className="ion-no-padding">
+                                {despesas.map(despesa => {
+                                    return (
+                                        <IonItem key={despesa.id} color={"dark"}>
+                                            <IonGrid>
+                                                <IonRow>
+                                                    <IonCol>
+                                                        <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
+                                                        <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
+                                                        <IonCardContent>{despesa.descricao}</IonCardContent>
+                                                        <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
+                                                    </IonCol>
+                                                    <IonCol>
+                                                        <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"danger"} className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                            <IonText color={'light'}>Excluir</IonText>
+                                                        </IonButton>
+                                                    </IonCol>
+                                                </IonRow>
+                                            </IonGrid>
+                                        </IonItem>
+                                    )
+                                })}
+                            </IonList>
+                        </IonCard>
+                    </IonCardContent>
+                </IonCard>
             </IonContent>
         </IonPage>
     )

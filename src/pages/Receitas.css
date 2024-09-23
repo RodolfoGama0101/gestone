@@ -4,7 +4,10 @@
 }
 
 .card-add-receita {
-    width: 90%;
+    width: 99%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .btn-add-receita {
@@ -16,10 +19,32 @@
     height: 50px;
 }
 
-.btn-add-right {
-    margin-left: 80%;
-}
+
 
 .card-content-receitas {
     padding: 7px;
+}
+
+.btn-cards-transferencia {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.delete-bt{
+    margin-right: auto;
+    text-align: right;
+    
+}
+
+.receita{
+    font-size: 40px;
+    margin: 0px;
+    padding: none;
+}
+
+.edit-btn, .delete-btn {
+    width: 130px;
+
+  
 }
