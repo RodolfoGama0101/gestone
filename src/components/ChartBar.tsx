@@ -93,9 +93,7 @@ const ChartBar: React.FC = () => {
         },
         plugins: {
             legend: {
-                labels: {
-                    color: '#FFFFFF', // Cor branca para a legenda
-                }
+                display: false
             }
         }
     };
