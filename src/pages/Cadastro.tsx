@@ -32,28 +32,52 @@ const Cadastro: React.FC = () => {
 
         if (senha === confirmaSenha) {
             try {
+                // Cria o usuário com e-mail e senha
                 const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                 const user = userCredential.user;
 
                 if (user) {
-                    // Atualiza o nome de usuário
-                    await updateProfile(user, {
-                        displayName: nome,
-                    });
+                    // Atualiza o nome do usuário
+                    console.log("Atualizando o perfil...");
+                    await updateProfile(user, { displayName: nome });
+                    console.log("Perfil atualizado com sucesso!");
 
                     // Armazena o mês atual para início
-                    const refDoc = doc(db, "MesSelecao", user.uid);
-                    await setDoc(refDoc, {
+                    console.log("Armazenando mês no Firestore...");
+                    const refDocMes = doc(db, "MesSelecao", user.uid);
+                    await setDoc(refDocMes, {
                         uid: user.uid,
-                        mes: new Date().getMonth(),
+                        mes: new Date().getMonth(), // Armazena o mês atual
                     });
+                    console.log("Mês armazenado com sucesso!");
 
-                    // Redireciona o usuário após todas as operações
+                    // Armazena as tags primárias de despesas
+                    console.log("Armazenando tags no Firestore...");
+                    const refDocTags = doc(db, "TagsDespesas", user.uid);
+                    await setDoc(refDocTags, {
+                        tags: [
+                            "Roupas", 
+                            "Educação", 
+                            "Eletrônicos", 
+                            "Saúde", 
+                            "Casa", 
+                            "Lazer", 
+                            "Restaurante", 
+                            "Mercado", 
+                            "Serviços", 
+                            "Transporte", 
+                            "Viagem", 
+                            "Outros"
+                        ]
+                    });
+                    console.log("Tags armazenadas com sucesso!");
+
+                    // Redireciona o usuário após todas as operações assíncronas serem concluídas
                     window.location.href = "/home";
                 }
             } catch (error) {
                 console.error("Erro ao fazer o cadastro: ", error);
-                window.alert(error);
+                window.alert("Erro ao cadastrar: " + error);  // Exibe a mensagem de erro completa
             } finally {
                 setIsLoading(false);  // Define o estado como não carregando
             }
@@ -64,16 +88,16 @@ const Cadastro: React.FC = () => {
     };
 
     // Verifica login após a página carregar
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Se o usuário já estiver logado, redireciona para a home
-                window.location.href = '/home';
-            }
-        });
+    // useEffect(() => {
+    //      const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //         if (user) {
+    //             // Se o usuário já estiver logado, redireciona para a home
+    //             window.location.href = '/home';
+    //         }
+    //     });
 
-        return () => unsubscribe(); // Limpa o listener ao desmontar o componente
-    }, []);
+    //     return () => unsubscribe(); // Limpa o listener ao desmontar o componente
+    // }, []);
 
     return (
         <IonContent color={"dark"}>

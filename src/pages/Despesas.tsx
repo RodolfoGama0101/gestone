@@ -40,7 +40,7 @@ const Despesas: React.FC = () => {
         id: string;
         data: Date;
         valor: Number;
-        descricao: string;
+        tag: string;
     }
 
     interface TagsData {
@@ -121,7 +121,7 @@ const Despesas: React.FC = () => {
                     id: docId,
                     data: data,
                     valor: docData.valor,
-                    descricao: docData.descricao
+                    tag: docData.tag
                 };
 
                 return combinedData;
@@ -258,8 +258,8 @@ const Despesas: React.FC = () => {
                             </IonToolbar>
                         </IonHeader>
                         <IonContent className="ion-padding" color={'dark2'}>
-                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
-                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} required/>
+                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} required/>
                             <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input" onIonChange={(e: any) => setTagSelecao(e.target.value)}>
                                 {tags.map(tag => {
                                     return (
@@ -321,7 +321,7 @@ const Despesas: React.FC = () => {
                                                     <IonCol>
                                                         <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
                                                         <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
-                                                        <IonCardContent>{despesa.descricao}</IonCardContent>
+                                                        <IonCardContent>{despesa.tag}</IonCardContent>
                                                         <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
                                                     </IonCol>
                                                     <IonCol>
