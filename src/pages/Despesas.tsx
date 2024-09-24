@@ -49,7 +49,6 @@ const Despesas: React.FC = () => {
 
     const [data, setData] = useState(new Date());
     const [valorDespesa, setValorDespesa] = useState(Number);
-    const [descricao, setDescricao] = useState();
     const [uid, setUid] = useState("");
     const [despesas, setDespesas] = useState<DespesasData[]>(Array);
     const [despesaTotal, setDespesaTotal] = useState(Number);
@@ -60,6 +59,7 @@ const Despesas: React.FC = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [isOpen, setIsOpen] = useState(false);
     const [mesSelecionado, setMesSelecionado] = useState("");
+    const [tagSelecao, setTagSelecao] = useState()
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -89,6 +89,7 @@ const Despesas: React.FC = () => {
         });
     });
 
+    // Adicionar despesa
     async function addDespesa() {
         const dateTime = new Date(data).getTime();
 
@@ -97,7 +98,7 @@ const Despesas: React.FC = () => {
             mes: new Date(data).getMonth(),
             valor: Number(valorDespesa),
             tipo: "despesa",
-            descricao: descricao,
+            tag: tagSelecao,
             uid: uid
         });
 
@@ -246,7 +247,6 @@ const Despesas: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-
                 <IonCard color={'dark2'} className="card-add-receita">
                     <IonModal isOpen={isOpen}>
                         <IonHeader>
@@ -260,7 +260,7 @@ const Despesas: React.FC = () => {
                         <IonContent className="ion-padding" color={'dark2'}>
                             <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} />
                             <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                            <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input">
+                            <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input" onIonChange={(e: any) => setTagSelecao(e.target.value)}>
                                 {tags.map(tag => {
                                     return (
                                         <IonSelectOption>{tag.toString()}</IonSelectOption>
@@ -268,7 +268,7 @@ const Despesas: React.FC = () => {
                                 })}
                             </IonSelect>
 
-                            <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa() }}>Adicionar despesa</IonButton>
+                            <IonButton className="btn-add-receita" color={'danger'} onClick={() => { addDespesa(), setIsOpen(false) }}>Adicionar despesa</IonButton>
                         </IonContent>
                     </IonModal>
 
