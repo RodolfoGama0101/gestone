@@ -22,9 +22,13 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
-import { Chart } from "react-google-charts";
 import { meses } from '../variables/variables';
 import ChartBar from '../components/ChartBar';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+// Registrando os componentes do Chart.js
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const Home: React.FC = () => {
   const [userInfo, setUserInfo] = useState(Object);
@@ -156,6 +160,53 @@ const Home: React.FC = () => {
     armazenarMesSelecionado();
   }, [selectedMonth])
 
+  // Charts
+  // Dados do gráfico
+  const data = {
+    labels: ['Receitas', 'Despesas'],
+    datasets: [{
+      label: 'Finanças do mês',
+      data: [receitaTotal, despesaTotal],
+      backgroundColor: [
+        'rgba(46, 161, 77, 0.6)',
+        'rgba(197, 0, 15, 0.6)',
+      ],
+      borderColor: [
+        'rgba(46, 161, 77, 1)',
+        'rgba(197, 0, 15, 1)',
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  const options = {
+    maintainAspectRatio: false,
+    aspectRatio: 2, // Proporção largura/altura
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo Y
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        }
+      },
+      x: {
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo X
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  }
 
   return (
     <>
@@ -311,7 +362,9 @@ const Home: React.FC = () => {
                       <h1 className='ion-text-start'>Balanço Mensal</h1>
                     </IonText>
                     <IonCol size='auto'>
-                      <ChartBar></ChartBar>
+                      <div className="chart-bar-container">
+                        <Bar data={data} options={options} />
+                      </div>
                     </IonCol>
                   </IonCardContent>
                 </IonCard>

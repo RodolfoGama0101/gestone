@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { collection, getAggregateFromServer, query, sum, where } from "firebase/firestore";
+import { collection, doc, getAggregateFromServer, getDoc, query, sum, where } from "firebase/firestore";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -20,6 +20,15 @@ const ChartBar: React.FC = () => {
                 if (user) {
                     setUserInfo(user);
                     const uid = user.uid;
+
+                    const docRefMesSelecao = doc(db, "MesSelecao", uid);
+                    const docSnapMesSelecao = await getDoc(docRefMesSelecao);
+
+                    if (docSnapMesSelecao.exists()) {
+                        const selecaoMes = docSnapMesSelecao.data().mes;
+
+                        setDataMesSelecionado(selecaoMes);
+                    }
 
                     // Receita
                     const collReceitas = collection(db, 'UserFinance');
