@@ -19,7 +19,8 @@ import {
     IonList,
     IonItem,
     IonModal,
-    IonPopover
+    IonPopover,
+    IonAlert
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
@@ -216,16 +217,16 @@ const Receitas: React.FC = () => {
                         <IonCol>
                             <IonText>
                                 <h1 className="ion-margin receita">R$ {receitaTotal}</h1>
-                            </IonText> 
+                            </IonText>
                         </IonCol>
-                        <IonCol size="auto" className="ion-justify-content-end ion-align-self-center"> 
+                        <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
                             <IonButton shape="round" className="btn-add" color={"success"} onClick={() => setIsOpen(true)}><IonIcon icon={addOutline} slot="icon-only" /></IonButton>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
 
                 <IonCard color={'dark2'} className="card-add-receita">
-                    <IonModal isOpen={isOpen}>
+                    <IonModal isOpen={isOpen} className="fullscreen-modal">
                         <IonHeader>
                             <IonToolbar color="success">
                                 <IonTitle>Adicionar</IonTitle>
@@ -284,7 +285,7 @@ const Receitas: React.FC = () => {
                         </IonRow>
                     </IonGrid>
 
-                    
+
                     <IonCardContent color={"success"}>
                         <IonList className="ion-no-padding">
                             {receitas.map(receita => {
@@ -298,10 +299,29 @@ const Receitas: React.FC = () => {
                                                     <IonText><p>{receita.descricao}</p></IonText>
                                                 </IonCol>
                                                 <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                    <IonButton onClick={() => { excluirReceita(receita.id) }} color={"danger"} className="delete-bt">
+                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
                                                         <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                         <IonText color={'light'}>Excluir</IonText>
                                                     </IonButton>
+                                                    <IonAlert
+                                                        trigger="present-alert"
+                                                        header="Tem certeza que deseja excluir"
+                                                        className="custom-alert"
+                                                        buttons={[
+                                                            {
+                                                                text: 'cancel',
+                                                                cssClass: 'alert-button-cancel',
+    
+                                                            },
+                                                            {
+                                                                text: 'confirm',
+                                                                cssClass: 'alert-button-confirm',
+                                                                handler: () => {
+                                                                    excluirReceita(receita.id); 
+                                                                },
+                                                            }
+                                                        ]}
+                                                    ></IonAlert>
                                                 </IonCol>
                                             </IonRow>
                                         </IonGrid>

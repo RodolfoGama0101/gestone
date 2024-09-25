@@ -119,7 +119,7 @@ const Cadastro: React.FC = () => {
                                     className="input-cadastro"
                                     color={"success"}
                                     label='Nome: '
-                                    placeholder="Jubileu Nemeu"
+                                    placeholder="exemple"
                                     clearInput
                                     labelPlacement="floating"
                                     fill="outline"
@@ -130,7 +130,7 @@ const Cadastro: React.FC = () => {
                                     className="input-cadastro"
                                     color={"success"}
                                     label='Email:'
-                                    placeholder='jubileu.nemeu@gmail.com'
+                                    placeholder='Exemple@exemple'
                                     clearInput
                                     labelPlacement="floating"
                                     fill="outline"

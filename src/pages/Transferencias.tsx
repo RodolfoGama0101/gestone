@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -154,10 +154,29 @@ const Transferencias: React.FC = () => {
                                                         <IonText color={'light'}>Editar</IonText>
                                                     </IonButton>
                                                     {/* Delete button */}
-                                                    <IonButton onClick={() => { excluirTransferencia(transferencias.id) }} color={"danger"} className="delete-btn">
+                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
                                                         <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                         <IonText color={'light'}>Excluir</IonText>
                                                     </IonButton>
+                                                    <IonAlert
+                                                        trigger="present-alert"
+                                                        header="Tem certeza que deseja excluir"
+                                                        className="custom-alert"
+                                                        buttons={[
+                                                            {
+                                                                text: 'cancel',
+                                                                cssClass: 'alert-button-cancel',
+    
+                                                            },
+                                                            {
+                                                                text: 'confirm',
+                                                                cssClass: 'alert-button-confirm',
+                                                                handler: () => {
+                                                                    excluirTransferencia(transferencias.id); 
+                                                                },
+                                                            }
+                                                        ]}
+                                                    ></IonAlert>
                                                 </IonCol>
                                             </IonRow>
                                         </IonGrid>

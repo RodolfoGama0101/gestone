@@ -1,3 +1,4 @@
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -33,6 +34,7 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
+import '@ionic/react/css/palettes/dark.class.css';
 import './theme/variables.css';
 import Transferencias from './pages/Transferencias';
 import Inicial from './pages/Inicial';

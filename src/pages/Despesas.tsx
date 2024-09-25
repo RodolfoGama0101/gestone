@@ -24,6 +24,7 @@ import {
     IonSelectOption,
     IonSelect,
     IonModal,
+    IonAlert,
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
@@ -238,7 +239,7 @@ const Despesas: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin">{despesaTotal}</h1>
+                                <h1 className="ion-margin receita">{despesaTotal}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
@@ -248,7 +249,7 @@ const Despesas: React.FC = () => {
                 </IonGrid>
 
                 <IonCard color={'dark2'} className="card-add-receita">
-                    <IonModal isOpen={isOpen}>
+                    <IonModal isOpen={isOpen} className="fullscreen-modal">
                         <IonHeader>
                             <IonToolbar color="danger">
                                 <IonTitle>Adicionar</IonTitle>
@@ -322,13 +323,31 @@ const Despesas: React.FC = () => {
                                                         <IonCardTitle>{"R$ " + despesa.valor}</IonCardTitle>
                                                         <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
                                                         <IonCardContent>{despesa.tag}</IonCardContent>
-                                                        <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"dark"}><IonIcon icon={trashOutline} color={'danger'}></IonIcon><IonText color={'danger'}>Excluir</IonText></IonButton>
                                                     </IonCol>
-                                                    <IonCol>
-                                                        <IonButton onClick={() => { excluirDespesa(despesa.id) }} color={"danger"} className="delete-bt">
-                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                            <IonText color={'light'}>Excluir</IonText>
-                                                        </IonButton>
+                                                    <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
+                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
+                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                        <IonText color={'light'}>Excluir</IonText>
+                                                    </IonButton>
+                                                    <IonAlert
+                                                        trigger="present-alert"
+                                                        header="Tem certeza que deseja excluir"
+                                                        className="custom-alert"
+                                                        buttons={[
+                                                            {
+                                                                text: 'cancel',
+                                                                cssClass: 'alert-button-cancel',
+    
+                                                            },
+                                                            {
+                                                                text: 'confirm',
+                                                                cssClass: 'alert-button-confirm',
+                                                                handler: () => {
+                                                                    excluirDespesa(despesa.id); 
+                                                                },
+                                                            }
+                                                        ]}
+                                                    ></IonAlert>
                                                     </IonCol>
                                                 </IonRow>
                                             </IonGrid>
