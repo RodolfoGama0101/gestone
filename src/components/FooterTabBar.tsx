@@ -6,24 +6,27 @@ const FooterTabBar: React.FC = () => {
     return (
 
         <IonFooter>
-            <IonToolbar color={'dark2'} className="toolbar">
+            <IonToolbar style={{
+                '--background': 'var(--ion-color-primary)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid className="grid">
                     <IonRow className="ion-align-items-center">
                         <IonCol className="bnt ion-align-items-center">
                             <IonButton href="/Home" color={"light"} fill="clear">
-                                <IonIcon aria-hidden="true" icon={homeOutline} slot="icon-only" className="icons-footer"/>
+                                <IonIcon aria-hidden="true" icon={homeOutline} slot="icon-only" className="icons-footer" />
                             </IonButton>
                         </IonCol>
 
                         <IonCol class="bnt">
-                            <IonButton id="open-action-sheet" color={"dark2"} fill="clear">
+                            <IonButton id="open-action-sheet"  fill="clear">
                                 <IonImg src='/addIcon.svg' slot="icon-only" />
                             </IonButton>
                         </IonCol>
 
                         <IonCol className="bnt ion-align-items-center">
                             <IonButton href="/Charts" color={"light"} fill="clear">
-                                <IonIcon aria-hidden="true" icon={barChartOutline} slot="icon-only" className="icons-footer"/>
+                                <IonIcon aria-hidden="true" icon={barChartOutline} slot="icon-only" className="icons-footer" />
                             </IonButton>
                         </IonCol>
                     </IonRow>
@@ -32,7 +35,8 @@ const FooterTabBar: React.FC = () => {
 
             <IonActionSheet
                 className="custom-action-sheet"
-                trigger="open-action-sheet"            
+                trigger="open-action-sheet"
+                cssClass="light-action-sheet"
                 buttons={[
                     {
                         icon: trendingDown,
@@ -63,7 +67,7 @@ const FooterTabBar: React.FC = () => {
                         icon: close,
                         text: 'Cancel',
                         role: 'cancel',
-                    
+
                     },
                 ]}
             ></IonActionSheet>

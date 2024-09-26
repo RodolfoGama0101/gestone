@@ -33,6 +33,8 @@ import { auth, db } from "../firebase/firebase";
 import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import "./Despesas.css"
 import { meses } from "../variables/variables";
+import { ThemeContext } from '../components/ThemeContext';
+
 
 const Despesas: React.FC = () => {
     Verifica();
@@ -234,7 +236,10 @@ const Despesas: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent color={'dark'}>
+            <IonContent style={{
+                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid>
                     <IonRow>
                         <IonCol>
@@ -243,12 +248,15 @@ const Despesas: React.FC = () => {
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                            <IonButton shape="round" className="btn-add" color={"danger"} onClick={() => setIsOpen(true)}><IonIcon icon={addOutline} slot="icon-only"/></IonButton>
+                            <IonButton shape="round" className="btn-add" color={"danger"} onClick={() => setIsOpen(true)}><IonIcon icon={addOutline} slot="icon-only" /></IonButton>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
 
-                <IonCard color={'dark2'} className="card-add-receita">
+                <IonCard className="card-add-receita" style={{
+                    '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
                     <IonModal isOpen={isOpen} className="fullscreen-modal">
                         <IonHeader>
                             <IonToolbar color="danger">
@@ -258,9 +266,12 @@ const Despesas: React.FC = () => {
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
-                        <IonContent className="ion-padding" color={'dark2'}>
-                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} required/>
-                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} required/>
+                        <IonContent className="ion-padding" style={{
+                            '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
+                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} required />
+                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} required />
                             <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input" onIonChange={(e: any) => setTagSelecao(e.target.value)}>
                                 {tags.map(tag => {
                                     return (
@@ -274,7 +285,10 @@ const Despesas: React.FC = () => {
                     </IonModal>
 
                     {/* Selecão de mês */}
-                    <IonGrid color='dark'>
+                    <IonGrid style={{
+                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                    }}>
                         <IonRow>
                             <IonCol className="ion-text-center ion-align-self-center">
                                 <IonButton id='trigger-button' className='select-month-btn' color={"danger"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
@@ -316,7 +330,10 @@ const Despesas: React.FC = () => {
                             <IonList className="ion-no-padding">
                                 {despesas.map(despesa => {
                                     return (
-                                        <IonItem key={despesa.id} color={"dark"}>
+                                        <IonItem key={despesa.id} style={{
+                                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                        }}>
                                             <IonGrid>
                                                 <IonRow>
                                                     <IonCol>
@@ -325,29 +342,29 @@ const Despesas: React.FC = () => {
                                                         <IonCardContent>{despesa.tag}</IonCardContent>
                                                     </IonCol>
                                                     <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
-                                                    </IonButton>
-                                                    <IonAlert
-                                                        trigger="present-alert"
-                                                        header="Tem certeza que deseja excluir"
-                                                        className="custom-alert"
-                                                        buttons={[
-                                                            {
-                                                                text: 'cancel',
-                                                                cssClass: 'alert-button-cancel',
-    
-                                                            },
-                                                            {
-                                                                text: 'confirm',
-                                                                cssClass: 'alert-button-confirm',
-                                                                handler: () => {
-                                                                    excluirDespesa(despesa.id); 
+                                                        <IonButton id="present-alert" color={"danger"} className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                            <IonText color={'light'}>Excluir</IonText>
+                                                        </IonButton>
+                                                        <IonAlert
+                                                            trigger="present-alert"
+                                                            header="Tem certeza que deseja excluir"
+                                                            className="custom-alert"
+                                                            buttons={[
+                                                                {
+                                                                    text: 'cancel',
+                                                                    cssClass: 'alert-button-cancel',
+
                                                                 },
-                                                            }
-                                                        ]}
-                                                    ></IonAlert>
+                                                                {
+                                                                    text: 'confirm',
+                                                                    cssClass: 'alert-button-confirm',
+                                                                    handler: () => {
+                                                                        excluirDespesa(despesa.id);
+                                                                    },
+                                                                }
+                                                            ]}
+                                                        ></IonAlert>
                                                     </IonCol>
                                                 </IonRow>
                                             </IonGrid>

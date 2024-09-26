@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     IonHeader,
     IonTitle,
@@ -29,6 +29,7 @@ import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
+import { ThemeContext } from '../components/ThemeContext';
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -52,6 +53,7 @@ const Receitas: React.FC = () => {
     const [userInfo, setUserInfo] = useState(Object);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [mesSelecionado, setMesSelecionado] = useState("");
+    const { isDarkMode } = useContext(ThemeContext);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -211,7 +213,10 @@ const Receitas: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent color={'dark'}>
+            <IonContent style={{
+                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid>
                     <IonRow>
                         <IonCol>
@@ -225,7 +230,10 @@ const Receitas: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonCard color={'dark2'} className="card-add-receita">
+                <IonCard className="card-add-receita" style={{
+                    '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
                     <IonModal isOpen={isOpen} className="fullscreen-modal">
                         <IonHeader>
                             <IonToolbar color="success">
@@ -235,7 +243,10 @@ const Receitas: React.FC = () => {
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
-                        <IonContent className="ion-padding" color={'dark2'}>
+                        <IonContent className="ion-padding" style={{
+                            '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
                             <IonCardContent>
                                 <IonInput required label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
                                 <IonInput required label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
@@ -248,7 +259,10 @@ const Receitas: React.FC = () => {
                     {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
 
                     {/* Selecão de mês */}
-                    <IonGrid color='dark'>
+                    <IonGrid style={{
+                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                    }}>
                         <IonRow>
                             <IonCol className="ion-text-center ion-align-self-center">
                                 <IonButton id='trigger-button' className='select-month-btn' color={"success"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
@@ -290,7 +304,10 @@ const Receitas: React.FC = () => {
                         <IonList className="ion-no-padding">
                             {receitas.map(receita => {
                                 return (
-                                    <IonItem key={receita.id} color={"dark"}>
+                                    <IonItem key={receita.id} style={{
+                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                    }}>
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol>
@@ -311,13 +328,13 @@ const Receitas: React.FC = () => {
                                                             {
                                                                 text: 'cancel',
                                                                 cssClass: 'alert-button-cancel',
-    
+
                                                             },
                                                             {
                                                                 text: 'confirm',
                                                                 cssClass: 'alert-button-confirm',
                                                                 handler: () => {
-                                                                    excluirReceita(receita.id); 
+                                                                    excluirReceita(receita.id);
                                                                 },
                                                             }
                                                         ]}

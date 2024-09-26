@@ -38,6 +38,7 @@ import '@ionic/react/css/palettes/dark.class.css';
 import './theme/variables.css';
 import Transferencias from './pages/Transferencias';
 import Inicial from './pages/Inicial';
+import { ThemeProvider } from './components/ThemeContext';
 
 setupIonicReact();
 
@@ -77,6 +78,14 @@ const App: React.FC = () => (
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
+
+    <ThemeProvider>
+      <IonReactRouter>
+        <Route path="/home" component={Home} exact={true} />
+        <Route path="/conta" component={Conta} />
+      </IonReactRouter>
+    </ThemeProvider>
+
   </IonApp>
 
 );

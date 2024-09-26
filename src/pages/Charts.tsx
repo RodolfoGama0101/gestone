@@ -3,6 +3,7 @@ import './Charts.css';
 import Verifica from '../firebase/verifica';
 import ChartBar from '../components/ChartBar';
 
+
 const Charts: React.FC = () => {
   Verifica();
 

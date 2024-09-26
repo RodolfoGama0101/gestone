@@ -37,18 +37,30 @@ const Menu: React.FC = () => {
           <IonTitle>Menu</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding" color={'dark'}>
-        <IonItem button={true} href="/Conta" color={'dark'}>
+      <IonContent className="ion-padding" style={{
+            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+          }}>
+        <IonItem button={true} href="/Conta" style={{
+            '--background': 'var(--ion-background-color)', 
+            '--color': 'var(--ion-text-color)',
+          }}>
           <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
-          <IonLabel>Sua Conta</IonLabel>
+          <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Sua Conta</IonLabel>
         </IonItem>
-        <IonItem button={true} href="/suporte" color={'dark'}>
-          <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline}></IonIcon>
-          <IonLabel>Support</IonLabel>
+        <IonItem button={true} href="/suporte" style={{
+            '--background': 'var(--ion-background-color)',  
+            '--color': 'var(--ion-text-color)',
+          }}>
+          <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline} ></IonIcon>
+          <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Support</IonLabel>
         </IonItem>
-        <IonItem button={true} href="/login" color={'dark'} onClick={logout}>
+        <IonItem button={true} href="/login" onClick={logout} style={{
+            '--background': 'var(--ion-background-color)', 
+            '--color': 'var(--ion-text-color)',
+          }}>
           <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
-          <IonLabel>Logout</IonLabel>
+          <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Logout</IonLabel>
         </IonItem>
       </IonContent>
     </IonMenu>

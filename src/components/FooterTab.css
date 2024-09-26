@@ -10,3 +10,21 @@
 .icons-footer {
     font-size: 25px;
 }
+
+/* Estilo para o IonActionSheet com fundo claro e texto preto */
+.light-action-sheet {
+    --background: #ffffff; /* Fundo branco */
+    --color: #000000; /* Texto preto */
+  }
+  
+  /* Estilos adicionais para botões */
+  .light-action-sheet .action-sheet-button {
+    --background: #ffffff; /* Fundo branco para os botões */
+    --color: #000000; /* Texto preto */
+  }
+  
+  /* Estilo para os ícones dentro do IonActionSheet */
+  .light-action-sheet .action-sheet-icon {
+    color: #000000; /* Ícones pretos */
+  }
+  
