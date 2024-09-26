@@ -26,11 +26,6 @@ const Conta: React.FC = () => {
 
     return (
         <IonPage>
-            
-            <IonButton onClick={toggleDarkMode}>
-                {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
-            </IonButton>
-
             <IonHeader>
                 <IonToolbar color={'success'}>
                     <IonButtons slot="start">
@@ -43,13 +38,23 @@ const Conta: React.FC = () => {
             <IonGrid>
                 <IonRow>
                     <IonCol className='user-info'>
-                        <IonImg src={userImg.toString()} className='user-photo' />
+                        {/* <IonImg src={userImg.toString()} className='user-photo' /> */}
                         <IonText>
-                            <h1>{userName.toString()}</h1>
+                            <h2>{userName.toString()}</h2>
                         </IonText>
+                    </IonCol>
+
+                </IonRow>
+                <IonRow>
+                    <IonCol>
+                        <IonButton onClick={toggleDarkMode} shape='round'>
+                            {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
+                        </IonButton>
                     </IonCol>
                 </IonRow>
             </IonGrid>
+
+
         </IonPage>
     );
 }

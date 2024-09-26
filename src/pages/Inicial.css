@@ -1,6 +1,5 @@
 /* Inicial.css */
 .text-inicial {
-    color: #fff;
     text-align: center;
     font-size: 1.6rem;
     margin-bottom: 0.5rem;
@@ -42,7 +41,6 @@ a{
 
 .fazer-cadastro {
     text-decoration: none;
-    color: white;
     justify-content: center;
     display: flex;
 }

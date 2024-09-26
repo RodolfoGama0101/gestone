@@ -9,13 +9,13 @@ const Inicial: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen className='content-inicial' style={{
-        '--background': 'var(--ion-background-color)', // Controla o fundo da página
-        '--color': 'var(--ion-text-color)', // Controla a cor do texto
-      }}>
+                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid >
                     <IonRow class="row-inicial"></IonRow>
                     <IonRow class="row-inicial"></IonRow>
-                    <IonRow class="row-inicial">                        
+                    <IonRow class="row-inicial">
                         <IonCol>
                             <IonImg className='img-inicial' src="./versao104.png" />
                             <IonText className='text-inicial'>
@@ -23,14 +23,16 @@ const Inicial: React.FC = () => {
                             </IonText>
                             <div className='btn-inicial'>
                                 <IonButton color={"success"} href="/login" fill='outline' className='bnt-login'>Fazer Login</IonButton>
-                            </div>  
-                            <IonText>
+                            </div>
+                            <IonText style={{
+                                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                            }}>
                                 <a href="/Cadastro" className="fazer-cadastro">Faça o seu cadastro aqui</a>
                             </IonText>
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-            </IonContent>  
+            </IonContent>
         </IonPage>
     );
 };
