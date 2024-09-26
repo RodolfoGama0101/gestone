@@ -69,7 +69,7 @@ const Login: React.FC = () => {
 
         <IonGrid fixed={false}>
           <IonRow class="ion-justify-content-center">
-            <IonImg src="./versao104.png" className="img-inicial" />
+            <IonImg src="./versao1br.png" className="img-inicial" />
           </IonRow>
           <IonRow className="row-login">
             <IonCol sizeXl="5">
@@ -78,7 +78,7 @@ const Login: React.FC = () => {
                 '--color': 'var(--ion-text-color)', // Controla a cor do texto
               }}>
                 <IonCardHeader>
-                  <IonCardTitle className="ion-text-center tittle">FAZER LOGIN</IonCardTitle>
+                  <IonCardTitle className="ion-text-center tittle" color={'success'}>FAZER LOGIN</IonCardTitle>
                 </IonCardHeader>
 
                 <IonCardContent>

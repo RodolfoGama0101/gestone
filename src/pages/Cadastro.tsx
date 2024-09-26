@@ -108,7 +108,7 @@ const Cadastro: React.FC = () => {
         }}>
             <IonGrid fixed={false}>
                 <IonRow class="ion-justify-content-center">
-                    <IonImg src="./versao104.png" className="img-cadastro" />
+                    <IonImg src="./versao1br.png" className="img-cadastro" />
                 </IonRow>
                 <IonRow class="row-cadastro">
                     <IonCol sizeXl="5">

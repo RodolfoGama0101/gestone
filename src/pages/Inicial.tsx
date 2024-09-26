@@ -17,8 +17,12 @@ const Inicial: React.FC = () => {
                     <IonRow class="row-inicial"></IonRow>
                     <IonRow class="row-inicial">
                         <IonCol>
-                            <IonImg className='img-inicial' src="./versao104.png" />
+                            <IonImg className='img-inicial' src="./versao1br.png" />
                             <IonText className='text-inicial'>
+                                <h1>GESTONE</h1>
+                                <h6>Gestao Financeira</h6>
+                            </IonText>
+                            <IonText>
                                 <h1>Seja Bem Vindo!</h1>
                             </IonText>
                             <div className='btn-inicial'>
