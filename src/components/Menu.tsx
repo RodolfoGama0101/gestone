@@ -48,7 +48,7 @@ const Menu: React.FC = () => {
           <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Sua Conta</IonLabel>
         </IonItem>
-        <IonItem button={true} href="/suporte" style={{
+        <IonItem button={true} href="/support" style={{
             '--background': 'var(--ion-background-color)',  
             '--color': 'var(--ion-text-color)',
           }}>

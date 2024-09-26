@@ -13,19 +13,25 @@ const FooterTabBar: React.FC = () => {
                 <IonGrid className="grid">
                     <IonRow className="ion-align-items-center">
                         <IonCol className="bnt ion-align-items-center">
-                            <IonButton href="/Home" color={"light"} fill="clear">
-                                <IonIcon aria-hidden="true" icon={homeOutline} slot="icon-only" className="icons-footer" />
+                            <IonButton href="/Home" fill="clear" style={{
+                                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                            }}>
+                                <IonIcon aria-hidden="true" icon={homeOutline} slot="icon-only" className="icons-footer" style={{
+                                '--color': 'var(--ion-text-color)'
+                            }} />
                             </IonButton>
                         </IonCol>
 
                         <IonCol class="bnt">
-                            <IonButton id="open-action-sheet"  fill="clear">
+                            <IonButton id="open-action-sheet" fill="clear">
                                 <IonImg src='/addIcon.svg' slot="icon-only" />
                             </IonButton>
                         </IonCol>
 
                         <IonCol className="bnt ion-align-items-center">
-                            <IonButton href="/Charts" color={"light"} fill="clear">
+                            <IonButton href="/Charts" fill="clear" style={{
+                                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                            }}>
                                 <IonIcon aria-hidden="true" icon={barChartOutline} slot="icon-only" className="icons-footer" />
                             </IonButton>
                         </IonCol>

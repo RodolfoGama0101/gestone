@@ -288,76 +288,79 @@ const Home: React.FC = () => {
                   '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
                   '--color': 'var(--ion-text-color)', // Controla a cor do texto
                 }}>
-                  <IonGrid>
-                    <IonText className='ion-margin-left'>
-                      <h1 className='dashboard ion-text-start'>Dashboard</h1>
-                    </IonText>
-                    <IonRow>
-                      {/* Saldo */}
-                      <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                        <IonButton color={'light'} expand='block' href='Transferencias' className='card-button'>
-                          <IonGrid>
-                            <IonRow className='ion-align-items-center'>
-                              <IonCol>
-                                <IonText className='ion-text-start ion-text-uppercase'>
-                                  <p>Saldo</p>
-                                </IonText>
-                                <IonText className='ion-text-start'>
-                                  <h1>R$ {(receitaTotal - despesaTotal).toFixed(2)}</h1>
-                                </IonText>
-                              </IonCol>
-                              <IonCol>
-                                <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons saldo-button'></IonIcon>
-                              </IonCol>
-                            </IonRow>
-                          </IonGrid>
-                        </IonButton>
-                      </IonCol>
+                  <IonCardContent>
 
-                      {/* Despesas */}
-                      <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                        <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
-                          <IonGrid>
-                            <IonRow className='ion-align-items-center'>
-                              <IonCol>
-                                <IonText className='ion-text-start ion-text-uppercase'>
-                                  <p>Receitas</p>
-                                </IonText>
-                                <IonText className='ion-text-start'>
-                                  <h1>R$ {receitaTotal.toFixed(2)}</h1>
-                                </IonText>
-                              </IonCol>
-                              <IonCol>
-                                <IonIcon icon={arrowUp} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
-                              </IonCol>
-                            </IonRow>
-                          </IonGrid>
-                        </IonButton>
-                      </IonCol>
 
-                      {/* Despesas */}
-                      <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
-                        <IonButton color={'danger'} expand='block' href='despesas' className='card-button'>
-                          <IonGrid>
-                            <IonRow className='ion-align-items-center'>
-                              <IonCol>
-                                <IonText className='ion-text-start ion-text-uppercase'>
-                                  <p>Despesas</p>
-                                </IonText>
-                                <IonText className='ion-text-start'>
-                                  <h1>R$ {despesaTotal.toFixed(2)}</h1>
-                                </IonText>
-                              </IonCol>
-                              <IonCol>
-                                <IonIcon icon={arrowDown} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
-                              </IonCol>
-                            </IonRow>
-                          </IonGrid>
-                        </IonButton>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
+                    <IonGrid>
+                      <IonText className='ion-margin-left'>
+                        <h1 className='dashboard ion-text-start'>Dashboard</h1>
+                      </IonText>
+                      <IonRow>
+                        {/* Saldo */}
+                        <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                          <IonButton color={'light'} expand='block' href='Transferencias' className='card-button'>
+                            <IonGrid>
+                              <IonRow className='ion-align-items-center'>
+                                <IonCol>
+                                  <IonText className='ion-text-start ion-text-uppercase'>
+                                    <p>Saldo</p>
+                                  </IonText>
+                                  <IonText className='ion-text-start'>
+                                    <h1>R$ {(receitaTotal - despesaTotal).toFixed(2)}</h1>
+                                  </IonText>
+                                </IonCol>
+                                <IonCol>
+                                  <IonIcon icon={cashOutline} className='ion-float-right ion-padding ion-border home-buttons-icons saldo-button'></IonIcon>
+                                </IonCol>
+                              </IonRow>
+                            </IonGrid>
+                          </IonButton>
+                        </IonCol>
 
+                        {/* Receitas */}
+                        <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                          <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
+                            <IonGrid>
+                              <IonRow className='ion-align-items-center'>
+                                <IonCol>
+                                  <IonText className='ion-text-start ion-text-uppercase'>
+                                    <p>Receitas</p>
+                                  </IonText>
+                                  <IonText className='ion-text-start'>
+                                    <h1>R$ {receitaTotal.toFixed(2)}</h1>
+                                  </IonText>
+                                </IonCol>
+                                <IonCol>
+                                  <IonIcon icon={arrowUp} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                                </IonCol>
+                              </IonRow>
+                            </IonGrid>
+                          </IonButton>
+                        </IonCol>
+
+                        {/* Despesas */}
+                        <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
+                          <IonButton color={'danger'} expand='block' href='despesas' className='card-button'>
+                            <IonGrid>
+                              <IonRow className='ion-align-items-center'>
+                                <IonCol>
+                                  <IonText className='ion-text-start ion-text-uppercase'>
+                                    <p>Despesas</p>
+                                  </IonText>
+                                  <IonText className='ion-text-start'>
+                                    <h1>R$ {despesaTotal.toFixed(2)}</h1>
+                                  </IonText>
+                                </IonCol>
+                                <IonCol>
+                                  <IonIcon icon={arrowDown} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon>
+                                </IonCol>
+                              </IonRow>
+                            </IonGrid>
+                          </IonButton>
+                        </IonCol>
+                      </IonRow>
+                    </IonGrid>
+                  </IonCardContent>
                 </IonCard>
               </IonCol>
             </IonRow>
@@ -370,7 +373,8 @@ const Home: React.FC = () => {
               <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
                 <IonCard className='card-2 ion-padding' style={{
                   '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
-                  '--color': 'var(--ion-text-color)',}}>
+                  '--color': 'var(--ion-text-color)',
+                }}>
                   <IonCardContent>
                     <IonText>
                       <h1 className='ion-text-start'>Balanço Mensal</h1>

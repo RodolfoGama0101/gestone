@@ -13,10 +13,11 @@ import {
     IonContent,
 } from "@ionic/react";
 import './Cadastro.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { ThemeContext } from '../components/ThemeContext';
 
 const Cadastro: React.FC = () => {
     const [nome, setNome] = useState("");
@@ -24,6 +25,7 @@ const Cadastro: React.FC = () => {
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState("");
     const [isLoading, setIsLoading] = useState(false);  // Estado para controlar o loading
+    const { isDarkMode } = useContext(ThemeContext);
 
     // Função de cadastro
     const fazerCadastro = async (e: any) => {
@@ -56,17 +58,17 @@ const Cadastro: React.FC = () => {
                     const refDocTags = doc(db, "TagsDespesas", user.uid);
                     await setDoc(refDocTags, {
                         tags: [
-                            "Roupas", 
-                            "Educação", 
-                            "Eletrônicos", 
-                            "Saúde", 
-                            "Casa", 
-                            "Lazer", 
-                            "Restaurante", 
-                            "Mercado", 
-                            "Serviços", 
-                            "Transporte", 
-                            "Viagem", 
+                            "Roupas",
+                            "Educação",
+                            "Eletrônicos",
+                            "Saúde",
+                            "Casa",
+                            "Lazer",
+                            "Restaurante",
+                            "Mercado",
+                            "Serviços",
+                            "Transporte",
+                            "Viagem",
                             "Outros"
                         ]
                     });
@@ -100,14 +102,20 @@ const Cadastro: React.FC = () => {
     // }, []);
 
     return (
-        <IonContent color={"dark"}>
+        <IonContent style={{
+            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+        }}>
             <IonGrid fixed={false}>
                 <IonRow class="ion-justify-content-center">
                     <IonImg src="./versao104.png" className="img-cadastro" />
                 </IonRow>
                 <IonRow class="row-cadastro">
                     <IonCol sizeXl="5">
-                        <IonCard color={'dark2'}>
+                        <IonCard style={{
+                            '--background': 'var(--ion-color-primary)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
                             <IonCardHeader>
                                 <IonCardTitle className="ion-text-center" color={"success"}>
                                     FAZER CADASTRO

@@ -15,17 +15,19 @@ import {
   IonTabBar
 } from "@ionic/react";
 import './Login.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
 import SignGitHub from "../components/SignGitHub";
 import SignMicrosoft from "../components/SignMicrosoft";
 import { auth } from "../firebase/firebase";
+import { ThemeContext } from '../components/ThemeContext';
 
 const Login: React.FC = () => {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const { isDarkMode } = useContext(ThemeContext);
 
   const [user, setUser] = useState(Object);
 
@@ -60,7 +62,10 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <IonContent color={'dark'}>
+      <IonContent style={{
+        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+      }}>
 
         <IonGrid fixed={false}>
           <IonRow class="ion-justify-content-center">
@@ -68,7 +73,10 @@ const Login: React.FC = () => {
           </IonRow>
           <IonRow className="row-login">
             <IonCol sizeXl="5">
-              <IonCard color={'dark2'}>
+              <IonCard style={{
+                '--background': 'var(--ion-color-primary)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+              }}>
                 <IonCardHeader>
                   <IonCardTitle className="ion-text-center tittle">FAZER LOGIN</IonCardTitle>
                 </IonCardHeader>
@@ -86,13 +94,13 @@ const Login: React.FC = () => {
                       <a href="" className="redefinir-senha">Redefinir senha</a>
                     </IonText>
                   </div>
-                  
+
                   <div className="center-google-btn">
                     <SignGoogle></SignGoogle>
                     <SignGitHub></SignGitHub>
                     <SignMicrosoft></SignMicrosoft>
                   </div>
-                  
+
 
                 </IonCardContent>
               </IonCard>

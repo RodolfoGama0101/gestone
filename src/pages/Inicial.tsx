@@ -1,10 +1,17 @@
 import { IonButton, IonContent, IonPage, IonText, IonImg, IonGrid, IonRow, IonCol } from '@ionic/react';
 import './Inicial.css';
+import { ThemeContext } from '../components/ThemeContext';
+import { useContext } from 'react';
 
 const Inicial: React.FC = () => {
+    const { isDarkMode } = useContext(ThemeContext);
+
     return (
         <IonPage>
-            <IonContent fullscreen color="dark" className='content-inicial'>
+            <IonContent fullscreen className='content-inicial' style={{
+        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+      }}>
                 <IonGrid >
                     <IonRow class="row-inicial"></IonRow>
                     <IonRow class="row-inicial"></IonRow>

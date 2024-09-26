@@ -39,6 +39,7 @@ import './theme/variables.css';
 import Transferencias from './pages/Transferencias';
 import Inicial from './pages/Inicial';
 import { ThemeProvider } from './components/ThemeContext';
+import Suporte from './pages/Support';
 
 setupIonicReact();
 
@@ -75,6 +76,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/transferencias">
           <Transferencias />
+        </Route>
+        <Route path="/support">
+          <Suporte />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

@@ -271,7 +271,7 @@ const Receitas: React.FC = () => {
                                         <IonText>2024</IonText>
                                     </IonContent>
                                     <IonButtons>
-                                        <IonList>
+                                        <IonGrid>
                                             <IonRow>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
@@ -292,7 +292,7 @@ const Receitas: React.FC = () => {
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
                                             </IonRow>
-                                        </IonList>
+                                        </IonGrid>
                                     </IonButtons>
                                 </IonPopover>
                             </IonCol>
