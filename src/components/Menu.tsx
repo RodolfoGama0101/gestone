@@ -45,21 +45,21 @@ const Menu: React.FC = () => {
             '--background': 'var(--ion-background-color)', 
             '--color': 'var(--ion-text-color)',
           }}>
-          <IonIcon aria-hidden="true" slot="start" icon={personOutline}></IonIcon>
+          <IonIcon aria-hidden="true" slot="start" icon={personOutline} style={{'color': 'var(--ion-color-secondary-contrast'}} ></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Sua Conta</IonLabel>
         </IonItem>
         <IonItem button={true} href="/support" style={{
             '--background': 'var(--ion-background-color)',  
             '--color': 'var(--ion-text-color)',
           }}>
-          <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline} ></IonIcon>
+          <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline} style={{'color': 'var(--ion-color-secondary-contrast'}} ></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Support</IonLabel>
         </IonItem>
         <IonItem button={true} href="/login" onClick={logout} style={{
             '--background': 'var(--ion-background-color)', 
             '--color': 'var(--ion-text-color)',
           }}>
-          <IonIcon aria-hidden="true" slot="start" icon={exitOutline}></IonIcon>
+          <IonIcon aria-hidden="true" slot="start" icon={exitOutline} style={{'color': 'var(--ion-color-secondary-contrast'}}></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Logout</IonLabel>
         </IonItem>
       </IonContent>

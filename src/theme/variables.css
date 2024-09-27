@@ -192,7 +192,7 @@ http://ionicframework.com/docs/theming/ */
   
 	--ion-color-secondary: #c5c4c4;
 	--ion-color-secondary-rgb: 61, 194, 255;
-	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary-contrast: #000000;
 	--ion-color-secondary-contrast-rgb: 255, 255, 255;
 	--ion-color-secondary-shade: #6d6d6d;
 	--ion-color-secondary-tint: #494949;
