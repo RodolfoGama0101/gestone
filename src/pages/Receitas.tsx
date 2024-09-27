@@ -224,7 +224,7 @@ const Receitas: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin receita">R$ {receitaTotal}</h1>
+                                <h1 className="ion-margin receita">R$ {receitaTotal.toFixed(2)}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
@@ -314,7 +314,7 @@ const Receitas: React.FC = () => {
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol>
-                                                    <IonText><h1>{"R$ " + receita.valor}</h1></IonText>
+                                                    <IonText><h1>{"R$ " + receita.valor.toFixed(2)}</h1></IonText>
                                                     <IonText><p>{receita.data.toLocaleDateString()}</p></IonText>
                                                     <IonText><p>{receita.descricao}</p></IonText>
                                                 </IonCol>
