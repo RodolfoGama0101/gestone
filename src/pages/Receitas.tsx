@@ -244,13 +244,13 @@ const Receitas: React.FC = () => {
                             </IonToolbar>
                         </IonHeader>
                         <IonContent className="ion-padding" style={{
-                            '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                            '--background': 'var(--ion-color-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
                             <IonCardContent>
-                                <IonInput required label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput required label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonInput required label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                                <IonInput required label="R$:" type="number"color={'success'} className="input "  fill='outline'onIonChange={(e: any) => setValorReceita(e.target.value)} />
+                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                                <IonInput required label="Descrição:" type="text" color={'success'}  className="input" fill="outline"  onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
                         </IonContent>

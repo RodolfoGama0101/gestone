@@ -267,12 +267,12 @@ const Despesas: React.FC = () => {
                             </IonToolbar>
                         </IonHeader>
                         <IonContent className="ion-padding" style={{
-                            '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
-                            <IonInput label="R$" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} required />
-                            <IonInput label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} required />
-                            <IonSelect placeholder="Adicione uma tag" fill="outline" interface="popover" className="input" onIonChange={(e: any) => setTagSelecao(e.target.value)}>
+                            <IonInput label="R$" type="number" color={'danger'} className="input" fill="outline" onIonChange={(e: any) => setValorDespesa(e.target.value)} required />
+                            <IonInput label="Data: " type="date" color={'danger'} className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} required />
+                            <IonSelect placeholder="Adicione uma tag" color={'danger'} fill="outline" interface="popover" className="input" onIonChange={(e: any) => setTagSelecao(e.target.value)}>
                                 {tags.map(tag => {
                                     return (
                                         <IonSelectOption>{tag.toString()}</IonSelectOption>

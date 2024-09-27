@@ -13,9 +13,11 @@ import Cadastro from './pages/Cadastro';
 import Despesas from './pages/Despesas';
 import Conta from './pages/Conta';
 import Receitas from './pages/Receitas';
+import Transferencias from './pages/Transferencias';
+import Inicial from './pages/Inicial';
+import Suporte from './pages/Support';
 
-
-import './App.css'
+import './App.css';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,64 +36,35 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import '@ionic/react/css/palettes/dark.class.css';
+import '@ionic/react/css/palettes/dark.css';
 import './theme/variables.css';
-import Transferencias from './pages/Transferencias';
-import Inicial from './pages/Inicial';
+
 import { ThemeProvider } from './components/ThemeContext';
-import Suporte from './pages/Support';
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-      <Route exact path="/">
-          <Redirect to="/inicial" />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route path="/charts">
-          <Charts />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/receitas">
-          <Receitas />
-        </Route>
-        <Route path="/despesas">
-          <Despesas />
-        </Route>
-        <Route path="/cadastro">
-          <Cadastro />
-        </Route>
-        <Route path="/conta">
-          <Conta />
-        </Route>
-        <Route path="/inicial">
-          <Inicial />
-        </Route>
-        <Route path="/transferencias">
-          <Transferencias />
-        </Route>
-        <Route path="/support">
-          <Suporte />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-
     <ThemeProvider>
       <IonReactRouter>
-        <Route path="/home" component={Home} exact={true} />
-        <Route path="/conta" component={Conta} />
+        <IonRouterOutlet>
+          <Route exact path="/">
+            <Redirect to="/inicial" />
+          </Route>
+          <Route path="/home" component={Home} />
+          <Route path="/charts" component={Charts} />
+          <Route path="/login" component={Login} />
+          <Route path="/receitas" component={Receitas} />
+          <Route path="/despesas" component={Despesas} />
+          <Route path="/cadastro" component={Cadastro} />
+          <Route path="/conta" component={Conta} />
+          <Route path="/inicial" component={Inicial} />
+          <Route path="/transferencias" component={Transferencias} />
+          <Route path="/support" component={Suporte} />
+        </IonRouterOutlet>
       </IonReactRouter>
     </ThemeProvider>
-
   </IonApp>
-
 );
 
 export default App;

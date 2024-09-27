@@ -32,7 +32,7 @@ const Cadastro: React.FC = () => {
         e.preventDefault();
         setIsLoading(true);  // Define o estado como carregando
 
-        if (senha === confirmaSenha) {
+        if (senha == confirmaSenha) {
             try {
                 // Cria o usuário com e-mail e senha
                 const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
@@ -103,17 +103,17 @@ const Cadastro: React.FC = () => {
 
     return (
         <IonContent style={{
-            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+            '--background': 'var(--ion-color-primary)', // Controla o fundo da página
             '--color': 'var(--ion-text-color)', // Controla a cor do texto
         }}>
             <IonGrid fixed={false}>
                 <IonRow class="ion-justify-content-center">
-                    <IonImg src="./versao1br.png" className="img-cadastro" />
+                    <IonImg src="./versao106.png" className="img-cadastro" />
                 </IonRow>
                 <IonRow class="row-cadastro">
                     <IonCol sizeXl="5">
                         <IonCard style={{
-                            '--background': 'var(--ion-color-primary)', // Controla o fundo da página
+                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
                             <IonCardHeader>
@@ -179,6 +179,7 @@ const Cadastro: React.FC = () => {
                                         <h2>{isLoading ? "Cadastrando..." : "Cadastrar"}</h2>
                                     </IonText>
                                 </IonButton>
+                                <a href="/Inicial" className="voltar">Voltar</a>
                             </IonCardContent>
                         </IonCard>
                     </IonCol>

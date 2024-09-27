@@ -7,7 +7,7 @@
 
 .redefinir-senha {
     text-decoration: none;
-    color: white;
+    color: #2ea14d;
 }
 
 .redefinir-senha:hover{
@@ -32,3 +32,16 @@
     justify-content: center;
     text-align: left;
 }
+
+.voltar {
+    text-decoration: none;
+    display: flex;
+    color: #2ea14d;
+}
+
+.voltar:hover {
+    text-decoration: none;
+    color: #065a1c;
+}
+
+

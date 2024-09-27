@@ -1,4 +1,3 @@
-// src/contexts/ThemeContext.tsx
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 
 // Define a interface para o contexto do tema

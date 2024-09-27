@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonFab, IonFabButton, IonFooter, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
+import { IonButton, IonCol, IonFooter, IonGrid, IonIcon, IonImg, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
 import { barChartOutline, homeOutline, close, trendingDown, trendingUpSharp, repeat } from "ionicons/icons";
 import './FooterTab.css';
 

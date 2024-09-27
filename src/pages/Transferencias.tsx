@@ -164,8 +164,8 @@ const Transferencias: React.FC = () => {
                                                         '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                         '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                     }}>
-                                                        <IonIcon icon={createOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Editar</IonText>
+                                                        <IonIcon icon={createOutline} ></IonIcon>
+                                                        <IonText >Editar</IonText>
                                                     </IonButton>
                                                     {/* Delete button */}
                                                     <IonButton id="present-alert" color={"danger"} className="delete-bt">

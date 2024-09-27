@@ -44,11 +44,12 @@ a{
     text-decoration: none;
     justify-content: center;
     display: flex;
+    color: #2ea14d;
 }
 
 .fazer-cadastro:hover {
     text-decoration: none;
-    color: white;
+    color: #065a1c;
 }
 
 .text-inicial > h1, h6 {

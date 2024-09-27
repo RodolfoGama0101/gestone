@@ -6,13 +6,33 @@ import { logoGoogle } from "ionicons/icons";
 import "./SignGoogle.css"
 
 const SignGoogle: React.FC = () => {
-
     async function googleLogin() {
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
             .then(async (result) => {
                 const user = result.user;
+
+                // Armazena as tags primárias de despesas
+                console.log("Armazenando tags no Firestore...");
+                const refDocTags = doc(db, "TagsDespesas", user.uid);
+                await setDoc(refDocTags, {
+                    tags: [
+                        "Roupas",
+                        "Educação",
+                        "Eletrônicos",
+                        "Saúde",
+                        "Casa",
+                        "Lazer",
+                        "Restaurante",
+                        "Mercado",
+                        "Serviços",
+                        "Transporte",
+                        "Viagem",
+                        "Outros"
+                    ]
+                });
+                console.log("Tags armazenadas com sucesso!");
 
                 const refDoc = doc(db, "MesSelecao", user.uid);
                 await setDoc(refDoc, {
@@ -23,6 +43,8 @@ const SignGoogle: React.FC = () => {
                 if (user) {
                     window.location.href = '/home';
                 }
+
+                window.location.href = "/home";
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -32,7 +54,7 @@ const SignGoogle: React.FC = () => {
     }
 
     return (
-        <IonButton color={'success'} className="ion-margin-top" shape="round" onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
+        <IonButton color={'success'} className="ion-margin-top"  onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
     );
 }
 
