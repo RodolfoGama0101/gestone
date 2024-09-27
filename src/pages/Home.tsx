@@ -15,7 +15,7 @@ import {
   IonCardContent,
   IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -27,6 +27,8 @@ import ChartBar from '../components/ChartBar';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
+import { Icon } from 'ionicons/dist/types/components/icon/icon';
+
 
 
 // Registrando os componentes do Chart.js
@@ -40,7 +42,7 @@ const Home: React.FC = () => {
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
   const [userImg, setUserImg] = useState(Object);
-  const { isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -229,6 +231,12 @@ const Home: React.FC = () => {
             <IonText className='ion-margin-left'>
               <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
             </IonText>
+            <IonButtons slot='end' className='ion-margin'>
+              <IonButton onClick={toggleDarkMode}>
+                {isDarkMode ? <IonIcon icon={sunnyOutline} size='large' slot="icon-only" style={{ 'color': 'var(--ion-color-secondary-contrast' }} /> : <IonIcon icon={moonOutline} slot="icon-only" size='large' style={{ 'color': 'var(--ion-color-secondary-contrast' }} />}
+              </IonButton>
+            </IonButtons>
+
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>

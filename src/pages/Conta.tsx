@@ -45,13 +45,6 @@ const Conta: React.FC = () => {
                     </IonCol>
 
                 </IonRow>
-                <IonRow>
-                    <IonCol>
-                        <IonButton onClick={toggleDarkMode} shape='round'>
-                            {isDarkMode ? 'Tema Claro' : 'Tema Escuro'}
-                        </IonButton>
-                    </IonCol>
-                </IonRow>
             </IonGrid>
 
 
