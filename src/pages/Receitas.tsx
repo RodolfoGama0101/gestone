@@ -27,7 +27,7 @@ import './Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
 
@@ -207,7 +207,10 @@ const Receitas: React.FC = () => {
             <IonHeader>
                 <IonToolbar color={'success'}>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton>
+                        {/* <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton> */}
+                        <IonButton href="/Home" fill="clear">
+                            <IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} />
+                        </IonButton>
                     </IonButtons>
                     <IonTitle>Receitas</IonTitle>
                 </IonToolbar>

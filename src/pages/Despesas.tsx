@@ -30,7 +30,7 @@ import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import "./Despesas.css"
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
@@ -230,7 +230,9 @@ const Despesas: React.FC = () => {
             <IonHeader>
                 <IonToolbar color={'danger'}>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/Home"></IonBackButton>
+                        <IonButton href="/Home" fill="clear">
+                            <IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} />
+                        </IonButton>
                     </IonButtons>
                     <IonTitle>Despesas</IonTitle>
                 </IonToolbar>
