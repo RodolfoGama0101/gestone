@@ -25,7 +25,7 @@ import Menu from '../components/Menu';
 import { meses } from '../variables/variables';
 import ChartBar from '../components/ChartBar';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
 import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
@@ -167,10 +167,9 @@ const Home: React.FC = () => {
 
   // Charts
   // Dados do gráfico
-  const data = {
+  const dataBar = {
     labels: ['Receitas', 'Despesas'],
     datasets: [{
-      label: 'Finanças do mês',
       data: [receitaTotal, despesaTotal],
       backgroundColor: [
         'rgba(46, 161, 77, 0.6)',
@@ -184,7 +183,7 @@ const Home: React.FC = () => {
     }]
   };
 
-  const options = {
+  const optionsBar = {
     maintainAspectRatio: false,
     aspectRatio: 2, // Proporção largura/altura
     scales: {
@@ -212,6 +211,17 @@ const Home: React.FC = () => {
       }
     }
   }
+
+  const dataPie = {
+    datasets: [
+      {
+        label: 'Categorias de Despesas',
+        data: [500, 300, 100, 150],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+      },
+    ],
+  };
 
   return (
     <>
@@ -375,7 +385,7 @@ const Home: React.FC = () => {
           </IonGrid>
 
 
-          {/* Teste de Charts */}
+          {/* ChartBar */}
           <IonGrid>
             <IonRow>
               <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
@@ -389,7 +399,26 @@ const Home: React.FC = () => {
                     </IonText>
                     <IonCol size='auto'>
                       <div className="chart-bar-container">
-                        <Bar data={data} options={options} />
+                        <Bar data={dataBar} options={optionsBar} />
+                      </div>
+                    </IonCol>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+
+              {/* ChartPie Tags */}
+              <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
+                <IonCard className='card-2 ion-padding' style={{
+                  '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                  '--color': 'var(--ion-text-color)',
+                }}>
+                  <IonCardContent>
+                    <IonText>
+                      <h1 className='ion-text-start'>Despesas por tags</h1>
+                    </IonText>
+                    <IonCol size='auto'>
+                      <div className="chart-pie-container">
+                        <Pie data={dataPie} />
                       </div>
                     </IonCol>
                   </IonCardContent>

@@ -71,6 +71,13 @@ ion-card {
     align-items: center;
 }
 
+.chart-pie-container {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .chart-bar-container {
-    
+    height: 300px;
 }
