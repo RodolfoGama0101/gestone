@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     IonHeader,
     IonTitle,
@@ -27,8 +27,9 @@ import './Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { addOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
+import { ThemeContext } from '../components/ThemeContext';
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -52,6 +53,7 @@ const Receitas: React.FC = () => {
     const [userInfo, setUserInfo] = useState(Object);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [mesSelecionado, setMesSelecionado] = useState("");
+    const { isDarkMode } = useContext(ThemeContext);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -205,18 +207,24 @@ const Receitas: React.FC = () => {
             <IonHeader>
                 <IonToolbar color={'success'}>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton>
+                        {/* <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton> */}
+                        <IonButton href="/Home" fill="clear">
+                            <IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} />
+                        </IonButton>
                     </IonButtons>
                     <IonTitle>Receitas</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent color={'dark'}>
+            <IonContent style={{
+                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid>
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin receita">R$ {receitaTotal}</h1>
+                                <h1 className="ion-margin receita">R$ {receitaTotal.toFixed(2)}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
@@ -225,7 +233,10 @@ const Receitas: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonCard color={'dark2'} className="card-add-receita">
+                <IonCard className="card-add-receita" style={{
+                    '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
                     <IonModal isOpen={isOpen} className="fullscreen-modal">
                         <IonHeader>
                             <IonToolbar color="success">
@@ -235,11 +246,14 @@ const Receitas: React.FC = () => {
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
-                        <IonContent className="ion-padding" color={'dark2'}>
+                        <IonContent className="ion-padding" style={{
+                            '--background': 'var(--ion-color-background-color)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
                             <IonCardContent>
-                                <IonInput required label="R$:" type="number" className="input" fill="outline" onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput required label="Data: " type="date" className="input" fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonInput required label="Descrição:" type="text" className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                                <IonInput required label="R$:" type="number"color={'success'} className="input "  fill='outline'onIonChange={(e: any) => setValorReceita(e.target.value)} />
+                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
+                                <IonInput required label="Descrição:" type="text" color={'success'}  className="input" fill="outline"  onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
                         </IonContent>
@@ -248,7 +262,10 @@ const Receitas: React.FC = () => {
                     {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
 
                     {/* Selecão de mês */}
-                    <IonGrid color='dark'>
+                    <IonGrid style={{
+                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                    }}>
                         <IonRow>
                             <IonCol className="ion-text-center ion-align-self-center">
                                 <IonButton id='trigger-button' className='select-month-btn' color={"success"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
@@ -257,7 +274,7 @@ const Receitas: React.FC = () => {
                                         <IonText>2024</IonText>
                                     </IonContent>
                                     <IonButtons>
-                                        <IonList>
+                                        <IonGrid>
                                             <IonRow>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(0) }}>Jan</IonButton></IonCol>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(1) }}>Fev</IonButton></IonCol>
@@ -278,7 +295,7 @@ const Receitas: React.FC = () => {
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(10) }}>Nov</IonButton></IonCol>
                                                 <IonCol><IonButton onClick={() => { setSelectedMonth(11) }}>Dez</IonButton></IonCol>
                                             </IonRow>
-                                        </IonList>
+                                        </IonGrid>
                                     </IonButtons>
                                 </IonPopover>
                             </IonCol>
@@ -290,11 +307,14 @@ const Receitas: React.FC = () => {
                         <IonList className="ion-no-padding">
                             {receitas.map(receita => {
                                 return (
-                                    <IonItem key={receita.id} color={"dark"}>
+                                    <IonItem key={receita.id} style={{
+                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                    }}>
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol>
-                                                    <IonText><h1>{"R$ " + receita.valor}</h1></IonText>
+                                                    <IonText><h1>{"R$ " + receita.valor.toFixed(2)}</h1></IonText>
                                                     <IonText><p>{receita.data.toLocaleDateString()}</p></IonText>
                                                     <IonText><p>{receita.descricao}</p></IonText>
                                                 </IonCol>
@@ -311,13 +331,13 @@ const Receitas: React.FC = () => {
                                                             {
                                                                 text: 'cancel',
                                                                 cssClass: 'alert-button-cancel',
-    
+
                                                             },
                                                             {
                                                                 text: 'confirm',
                                                                 cssClass: 'alert-button-confirm',
                                                                 handler: () => {
-                                                                    excluirReceita(receita.id); 
+                                                                    excluirReceita(receita.id);
                                                                 },
                                                             }
                                                         ]}

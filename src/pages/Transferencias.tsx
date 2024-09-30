@@ -1,11 +1,12 @@
 import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { createOutline, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import "./Transferencias.css"
+import { ThemeContext } from '../components/ThemeContext';
 
 const Transferencias: React.FC = () => {
     Verifica();
@@ -24,6 +25,7 @@ const Transferencias: React.FC = () => {
     const [updateSaldo, setUpdateSaldo] = useState(false);
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
+    const { isDarkMode } = useContext(ThemeContext);
 
 
     useEffect(() => {
@@ -110,7 +112,10 @@ const Transferencias: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent color={"dark"}>
+            <IonContent style={{
+                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+            }}>
                 <IonGrid>
                     <IonRow>
                         <IonCol>
@@ -127,11 +132,17 @@ const Transferencias: React.FC = () => {
 
                 <IonCard color={"medium"}>
                     <IonCardContent>
-                        <IonList color={"dark"} className="ion-no-padding list-transferencias">
+                        <IonList className="ion-no-padding list-transferencias" style={{
+                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
                             {saldo.map(transferencias => {
                                 const negativo = transferencias.tipo === "receita" ? "" : "-";
                                 return (
-                                    <IonItem key={transferencias.id} color={"dark"}>
+                                    <IonItem key={transferencias.id} style={{
+                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                    }}>
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol>
@@ -149,13 +160,16 @@ const Transferencias: React.FC = () => {
                                                 </IonCol>
                                                 <IonCol size="auto">
                                                     {/* Edit button */}
-                                                    <IonButton onClick={() => { }} color={"dark"} className="edit-btn">
-                                                        <IonIcon icon={createOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Editar</IonText>
+                                                    <IonButton onClick={() => { }} className="edit-btn" style={{
+                                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                                    }}>
+                                                        <IonIcon icon={createOutline} ></IonIcon>
+                                                        <IonText >Editar</IonText>
                                                     </IonButton>
                                                     {/* Delete button */}
                                                     <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                        <IonIcon icon={trashOutline}></IonIcon>
                                                         <IonText color={'light'}>Excluir</IonText>
                                                     </IonButton>
                                                     <IonAlert
@@ -166,13 +180,13 @@ const Transferencias: React.FC = () => {
                                                             {
                                                                 text: 'cancel',
                                                                 cssClass: 'alert-button-cancel',
-    
+
                                                             },
                                                             {
                                                                 text: 'confirm',
                                                                 cssClass: 'alert-button-confirm',
                                                                 handler: () => {
-                                                                    excluirTransferencia(transferencias.id); 
+                                                                    excluirTransferencia(transferencias.id);
                                                                 },
                                                             }
                                                         ]}

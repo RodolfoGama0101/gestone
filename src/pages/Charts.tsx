@@ -2,15 +2,23 @@ import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonText, Ion
 import './Charts.css';
 import Verifica from '../firebase/verifica';
 import ChartBar from '../components/ChartBar';
+import { ThemeContext } from '../components/ThemeContext';
+import { useContext } from 'react';
+
 
 const Charts: React.FC = () => {
+  const { isDarkMode } = useContext(ThemeContext);
+
   Verifica();
 
   return (
     <IonPage>
       {/* Header */}
       <IonHeader>
-        <IonToolbar color={"dark"}>
+        <IonToolbar style={{
+        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+      }}>
           <IonButtons slot="start">
             <IonBackButton defaultHref="/Home"></IonBackButton>
           </IonButtons>
@@ -20,7 +28,10 @@ const Charts: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent color={"dark"}>
+      <IonContent style={{
+        '--background': 'var(--ion-background-color)', // Controla o fundo da página
+        '--color': 'var(--ion-text-color)', // Controla a cor do texto
+      }}>
         <ChartBar></ChartBar>
       </IonContent>
     </IonPage>

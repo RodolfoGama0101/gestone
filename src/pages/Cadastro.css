@@ -12,3 +12,14 @@
 .input-cadastro {
     margin-bottom: 10px;
 }
+
+.voltar {
+    text-decoration: none;
+    display: flex;
+    color: #2ea14d;
+}
+
+.voltar:hover {
+    text-decoration: none;
+    color: #065a1c;
+}

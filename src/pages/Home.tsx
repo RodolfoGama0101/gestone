@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   IonContent,
   IonPage,
@@ -15,7 +15,7 @@ import {
   IonCardContent,
   IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, personCircleOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -26,6 +26,10 @@ import { meses } from '../variables/variables';
 import ChartBar from '../components/ChartBar';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { ThemeContext } from '../components/ThemeContext';
+import { Icon } from 'ionicons/dist/types/components/icon/icon';
+
+
 
 // Registrando os componentes do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -38,6 +42,7 @@ const Home: React.FC = () => {
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
   const [userImg, setUserImg] = useState(Object);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -213,13 +218,25 @@ const Home: React.FC = () => {
       <Menu />
 
       <IonPage id="main-content">
-        <IonContent fullscreen color={'dark'}>
+        <IonContent fullscreen style={{
+          '--background': 'var(--ion-background-color)', // Controla o fundo da página
+          '--color': 'var(--ion-text-color)', // Controla a cor do texto
+        }}>
           {/* Header */}
-          <IonToolbar color={'dark'}>
+          <IonToolbar style={{
+            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+          }}>
             {/* User name */}
             <IonText className='ion-margin-left'>
               <h4 className='ion-text-start ion-margin-start'>Seja Bem-vindo</h4>
             </IonText>
+            <IonButtons slot='end' className='ion-margin'>
+              <IonButton onClick={toggleDarkMode}>
+                {isDarkMode ? <IonIcon icon={sunnyOutline} size='large' slot="icon-only" style={{ 'color': 'var(--ion-color-secondary-contrast' }} /> : <IonIcon icon={moonOutline} slot="icon-only" size='large' style={{ 'color': 'var(--ion-color-secondary-contrast' }} />}
+              </IonButton>
+            </IonButtons>
+
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
@@ -270,12 +287,18 @@ const Home: React.FC = () => {
             </IonRow>
           </IonGrid>
 
+
           {/* Card */}
           <IonGrid>
             <IonRow>
               <IonCol>
-                <IonCard color={'medium'} className='card-1'>
+                <IonCard className='card-1' style={{
+                  '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                  '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
                   <IonCardContent>
+
+
                     <IonGrid>
                       <IonText className='ion-margin-left'>
                         <h1 className='dashboard ion-text-start'>Dashboard</h1>
@@ -302,7 +325,7 @@ const Home: React.FC = () => {
                           </IonButton>
                         </IonCol>
 
-                        {/* Despesas */}
+                        {/* Receitas */}
                         <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='4' sizeXl='4'>
                           <IonButton color={"success"} expand='block' href='receitas' className='card-button'>
                             <IonGrid>
@@ -356,7 +379,10 @@ const Home: React.FC = () => {
           <IonGrid>
             <IonRow>
               <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
-                <IonCard color={"medium"} className='card-2 ion-padding'>
+                <IonCard className='card-2 ion-padding' style={{
+                  '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
+                  '--color': 'var(--ion-text-color)',
+                }}>
                   <IonCardContent>
                     <IonText>
                       <h1 className='ion-text-start'>Balanço Mensal</h1>
@@ -371,10 +397,10 @@ const Home: React.FC = () => {
               </IonCol>
             </IonRow>
           </IonGrid>
-        </IonContent>
+        </IonContent >
 
         <FooterTabBar></FooterTabBar>
-      </IonPage>
+      </IonPage >
     </>
   );
 };

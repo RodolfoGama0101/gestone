@@ -1,6 +1,5 @@
 /* Inicial.css */
 .text-inicial {
-    color: #fff;
     text-align: center;
     font-size: 1.6rem;
     margin-bottom: 0.5rem;
@@ -17,7 +16,7 @@
 }
 
 .row-inicial{
-    margin-top: 4.5%; 
+    margin-top: 3%; 
 }
 
 
@@ -32,6 +31,7 @@
 }
 
 a{
+    color: #2ea14d;
     font-size: 86%;
 }
 
@@ -42,12 +42,25 @@ a{
 
 .fazer-cadastro {
     text-decoration: none;
-    color: white;
     justify-content: center;
     display: flex;
+    color: #2ea14d;
 }
 
 .fazer-cadastro:hover {
     text-decoration: none;
-    color: #2ea14d;
+    color: #065a1c;
+}
+
+.text-inicial > h1, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.text-inicial > h1 {
+    font-size: 25pt;
+}
+
+.text-inicial > h6 {
+    font-size: 11pt;
 }

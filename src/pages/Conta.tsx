@@ -1,13 +1,16 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton } from '@ionic/react';
 import "./Conta.css"
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { ThemeContext } from '../components/ThemeContext';
 
 
 const Conta: React.FC = () => {
     const [userImg, setUserImg] = useState(Object);
     const [userName, setUserName] = useState(Object);
+    const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -35,13 +38,16 @@ const Conta: React.FC = () => {
             <IonGrid>
                 <IonRow>
                     <IonCol className='user-info'>
-                        <IonImg src={userImg.toString()} className='user-photo'/>
+                        {/* <IonImg src={userImg.toString()} className='user-photo' /> */}
                         <IonText>
-                            <h1>{userName.toString()}</h1>
+                            <h2>{userName.toString()}</h2>
                         </IonText>
                     </IonCol>
+
                 </IonRow>
             </IonGrid>
+
+
         </IonPage>
     );
 }
