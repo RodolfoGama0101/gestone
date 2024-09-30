@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { IonButton, IonIcon } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
@@ -13,32 +13,39 @@ const SignGoogle: React.FC = () => {
             .then(async (result) => {
                 const user = result.user;
 
-                // Armazena as tags primárias de despesas
-                console.log("Armazenando tags no Firestore...");
                 const refDocTags = doc(db, "TagsDespesas", user.uid);
-                await setDoc(refDocTags, {
-                    tags: [
-                        "Roupas",
-                        "Educação",
-                        "Eletrônicos",
-                        "Saúde",
-                        "Casa",
-                        "Lazer",
-                        "Restaurante",
-                        "Mercado",
-                        "Serviços",
-                        "Transporte",
-                        "Viagem",
-                        "Outros"
-                    ]
-                });
-                console.log("Tags armazenadas com sucesso!");
+                const docSnapTags = await getDoc(refDocTags);
+
+                if (!docSnapTags.exists()) {
+                    // Armazena as tags primárias de despesas
+                    await setDoc(refDocTags, {
+                        tags: [
+                            "Roupas",
+                            "Educação",
+                            "Eletrônicos",
+                            "Saúde",
+                            "Casa",
+                            "Lazer",
+                            "Restaurante",
+                            "Mercado",
+                            "Serviços",
+                            "Transporte",
+                            "Viagem",
+                            "Outros"
+                        ]
+                    });
+                    console.log("Tags armazenadas com sucesso!");
+                }
 
                 const refDoc = doc(db, "MesSelecao", user.uid);
-                await setDoc(refDoc, {
-                    uid: user.uid,
-                    mes: new Date().getMonth()
-                });
+                const docSnap = await getDoc(refDoc);
+
+                if (!docSnap.exists()) {
+                    await setDoc(refDoc, {
+                        uid: user.uid,
+                        mes: new Date().getMonth()
+                    });
+                } 
 
                 if (user) {
                     window.location.href = '/home';
@@ -54,7 +61,7 @@ const SignGoogle: React.FC = () => {
     }
 
     return (
-        <IonButton color={'success'} className="ion-margin-top"  onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
+        <IonButton color={'success'} className="ion-margin-top" onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
     );
 }
 
