@@ -4,7 +4,7 @@ import "./SignGoogle.css"
 
 const SignMicrosoft: React.FC = () => {
     return(
-        <IonButton color={'success'} className="ion-margin-top" shape="round"><IonIcon slot="icon-only" icon={logoMicrosoft} className="google-logo" /></IonButton>
+        <IonButton color={'success'} className="ion-margin-top"><IonIcon slot="icon-only" icon={logoMicrosoft} className="google-logo" /></IonButton>
     );
 }
 

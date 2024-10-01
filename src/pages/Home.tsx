@@ -15,7 +15,7 @@ import {
   IonCardContent,
   IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, barChart, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
 import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -43,6 +43,7 @@ const Home: React.FC = () => {
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
   const [userImg, setUserImg] = useState(Object);
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  const [tags, setTags] = useState(Object);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -116,7 +117,6 @@ const Home: React.FC = () => {
           setMesSelecionado(meses[mes]);
         }
       }
-
     })
   })
 
@@ -165,8 +165,7 @@ const Home: React.FC = () => {
     armazenarMesSelecionado();
   }, [selectedMonth])
 
-  // Charts
-  // Dados do gráfico
+  // Bar Chart
   const dataBar = {
     labels: ['Receitas', 'Despesas'],
     datasets: [{
@@ -212,16 +211,40 @@ const Home: React.FC = () => {
     }
   }
 
+  // Tag query
+  async function buscarTags() {
+    const docRef = doc(db, "TagsDespesas", userInfo.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      let tagData = docSnap.data();
+      setTags(tagData.tags);
+      console.log(tags)
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+  useEffect(() => {
+    buscarTags();
+  }, [])
+
+  // Pie Chart
   const dataPie = {
     datasets: [
       {
-        label: 'Categorias de Despesas',
+        label: "",
         data: [500, 300, 100, 150],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
       },
     ],
   };
+
+  const configPie = {
+
+  }
 
   return (
     <>
