@@ -11,7 +11,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg
+  IonImg,
+  IonInputPasswordToggle
 } from "@ionic/react";
 import './Login.css';
 import React, { useState, useContext } from 'react';
@@ -20,17 +21,13 @@ import SignGoogle from "../components/SignGoogle";
 import SignGitHub from "../components/SignGitHub";
 import SignMicrosoft from "../components/SignMicrosoft";
 import { ThemeContext } from '../components/ThemeContext';
-import { eye, eyeOff } from "ionicons/icons";
+
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const { isDarkMode } = useContext(ThemeContext);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Alterna entre mostrar ou esconder a senha
-  };
 
   const loginUser = () => {
     const auth = getAuth();
@@ -63,31 +60,9 @@ const Login: React.FC = () => {
                 <IonCardTitle className="ion-text-center title" color={'success'}>FAZER LOGIN</IonCardTitle>
               </IonCardHeader>
               <IonCardContent>
-                <IonInput color={"success"} label='Login: ' clearInput fill="outline" onIonChange={(e: any) => setEmail(e.target.value)} className="ion-margin-bottom"/>
-
-                <IonInput
-                  value={senha}
-                  color={"success"}
-                  label='Senha: '
-                  type={showPassword ? "text" : "password"}
-                  fill='outline'
-                  onIonChange={(e: any) => setSenha(e.target.value)}
-                  className="ion-margin-bottom"
-                >
-                  <IonButton
-                    fill="clear"
-                    slot="end" // Coloca o botão no final do input
-                    aria-label="Show/hide"
-                    onClick={togglePasswordVisibility}
-                    className="eye"
-                  >
-                    <IonIcon
-                      slot="icon-only"
-                      icon={showPassword ? eyeOff : eye}
-                      color="success"
-                      aria-hidden="true"
-                    />
-                  </IonButton>
+                <IonInput color={"success"} clearInput fill="outline" label="Login:" placeholder="Exemple@exemple" labelPlacement='stacked' onIonChange={(e: any) => setEmail(e.target.value)} className="input-login" />
+                <IonInput color={"success"} type="password" fill='outline' label="Senha:" placeholder="********" labelPlacement='stacked' onIonChange={(e: any) => setSenha(e.target.value)} className="input-login">
+                  <IonInputPasswordToggle slot="end" color={"success"}></IonInputPasswordToggle>
                 </IonInput>
 
                 <IonButton
@@ -106,12 +81,16 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="center-google-btn">
-                  <SignGoogle />
                   <SignMicrosoft />
+                  <SignGoogle />
                   <SignGitHub />
                 </div>
 
-                <a href="/Inicial" className="voltar">Voltar</a>
+                <div className="texts-login">
+                  <IonText>
+                    <a href="/Inicial" className="voltar">Voltar</a>
+                  </IonText>
+                </div>
               </IonCardContent>
             </IonCard>
           </IonCol>

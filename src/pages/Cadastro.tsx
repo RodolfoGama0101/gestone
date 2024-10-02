@@ -11,6 +11,9 @@ import {
     IonButton,
     IonText,
     IonContent,
+    IonInputPasswordToggle,
+    IonItem,
+    IonList,
 } from "@ionic/react";
 import './Cadastro.css';
 import React, { useState, useEffect, useContext } from 'react';
@@ -129,7 +132,7 @@ const Cadastro: React.FC = () => {
                                     label='Nome: '
                                     placeholder="exemple"
                                     clearInput
-                                    labelPlacement="floating"
+                                    labelPlacement="stacked"
                                     fill="outline"
                                     onIonChange={(e: any) => setNome(e.target.value)}
                                 />
@@ -137,10 +140,10 @@ const Cadastro: React.FC = () => {
                                 <IonInput
                                     className="input-cadastro"
                                     color={"success"}
-                                    label='Email:'
+                                    label='Login:'
                                     placeholder='Exemple@exemple'
                                     clearInput
-                                    labelPlacement="floating"
+                                    labelPlacement="stacked"
                                     fill="outline"
                                     onIonChange={(e: any) => setEmail(e.target.value)}
                                 />
@@ -149,25 +152,26 @@ const Cadastro: React.FC = () => {
                                     className="input-cadastro"
                                     color={"success"}
                                     label='Senha:'
-                                    placeholder='Senha'
+                                    placeholder='********'
                                     type='password'
-                                    clearInput
-                                    labelPlacement='floating'
+                                    labelPlacement='stacked'
                                     fill='outline'
                                     onIonChange={(e: any) => setSenha(e.target.value)}
-                                />
+                                > <IonInputPasswordToggle slot="end" color={"success"}></IonInputPasswordToggle> </IonInput>
+
+
 
                                 <IonInput
+                                    className="input-cadastro"
                                     color={"success"}
                                     label='Confirme sua senha:'
-                                    placeholder='Senha'
+                                    placeholder='********'
                                     type='password'
-                                    clearInput
-                                    labelPlacement='floating'
+                                    labelPlacement='stacked'
                                     fill='outline'
                                     onIonChange={(e: any) => setConfirmaSenha(e.target.value)}
-                                />
-
+                                > <IonInputPasswordToggle slot="end" color={"success"}></IonInputPasswordToggle> </IonInput>
+                                
                                 <IonButton
                                     expand='block'
                                     color={'success'}
@@ -179,7 +183,13 @@ const Cadastro: React.FC = () => {
                                         <h2>{isLoading ? "Cadastrando..." : "Cadastrar"}</h2>
                                     </IonText>
                                 </IonButton>
-                                <a href="/Inicial" className="voltar">Voltar</a>
+
+                                <div className="texts-login">
+                                    <IonText>
+                                        <a href="/Inicial" className="voltar">Voltar</a>
+                                    </IonText>
+                                </div>
+
                             </IonCardContent>
                         </IonCard>
                     </IonCol>
