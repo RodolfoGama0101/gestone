@@ -45,7 +45,7 @@ const SignGoogle: React.FC = () => {
                         uid: user.uid,
                         mes: new Date().getMonth()
                     });
-                } 
+                }
 
                 if (user) {
                     window.location.href = '/home';
