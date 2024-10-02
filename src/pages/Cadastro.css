@@ -11,6 +11,7 @@
 
 .input-cadastro {
     margin-bottom: 10px;
+
 }
 
 .voltar {
@@ -23,3 +24,10 @@
     text-decoration: none;
     color: #065a1c;
 }
+
+.input-cadastro .label-text {
+    font-size: 15px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+
+
