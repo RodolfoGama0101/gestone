@@ -20,7 +20,7 @@ import './Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, doc, getAggregateFromServer, getDoc, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 import { meses } from '../variables/variables';
 import ChartBar from '../components/ChartBar';
@@ -29,12 +29,15 @@ import { Bar, Pie } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
 import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
-
-
 // Registrando os componentes do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const Home: React.FC = () => {
+  interface DespesasData {
+    valor: number;
+    tag: string;
+  }
+
   const [userInfo, setUserInfo] = useState(Object);
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
@@ -44,6 +47,7 @@ const Home: React.FC = () => {
   const [userImg, setUserImg] = useState(Object);
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [tags, setTags] = useState(Object);
+  const [tagsData, setTagsData] = useState<DespesasData[]>([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -72,10 +76,16 @@ const Home: React.FC = () => {
 
         setReceitaTotal(snapshotReceitas.data().receitaTotal);
 
-        // Soma de despesas
+        // Query despesas
         const collDespesas = collection(db, 'UserFinance');
         const qDespesas = query(collDespesas, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
 
+        // Get docs despesas
+
+
+        // getTagsDespesas();
+
+        // Soma despesas
         const snapshotDespesas = await getAggregateFromServer(qDespesas, {
           despesaTotal: sum('valor')
         });
@@ -226,16 +236,42 @@ const Home: React.FC = () => {
     }
   }
 
+  async function getTagsDespesas() {
+    const collDespesas = collection(db, 'UserFinance');
+    const qDespesas = query(collDespesas, 
+      where("uid", "==", userInfo.uid), 
+      where("mes", "==", dataMesSelecionado), 
+      where("tipo", "==", "despesa"));
+    try {
+      const querySnapshot = await getDocs(qDespesas);
+
+      const despesasData: DespesasData[] = querySnapshot.docs.map((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        return {
+          valor: doc.data().valor,
+          tag: doc.data().tag
+        };
+      });
+
+      setTagsData(despesasData); // Ajustado para usar despesasData
+      console.log(despesasData); // Corrigido para logar despesasData
+    } catch (error) {
+      console.error("Erro ao buscar documentos de despesas: ", error);
+    }
+  }
+
   useEffect(() => {
     buscarTags();
-  }, [])
+    getTagsDespesas();
+  }, [dataMesSelecionado, userInfo])
 
   // Pie Chart
+  // Preparar dados para o gráfico de Pie
   const dataPie = {
+    labels: tagsData.map(item => item.tag), // Mapeia as tags
     datasets: [
       {
-        label: "",
-        data: [500, 300, 100, 150],
+        data: tagsData.map(item => item.valor), // Mapeia os valores das tags
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
       },
