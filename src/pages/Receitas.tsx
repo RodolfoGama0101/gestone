@@ -24,7 +24,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './Receitas.css';
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
@@ -41,7 +41,7 @@ const Receitas: React.FC = () => {
 
     Verifica();
 
-    const [data, setData] = useState(Date);
+    const [data, setData] = useState<Date | null>(null);
     const [valorReceita, setValorReceita] = useState(Number);
     const [descricao, setDescricao] = useState(String);
     const [uid, setUid] = useState("");
@@ -86,14 +86,19 @@ const Receitas: React.FC = () => {
     });
 
     async function addReceita() {
-        const docRef = await addDoc(collection(db, "UserFinance"), {
-            data: new Date(data),
-            mes: new Date(data).getMonth(),
-            valor: Number(valorReceita),
-            tipo: "receita",
-            descricao: descricao,
-            uid: uid
-        });
+        const dateWithTimezone = new Date(new Date(data!).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+        if (data) {
+            const docRef = await addDoc(collection(db, "UserFinance"), {
+              data: Timestamp.fromDate(dateWithTimezone),  // Aqui, data é uma instância de Date
+              mes: dateWithTimezone.getMonth(), // Somente acessa getMonth() se data não for null
+              valor: Number(valorReceita),
+              tipo: "receita",
+              descricao: descricao,
+              uid: uid
+            });
+          } else {
+            console.error("Data não foi definida corretamente.");
+          }
 
         // window.alert("Receita adicionada com sucesso!");
         setUpdateReceita(!updateReceita);
@@ -251,9 +256,12 @@ const Receitas: React.FC = () => {
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
                             <IonCardContent>
-                                <IonInput required label="R$:" type="number"color={'success'} className="input "  fill='outline'onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => setData(e.target.value)} />
-                                <IonInput required label="Descrição:" type="text" color={'success'}  className="input" fill="outline"  onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
+                                <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} />
+                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => {
+                                    const dateWithTimezone = new Date(new Date(e.target.value).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+                                    setData(dateWithTimezone);
+                                }} />
+                                <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
                         </IonContent>

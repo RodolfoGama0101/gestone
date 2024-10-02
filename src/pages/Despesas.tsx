@@ -246,7 +246,7 @@ const Despesas: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin receita">{despesaTotal.toFixed(2)}</h1>
+                                <h1 className="ion-margin receita">R$ {despesaTotal.toFixed(2)}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">

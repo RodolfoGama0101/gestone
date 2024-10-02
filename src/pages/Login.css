@@ -44,4 +44,22 @@
     color: #065a1c;
 }
 
+.eye {
+    margin: 0px;
+    align-items: end;
+}
 
+.input-password-container {
+    position: relative;
+  }
+
+  .eye-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+.input-login{
+    margin-bottom: 10px;
+}

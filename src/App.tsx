@@ -40,6 +40,7 @@ import '@ionic/react/css/palettes/dark.css';
 import './theme/variables.css';
 
 import { ThemeProvider } from './components/ThemeContext';
+import LandingPage from './pages/LandingPage';
 
 setupIonicReact();
 
@@ -61,6 +62,7 @@ const App: React.FC = () => (
           <Route path="/inicial" component={Inicial} />
           <Route path="/transferencias" component={Transferencias} />
           <Route path="/support" component={Suporte} />
+          <Route path="/landingpage" component={LandingPage}></Route>
         </IonRouterOutlet>
       </IonReactRouter>
     </ThemeProvider>
