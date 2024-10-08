@@ -16,7 +16,7 @@ import {
 } from "@ionic/react";
 import './Login.css';
 import React, { useState, useContext } from 'react';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
 import SignGitHub from "../components/SignGitHub";
 import SignMicrosoft from "../components/SignMicrosoft";
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
 
                 <div className="texts-login">
                   <IonText>
-                    <a href="" className="redefinir-senha">Redefinir senha</a>
+                    <a href={"EsqueciSenha"} className="redefinir-senha">Redefinir senha</a>
                   </IonText>
                 </div>
 
