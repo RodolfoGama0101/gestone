@@ -5,7 +5,7 @@ import { auth, db } from "../firebase/firebase";
 import { createOutline, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
-import "./Transferencias.css"
+import "./css/Transferencias.css"
 import { ThemeContext } from '../components/ThemeContext';
 
 const Transferencias: React.FC = () => {

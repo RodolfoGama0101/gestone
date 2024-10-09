@@ -1,5 +1,5 @@
 import { IonButton, IonContent, IonPage, IonText, IonImg, IonGrid, IonRow, IonCol } from '@ionic/react';
-import './Inicial.css';
+import './css/Inicial.css';
 import { ThemeContext } from '../components/ThemeContext';
 import { useContext } from 'react';
 

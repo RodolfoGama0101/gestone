@@ -1,28 +1,29 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton } from '@ionic/react';
-import "./Conta.css"
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton, IonAvatar, IonCard } from '@ionic/react';
+import "./css/Conta.css"
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../components/ThemeContext';
 
-
 const Conta: React.FC = () => {
-    const [userImg, setUserImg] = useState(Object);
-    const [userName, setUserName] = useState(Object);
-    const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
-
+    const [userImg, setUserImg] = useState<string | null>(null);
+    const [userName, setUserName] = useState<string | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
 
     useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
-                const userPhoto = user.photoURL;
-                const userName = user.displayName;
-                setUserImg(userPhoto);
-                setUserName(userName);
+                setUserImg(user.photoURL);
+                setUserName(user.displayName);
+                setUserEmail(user.email);
+            } else {
+                setUserImg(null);
+                setUserName(null);
+                setUserEmail(null);
             }
-        })
-    })
+        });
+        return () => unsubscribe(); // Clean up the subscription when the component unmounts
+    }, []);
 
     return (
         <IonPage>
@@ -34,19 +35,53 @@ const Conta: React.FC = () => {
                     <IonTitle>Sua Conta</IonTitle>
                 </IonToolbar>
             </IonHeader>
+            <IonContent>
+                <IonGrid>
+                    <IonRow>
+                        <IonCol className='user-info'>
+                            {userImg ? (
+                                <IonAvatar className='user-photo' >
+                                    <IonImg src={userImg} />
+                                </IonAvatar>
+                            ) : (
+                                <IonAvatar className='user-photo'>
+                                    <IonImg src="/assets/default-avatar.png" /> {/* Um avatar padrão se a foto não estiver disponível */}
+                                </IonAvatar>
+                            )}
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
 
-            <IonGrid>
-                <IonRow>
-                    <IonCol className='user-info'>
-                        {/* <IonImg src={userImg.toString()} className='user-photo' /> */}
-                        <IonText>
-                            <h2>{userName.toString()}</h2>
-                        </IonText>
-                    </IonCol>
+                <IonText className='ion-aling-text-start'>
+                    <h4>Account Information:</h4>
+                </IonText>
+                <IonCard className='ion-padding'>
+                    <IonText className='text-name'>
+                        <h3>Nome: {userName ? userName : 'Usuário Desconhecido'}</h3>
+                    </IonText>
+                </IonCard>
+                <IonCard className='ion-padding'>
+                    <IonText className='text-name'>
+                        <h3>E-mail: {userEmail ? userEmail : 'Email Desconhecido'}</h3>
+                    </IonText>
+ 
+                </IonCard>
 
-                </IonRow>
-            </IonGrid>
+                <IonGrid>
+                    <IonRow>
+                        <IonButton color={'success'}>
+                            Editar
+                        </IonButton>
+                    </IonRow>
+                    <IonRow>
+                        <IonButton color={'danger'}>
+                            Logout
+                        </IonButton>
+                    </IonRow>
+                </IonGrid>
 
+
+            </IonContent>
 
         </IonPage>
     );

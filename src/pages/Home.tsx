@@ -13,10 +13,12 @@ import {
   IonMenuButton,
   IonCard,
   IonCardContent,
-  IonPopover
+  IonPopover,
+  IonAvatar,
+  IonImg
 } from '@ionic/react';
 import { arrowDown, arrowUp, barChart, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
-import './Home.css';
+import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -238,9 +240,9 @@ const Home: React.FC = () => {
 
   async function getTagsDespesas() {
     const collDespesas = collection(db, 'UserFinance');
-    const qDespesas = query(collDespesas, 
-      where("uid", "==", userInfo.uid), 
-      where("mes", "==", dataMesSelecionado), 
+    const qDespesas = query(collDespesas,
+      where("uid", "==", userInfo.uid),
+      where("mes", "==", dataMesSelecionado),
       where("tipo", "==", "despesa"));
     try {
       const querySnapshot = await getDocs(qDespesas);
@@ -309,10 +311,19 @@ const Home: React.FC = () => {
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
-                {/* <IonImg src={userImg.toString()} className='user-photo'></IonImg> */}
-                <IonIcon icon={personCircleOutline} size='large' />
+                {userImg ? (
+                  <IonAvatar className='home-photo' >
+                    <IonImg src={userImg} />
+                  </IonAvatar>
+                ) : (
+                  <IonAvatar className='home-photo'>
+                    <IonImg src="/assets/default-avatar.png" className='default-photo'/> {/* Um avatar padrão se a foto não estiver disponível */}
+                  </IonAvatar>
+                )}
+                {/* <IonIcon icon={personCircleOutline} size='large' /> */}
               </IonMenuButton>
             </IonButtons>
+
             <IonText>
               <h1 className='nome ion-text-start ion-margin-start'>{userInfo.displayName}</h1>
             </IonText>

@@ -23,7 +23,7 @@ import {
     IonAlert
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
-import './Receitas.css';
+import './css/Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";

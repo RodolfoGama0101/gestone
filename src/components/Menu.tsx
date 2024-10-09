@@ -13,7 +13,8 @@ import { signOut } from 'firebase/auth';
 import {
   personOutline,
   alertCircleOutline,
-  exitOutline
+  exitOutline,
+  starHalfOutline
 } from 'ionicons/icons';
 import { auth } from '../firebase/firebase';
 
@@ -54,6 +55,13 @@ const Menu: React.FC = () => {
           }}>
           <IonIcon aria-hidden="true" slot="start" icon={alertCircleOutline} style={{'color': 'var(--ion-color-secondary-contrast'}} ></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Support</IonLabel>
+        </IonItem>
+        <IonItem button={true} href="/opiniao" style={{
+            '--background': 'var(--ion-background-color)',  
+            '--color': 'var(--ion-text-color)',
+          }}>
+          <IonIcon aria-hidden="true" slot="start" icon={starHalfOutline} style={{'color': 'var(--ion-color-secondary-contrast'}} ></IonIcon>
+          <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Avaliação</IonLabel>
         </IonItem>
         <IonItem button={true} href="/login" onClick={logout} style={{
             '--background': 'var(--ion-background-color)', 

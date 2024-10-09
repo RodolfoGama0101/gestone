@@ -60,7 +60,7 @@ ion-card {
     margin-left: 3px;
 }
 
-.year-select{   
+.year-select {
     margin: 0px;
     height: 20px;
 }
@@ -80,4 +80,21 @@ ion-card {
 
 .chart-bar-container {
     height: 300px;
+}
+
+.home-photo {
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 40px; /* Ajuste o tamanho conforme necessário */
+    border-radius: 50%; /* Torna o avatar circular */
+    overflow: hidden; /* Garante que a imagem não extrapole o contêiner */
+    display: flex; /* Para usar alinhamento flexível */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.default-photo {
+    width: 100%;
+    /* Ajusta a largura da imagem para 100% do contêiner */
+    height: auto;
+    /* Mantém a proporção da imagem */
 }
