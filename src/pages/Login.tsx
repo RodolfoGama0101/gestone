@@ -14,7 +14,7 @@ import {
   IonImg,
   IonInputPasswordToggle
 } from "@ionic/react";
-import './Login.css';
+import './css/Login.css';
 import React, { useState, useContext } from 'react';
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";

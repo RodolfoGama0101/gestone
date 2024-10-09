@@ -1,7 +1,7 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
-import './Login.css';
+import './css/Login.css';
 
 const EsqueciSenha: React.FC = () => {
     const [email, setEmail] = useState("");

@@ -1,5 +1,5 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonText, IonToolbar } from '@ionic/react';
-import './Charts.css';
+import './css/Cadastro.css';
 import Verifica from '../firebase/verifica';
 import ChartBar from '../components/ChartBar';
 import { ThemeContext } from '../components/ThemeContext';

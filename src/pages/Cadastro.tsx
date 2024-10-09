@@ -15,9 +15,9 @@ import {
     IonItem,
     IonList,
 } from "@ionic/react";
-import './Cadastro.css';
+import './css/Cadastro.css';
 import React, { useState, useEffect, useContext } from 'react';
-import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, getAuth } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { ThemeContext } from '../components/ThemeContext';
@@ -40,12 +40,21 @@ const Cadastro: React.FC = () => {
                 // Cria o usuário com e-mail e senha
                 const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                 const user = userCredential.user;
+                const defaultAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/gestone-d508a.appspot.com/o/default.png?alt=media&token=a1521066-52cf-49f2-9d84-78a8085807d4";
 
                 if (user) {
                     // Atualiza o nome do usuário
                     console.log("Atualizando o perfil...");
                     await updateProfile(user, { displayName: nome });
                     console.log("Perfil atualizado com sucesso!");
+
+                    updateProfile(user, {
+                        photoURL: defaultAvatarUrl
+                    }).then(() => {
+                        console.log("Perfil do usuário atualizado com avatar padrão.");
+                    }).catch((error) => {
+                        console.error("Erro ao atualizar perfil do usuário:", error);
+                    });
 
                     // Armazena o mês atual para início
                     console.log("Armazenando mês no Firestore...");
@@ -90,6 +99,9 @@ const Cadastro: React.FC = () => {
             window.alert("As senhas não conferem.");
             setIsLoading(false);  // Define o estado como não carregando em caso de erro
         }
+
+
+
     };
 
     // Verifica login após a página carregar
@@ -171,7 +183,7 @@ const Cadastro: React.FC = () => {
                                     fill='outline'
                                     onIonChange={(e: any) => setConfirmaSenha(e.target.value)}
                                 > <IonInputPasswordToggle slot="end" color={"success"}></IonInputPasswordToggle> </IonInput>
-                                
+
                                 <IonButton
                                     expand='block'
                                     color={'success'}

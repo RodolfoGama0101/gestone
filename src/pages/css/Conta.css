@@ -1,0 +1,21 @@
+.user-info {
+    display: flex;
+    flex-direction: column; /* Organiza os itens (imagem e texto) em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+}
+
+.account-info {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin-bottom: 0;
+}
+
+.text-name {
+    font-size: 20px;
+}
+
+.user-photo {
+    width: 100px;
+    height: 100px;
+}

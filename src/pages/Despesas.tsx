@@ -31,7 +31,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
-import "./Despesas.css"
+import "./css/Despesas.css"
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
 

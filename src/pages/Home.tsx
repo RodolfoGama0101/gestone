@@ -16,7 +16,7 @@ import {
   IonPopover
 } from '@ionic/react';
 import { arrowDown, arrowUp, barChart, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
-import './Home.css';
+import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
