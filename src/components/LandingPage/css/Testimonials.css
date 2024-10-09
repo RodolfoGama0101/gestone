@@ -1,0 +1,147 @@
+.testimonials {
+    background-color: rgb(61, 117, 100);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.divbox {
+    background-color: #ebe2e2;
+    border-radius: 10px;
+    position: absolute;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: carousel 15s linear infinite;
+}
+
+.divbox:nth-child(1) {
+    animation-delay: -3s;
+}
+
+.divbox:nth-child(2) {
+    animation-delay: 0;
+}
+
+.divbox:nth-child(3) {
+    animation-delay: 3s;
+}
+
+.divbox:nth-child(4) {
+    animation-delay: 6s;
+}
+
+.divbox:last-child {
+    animation-delay: 9s;
+}
+
+@keyframes carousel {
+    0% {
+        transform: translateY(100%) scale(0.5);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    3%,
+    20% {
+        /* 3, 100/total number of cards */
+        transform: translateY(100%) scale(0.7);
+        opacity: 0.4;
+        visibility: visible;
+    }
+
+    23%,
+    40% {
+        /* [(100/total number of cards) + 3], [(100/number of cards) * 2] */
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    43%,
+    60% {
+        /* [(100/total number of cards)*2 + 3], [(100/number of cards) * 3] */
+        transform: translateY(-100%) scale(0.7);
+        opacity: 0.4;
+        visibility: visible;
+    }
+
+    63% {
+        /* [(100/total number of cards) * 3] + 3 */
+        transform: translateY(-100%) scale(0.5);
+        opacity: 0;
+        visibility: visible;
+    }
+
+    100% {
+        transform: translateY(-100%) scale(0.5);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+/* Responsividade para telas menores que 785px */
+@media (max-width: 785px) {
+    .testimonials {
+        padding: 100px 2%;
+        flex-direction: column;
+        text-align: center;
+        overflow: auto;
+        gap: 30rem;
+    }
+    
+    .carousel {
+        flex-direction: column;
+        height: 450px; /* Ajusta a altura para caber melhor em telas pequenas */
+        gap: 60px;
+    }
+
+    .divbox {
+        position: absolute; /* Remove a posição absoluta em telas pequenas */
+        margin: 80px 0; /* Ajusta as margens */
+       
+    }
+
+@keyframes carousel {
+        0% {
+            transform: translateY(50%) scale(0.5);
+            opacity: 0;
+        }
+
+        3%,
+        20% {
+            transform: translateY(50%) scale(0.7);
+            opacity: 0.4;
+        }
+
+        23%,
+        40% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        43%,
+        60% {
+            transform: translateY(-25%) scale(0.7);
+            opacity: 0.4;
+        }
+
+        63%{
+            transform: translateY(-50%) scale(0.5);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(-50%) scale(0.5);
+            opacity: 0;
+        }
+    }
+}

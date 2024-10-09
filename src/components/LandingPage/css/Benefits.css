@@ -1,0 +1,11 @@
+.benefits {
+    height: 465px;
+    width: 50%;
+    background-color: rgb(61, 117, 100);;
+    float: right;
+}
+
+iframe{
+    width: 70%;
+    height: 80%;
+}
