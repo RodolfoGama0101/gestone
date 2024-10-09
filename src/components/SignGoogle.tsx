@@ -22,7 +22,7 @@ const SignGoogle: React.FC = () => {
                         tags: [
                             "Roupas",
                             "Educação",
-                            "Eletrônicos",
+                            "Eletrônicos", 
                             "Saúde",
                             "Casa",
                             "Lazer",
