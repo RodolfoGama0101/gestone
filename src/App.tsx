@@ -42,6 +42,7 @@ import './theme/variables.css';
 import { ThemeProvider } from './components/ThemeContext';
 import LandingPage from './pages/LandingPage';
 import EsqueciSenha from './pages/EsqueciSenha';
+import Avaliacoes from './pages/Avaliacoes';
 
 setupIonicReact();
 
@@ -63,8 +64,9 @@ const App: React.FC = () => (
           <Route path="/inicial" component={Inicial} />
           <Route path="/transferencias" component={Transferencias} />
           <Route path="/support" component={Suporte} />
-          <Route path="/esquecisenha" component={EsqueciSenha}></Route>
-          <Route path="/landingpage" component={LandingPage}></Route>
+          <Route path="/esquecisenha" component={EsqueciSenha} />
+          <Route path="/landingpage" component={LandingPage} />
+          <Route path="/avaliacoes" component={Avaliacoes} />
         </IonRouterOutlet>
       </IonReactRouter>
     </ThemeProvider>
