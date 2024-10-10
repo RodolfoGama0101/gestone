@@ -232,9 +232,7 @@ const Home: React.FC = () => {
     if (docSnap.exists()) {
       let tagData = docSnap.data();
       setTags(tagData.tags);
-      // console.log(tags)
     } else {
-      // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
   }
@@ -245,19 +243,23 @@ const Home: React.FC = () => {
       where("uid", "==", userInfo.uid),
       where("mes", "==", dataMesSelecionado),
       where("tipo", "==", "despesa"));
+
     try {
       const querySnapshot = await getDocs(qDespesas);
 
-      const despesasData: DespesasData[] = querySnapshot.docs.map((doc) => {
-        // doc.data() is never undefined for query doc snapshots
+      const despesasData = querySnapshot.docs.map((doc) => {
         return {
           valor: doc.data().valor,
-          tag: doc.data().tag
+          tag: doc.data().tag,
         };
       });
 
       setTagsData(despesasData); // Ajustado para usar despesasData
       console.log(despesasData); // Corrigido para logar despesasData
+
+      // Após buscar as despesas, agrupar por tag
+      const despesasAgrupadas = agruparDespesasPorTag(despesasData);
+      setTagsDataAgrupado(despesasAgrupadas); // Atualiza estado com dados agrupados
     } catch (error) {
       console.error("Erro ao buscar documentos de despesas: ", error);
     }
@@ -266,46 +268,113 @@ const Home: React.FC = () => {
   function agruparDespesasPorTag(data: any) {
     const despesasAgrupadas = data.reduce((acc: any, item: any) => {
       const { tag, valor } = item;
-  
+
       // Se a tag já existir no acumulador, somamos o valor
       if (acc[tag]) {
         acc[tag] += valor;
       } else {
-        // Caso contrário, iniciamos com o valor atual
         acc[tag] = valor;
       }
-      
-      console.log(acc)
       return acc;
     }, {});
-    
-    setTagsDataAgrupado(despesasAgrupadas);
+
     return despesasAgrupadas;
   }
 
   useEffect(() => {
-    buscarTags();
-    getTagsDespesas();
-    // agruparDespesasPorTag(tagsData);
-    // console.log(tagsDataAgrupado)
-  }, [dataMesSelecionado, userInfo])
-  
+    async function fetchData() {
+      await buscarTags(); // Busque as tags
+      await getTagsDespesas(); // Depois, busque e agrupe as despesas
+    }
+
+    fetchData(); // Função assíncrona dentro do useEffect
+
+  }, [dataMesSelecionado, userInfo]);
+
+  const tagColorMap: Record<string, string> = {
+    "Roupas": "#4490db99",
+    "Educação": "#1d1aeb99",
+    "Eletrônicos": "#0db51299",
+    "Saúde": "#c1e5e699",
+    "Casa": "#b3d95599",
+    "Lazer": "#e0d61099",
+    "Restaurante": "#e02f1099",
+    "Mercado": "#5118b599",
+    "Serviços": "#40341e99",
+    "Transporte": "#1a191899",
+    "Viagem": "#30b9d199",
+    "Outros": "#464e4f99"
+  };
+
+  function obterCorParaTag(tag: string) {
+    return tagColorMap[tag] || '#000000'; // Default to black if the tag isn't found
+  }
+
   // Pie Chart
-  // Preparar dados para o gráfico de Pie
   const dataPie = {
-    labels: tagsData.map(item => item.tag), // Mapeia as tags
+    labels: Object.keys(tagsDataAgrupado), // Mapeia as tags agrupadas
     datasets: [
       {
-        data: tagsData.map(item => item.valor), // Mapeia os valores das tags
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        data: Object.values(tagsDataAgrupado), // Mapeia os valores agrupados
+        backgroundColor: Object.keys(tagsDataAgrupado).map(tag => obterCorParaTag(tag)), // Mapeia as cores das tags
+        hoverBackgroundColor: Object.keys(tagsDataAgrupado).map(tag => obterCorParaTag(tag)), // Cores ao passar o mouse
       },
     ],
   };
 
-  const configPie = {
-    
-  }
+  const configPie: any = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false, // Remove a legenda
+      },
+      title: {
+        display: true,
+        text: 'Despesas por tags',
+        color: '#ffffff',
+        font: {
+          size: 20,
+          family: 'Arial',
+          weight: 'bold', // Aqui ajustamos para o tipo correto
+        },
+        padding: {
+          top: 10,
+          bottom: 20,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem: any) {
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Formato do tooltip
+          },
+        },
+        backgroundColor: '#333',
+        titleColor: '#fff',
+        bodyColor: '#fff',
+        borderColor: '#fff',
+        borderWidth: 1,
+      },
+    },
+    elements: {
+      arc: {
+        borderWidth: 1,
+        borderColor: '#fff',
+        hoverBorderWidth: 2,
+        hoverBorderColor: '#ffffff',
+        hoverOffset: 10,
+      },
+    },
+    layout: {
+      padding: {
+        top: 20,
+        bottom: 20,
+        right: 20, 
+        left: 20
+      },
+    },
+  };
+  
 
   return (
     <>
@@ -340,7 +409,7 @@ const Home: React.FC = () => {
                   </IonAvatar>
                 ) : (
                   <IonAvatar className='home-photo'>
-                    <IonImg src="/assets/default-avatar.png" className='default-photo'/> {/* Um avatar padrão se a foto não estiver disponível */}
+                    <IonImg src="/assets/default-avatar.png" className='default-photo' /> {/* Um avatar padrão se a foto não estiver disponível */}
                   </IonAvatar>
                 )}
                 {/* <IonIcon icon={personCircleOutline} size='large' /> */}
@@ -511,7 +580,7 @@ const Home: React.FC = () => {
                     </IonText>
                     <IonCol size='auto'>
                       <div className="chart-pie-container">
-                        <Pie data={dataPie} options={configPie}/>
+                        <Pie data={dataPie} options={configPie} />
                       </div>
                     </IonCol>
                   </IonCardContent>
