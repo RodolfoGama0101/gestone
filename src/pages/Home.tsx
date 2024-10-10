@@ -50,6 +50,7 @@ const Home: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const [tags, setTags] = useState(Object);
   const [tagsData, setTagsData] = useState<DespesasData[]>([]);
+  const [tagsDataAgrupado, setTagsDataAgrupado] = useState<DespesasData[]>([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -231,7 +232,7 @@ const Home: React.FC = () => {
     if (docSnap.exists()) {
       let tagData = docSnap.data();
       setTags(tagData.tags);
-      console.log(tags)
+      // console.log(tags)
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -262,11 +263,33 @@ const Home: React.FC = () => {
     }
   }
 
+  function agruparDespesasPorTag(data: any) {
+    const despesasAgrupadas = data.reduce((acc: any, item: any) => {
+      const { tag, valor } = item;
+  
+      // Se a tag já existir no acumulador, somamos o valor
+      if (acc[tag]) {
+        acc[tag] += valor;
+      } else {
+        // Caso contrário, iniciamos com o valor atual
+        acc[tag] = valor;
+      }
+      
+      console.log(acc)
+      return acc;
+    }, {});
+    
+    setTagsDataAgrupado(despesasAgrupadas);
+    return despesasAgrupadas;
+  }
+
   useEffect(() => {
     buscarTags();
     getTagsDespesas();
+    // agruparDespesasPorTag(tagsData);
+    // console.log(tagsDataAgrupado)
   }, [dataMesSelecionado, userInfo])
-
+  
   // Pie Chart
   // Preparar dados para o gráfico de Pie
   const dataPie = {
@@ -281,7 +304,7 @@ const Home: React.FC = () => {
   };
 
   const configPie = {
-
+    
   }
 
   return (
@@ -488,7 +511,7 @@ const Home: React.FC = () => {
                     </IonText>
                     <IonCol size='auto'>
                       <div className="chart-pie-container">
-                        <Pie data={dataPie} />
+                        <Pie data={dataPie} options={configPie}/>
                       </div>
                     </IonCol>
                   </IonCardContent>

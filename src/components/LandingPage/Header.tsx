@@ -2,16 +2,16 @@ import React, { useState, useRef } from 'react';
 import './css/Header.css';
 
 const Header: React.FC = () => {
-    
-  const [isActive, setIsActive] = useState(false);
 
-  const navMenuRef = useRef(null);
-  const menuRef = useRef(null);
+    const [isActive, setIsActive] = useState(false);
 
-  const handleMenuClick = () => {
-    setIsActive(!isActive);  
+    const navMenuRef = useRef(null);
+    const menuRef = useRef(null);
 
-  };
+    const handleMenuClick = () => {
+        setIsActive(!isActive);
+
+    };
 
     return (
         <header className="header">
@@ -40,7 +40,7 @@ const Header: React.FC = () => {
                         <a href="#" className="home-cad">Fazer Cadastro</a>
                     </div>
                     <div className="home-img">
-                        <img src='versaoLetraPreta.png'></img>   
+                        <img src='versaoLetraPreta.png'></img>
                     </div>
                 </section>
             </main>
