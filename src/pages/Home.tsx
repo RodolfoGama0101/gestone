@@ -335,7 +335,7 @@ const Home: React.FC = () => {
         font: {
           size: 20,
           family: 'Arial',
-          weight: 'bold', // Aqui ajustamos para o tipo correto
+          weight: 'bold',
         },
         padding: {
           top: 10,
@@ -345,7 +345,7 @@ const Home: React.FC = () => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Formato do tooltip
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)} (${((tooltipItem.raw / despesaTotal) * 100).toFixed(2)}%)`; // Adiciona a porcentagem ao tooltip
           },
         },
         backgroundColor: '#333',
@@ -354,13 +354,21 @@ const Home: React.FC = () => {
         borderColor: '#fff',
         borderWidth: 0,
       },
+      datalabels: {
+        color: '#ffffff',
+        formatter: (value: any, context: any) => {
+          const total = context.chart._getDatasetTotal(context.datasetIndex);
+          const percentage = ((value / total) * 100).toFixed(2) + '%';
+          return percentage;
+        },
+      },
     },
     elements: {
       arc: {
         borderWidth: 1,
-        borderColor: '#fff',
+        borderColor: '#202020',
         hoverBorderWidth: 1,
-        hoverBorderColor: '#ffffff',
+        hoverBorderColor: '#101010',
         hoverOffset: 20,
       },
     },
@@ -369,7 +377,7 @@ const Home: React.FC = () => {
         top: 20,
         bottom: 20,
         right: 20,
-        left: 20
+        left: 20,
       },
     },
   };
