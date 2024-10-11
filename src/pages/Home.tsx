@@ -17,7 +17,7 @@ import {
   IonAvatar,
   IonImg
 } from '@ionic/react';
-import { arrowDown, arrowUp, barChart, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
 import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -25,9 +25,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 import { meses } from '../variables/variables';
-import ChartBar from '../components/ChartBar';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar, Pie, Doughnut } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
 import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
@@ -292,18 +291,18 @@ const Home: React.FC = () => {
   }, [dataMesSelecionado, userInfo]);
 
   const tagColorMap: Record<string, string> = {
-    "Roupas": "#4490db99",
-    "Educação": "#1d1aeb99",
-    "Eletrônicos": "#0db51299",
-    "Saúde": "#c1e5e699",
-    "Casa": "#b3d95599",
-    "Lazer": "#e0d61099",
-    "Restaurante": "#e02f1099",
-    "Mercado": "#5118b599",
-    "Serviços": "#40341e99",
-    "Transporte": "#1a191899",
-    "Viagem": "#30b9d199",
-    "Outros": "#464e4f99"
+    "Roupas": "#8c11cf99",
+    "Educação": "#ffea2b99",
+    "Eletrônicos": "#1790d199",
+    "Saúde": "#7dff6699",
+    "Casa": "#f7b2e499",
+    "Lazer": "#fc7e0f99",
+    "Restaurante": "#ff242499",
+    "Mercado": "#0b801999",
+    "Serviços": "#13247d99",
+    "Transporte": "#5b607599",
+    "Viagem": "#69340599",
+    "Outros": "#ffffff99"
   };
 
   function obterCorParaTag(tag: string) {
@@ -353,16 +352,16 @@ const Home: React.FC = () => {
         titleColor: '#fff',
         bodyColor: '#fff',
         borderColor: '#fff',
-        borderWidth: 1,
+        borderWidth: 0,
       },
     },
     elements: {
       arc: {
         borderWidth: 1,
         borderColor: '#fff',
-        hoverBorderWidth: 2,
+        hoverBorderWidth: 1,
         hoverBorderColor: '#ffffff',
-        hoverOffset: 10,
+        hoverOffset: 20,
       },
     },
     layout: {
@@ -404,12 +403,12 @@ const Home: React.FC = () => {
             <IonButtons slot='end'>
               <IonMenuButton>
                 {userImg ? (
-                  <IonAvatar className='home-photo' >
-                    <IonImg src={userImg} />
-                  </IonAvatar>
+                  <div className='home-photo' >
+                    <IonImg src={userImg} className='avatar-image'/>
+                  </div>
                 ) : (
                   <IonAvatar className='home-photo'>
-                    <IonImg src="/assets/default-avatar.png" className='default-photo' /> {/* Um avatar padrão se a foto não estiver disponível */}
+                    <IonImg src="/assets/default-avatar.png" className='avatar-image' /> {/* Um avatar padrão se a foto não estiver disponível */}
                   </IonAvatar>
                 )}
                 {/* <IonIcon icon={personCircleOutline} size='large' /> */}
@@ -580,7 +579,7 @@ const Home: React.FC = () => {
                     </IonText>
                     <IonCol size='auto'>
                       <div className="chart-pie-container">
-                        <Pie data={dataPie} options={configPie} />
+                        <Doughnut data={dataPie} options={configPie} />
                       </div>
                     </IonCol>
                   </IonCardContent>

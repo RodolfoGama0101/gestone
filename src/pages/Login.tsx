@@ -81,8 +81,8 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="center-google-btn">
-                  <SignGoogle />
                   <SignMicrosoft />
+                  <SignGoogle />
                   <SignGitHub />
                 </div>
 
