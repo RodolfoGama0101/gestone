@@ -17,7 +17,7 @@ import {
   IonAvatar,
   IonImg
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, menuOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
 import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -344,7 +344,7 @@ const Home: React.FC = () => {
       },
       tooltip: {
         callbacks: {
-          label: function(tooltipItem: any) {
+          label: function (tooltipItem: any) {
             return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Formato do tooltip
           },
         },
@@ -368,12 +368,12 @@ const Home: React.FC = () => {
       padding: {
         top: 20,
         bottom: 20,
-        right: 20, 
+        right: 20,
         left: 20
       },
     },
   };
-  
+
 
   return (
     <>
@@ -402,16 +402,7 @@ const Home: React.FC = () => {
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
-                {userImg ? (
-                  <div className='home-photo' >
-                    <IonImg src={userImg} className='avatar-image'/>
-                  </div>
-                ) : (
-                  <IonAvatar className='home-photo'>
-                    <IonImg src="/assets/default-avatar.png" className='avatar-image' /> {/* Um avatar padrão se a foto não estiver disponível */}
-                  </IonAvatar>
-                )}
-                {/* <IonIcon icon={personCircleOutline} size='large' /> */}
+                <IonIcon icon={menuOutline} size='large' />
               </IonMenuButton>
             </IonButtons>
 

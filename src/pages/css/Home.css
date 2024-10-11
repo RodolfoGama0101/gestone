@@ -85,14 +85,16 @@ ion-card {
 
 /* Garante que as imagens tenham o mesmo tamanho */
 .home-photo {
-    width: 97.9%; /* Defina o tamanho desejado */
-    height: 97.9%;
+    width: 100%; /* Defina o tamanho desejado */
+    height: 100%;
   }
   
   .avatar-image {
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: 85%;
     object-fit: cover; /* Garante que a imagem preencha o espaço e mantenha a proporção */
-    border-radius: 50%; /* Garante que a imagem seja circular */
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
   

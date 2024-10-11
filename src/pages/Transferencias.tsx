@@ -137,7 +137,8 @@ const Transferencias: React.FC = () => {
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
                             {saldo.map(transferencias => {
-                                const negativo = transferencias.tipo === "receita" ? "" : "-";
+                                const negativo = transferencias.tipo === "receita" ? "+" : "-";
+                                const cor = transferencias.tipo === "receita" ? "success" : "";
                                 return (
                                     <IonItem key={transferencias.id} style={{
                                         '--background': 'var(--ion-background-color)', // Controla o fundo da página
@@ -146,7 +147,7 @@ const Transferencias: React.FC = () => {
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol>
-                                                    <IonText>
+                                                    <IonText color={cor}>
                                                         <h1 className="ion-no-padding">{"R$ " + negativo + transferencias.valor}</h1>
                                                     </IonText>
 

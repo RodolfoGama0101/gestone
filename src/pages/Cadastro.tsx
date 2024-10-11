@@ -40,7 +40,7 @@ const Cadastro: React.FC = () => {
                 // Cria o usuário com e-mail e senha
                 const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                 const user = userCredential.user;
-                const defaultAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/gestone-d508a.appspot.com/o/default.png?alt=media&token=a1521066-52cf-49f2-9d84-78a8085807d4";
+                const defaultAvatarUrl = "https://firebasestorage.googleapis.com/v0/b/gestone-d508a.appspot.com/o/boneco.svg?alt=media&token=a1521066-52cf-49f2-9d84-78a8085807d4";
 
                 if (user) {
                     // Atualiza o nome do usuário
