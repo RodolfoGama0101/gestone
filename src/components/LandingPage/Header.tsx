@@ -19,10 +19,10 @@ const Header: React.FC = () => {
             <nav className="navigation">
                 <a href="#" className="logo">Gestone</a>
                 <ul ref={navMenuRef} className={`nav-menu ${isActive ? 'ativo' : ''}`}>
-                    <li className="nav-item"><a href="paginadecadastro">Cadastro</a></li>
-                    <li className="nav-item"><a href="paginadelogin">Login</a></li>
+                    <li className="nav-item"><a href="Cadastro">Cadastro</a></li>
+                    <li className="nav-item"><a href="Login">Login</a></li>
                     <li className="nav-item"><a href="paginasobre">Sobre</a></li>
-                    <li className="nav-item"><a href="paginadesuporte">Suporte</a></li>
+                    <li className="nav-item"><a href="Suporte">Support</a></li>
 
                 </ul>
                 <div ref={menuRef} className={`menu ${isActive ? 'ativo' : ''}`} onClick={handleMenuClick}>
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
                         <h2 className="text-h2">Bem vindo ao Gestone</h2>
                         <h1 className="text-h1">Controle suas Finanças de Forma Simples e Eficaz</h1>
                         <p>Descubra como gerenciar seu dinheiro e alcançar seus objetivos financeiros com nosso sistema de gestão financeira pessoal</p>
-                        <a href="#" className="home-cad">Fazer Cadastro</a>
+                        <a href="Cadastro" className="home-cad">Fazer Cadastro</a>
                     </div>
                     <div className="home-img">
                         <img src='versaoLetraPreta.png'></img>
