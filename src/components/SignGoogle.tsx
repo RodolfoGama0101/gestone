@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { IonButton, IonIcon } from "@ionic/react";
+import { IonButton, IonIcon, IonText } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
 import "./SignGoogle.css"
 
@@ -22,7 +22,7 @@ const SignGoogle: React.FC = () => {
                         tags: [
                             "Roupas",
                             "Educação",
-                            "Eletrônicos", 
+                            "Eletrônicos",
                             "Saúde",
                             "Casa",
                             "Lazer",
@@ -61,7 +61,12 @@ const SignGoogle: React.FC = () => {
     }
 
     return (
-        <IonButton color={'success'} className="ion-margin-top" onClick={(googleLogin)}><IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" /></IonButton>
+        <IonButton color={'success'} className="ion-margin-top" onClick={(googleLogin)} expand='block'>
+            <IonIcon slot="icon-only" icon={logoGoogle} className="google-logo" />
+            <IonText className="ion-text-capitalize">
+                <p>Sign in with Google</p>
+            </IonText>
+        </IonButton>
     );
 }
 

@@ -13,9 +13,7 @@ import {
   IonMenuButton,
   IonCard,
   IonCardContent,
-  IonPopover,
-  IonAvatar,
-  IonImg
+  IonPopover
 } from '@ionic/react';
 import { arrowDown, arrowUp, cashOutline, menuOutline,chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
 import './css/Home.css';

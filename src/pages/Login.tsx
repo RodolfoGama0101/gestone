@@ -74,6 +74,8 @@ const Login: React.FC = () => {
                   <IonText><h2>Entrar</h2></IonText>
                 </IonButton>
 
+                <SignGoogle />
+
                 <div className="texts-login">
                   <IonText>
                     <a href={"EsqueciSenha"} className="redefinir-senha">Redefinir senha</a>
@@ -81,9 +83,7 @@ const Login: React.FC = () => {
                 </div>
 
                 <div className="center-google-btn">
-                  <SignMicrosoft />
-                  <SignGoogle />
-                  <SignGitHub />
+
                 </div>
 
                 <div className="texts-login">
