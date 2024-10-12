@@ -9,6 +9,7 @@
     align-items: start;
     justify-content: start;
     margin-bottom: 0;
+    margin-bottom: 10px; /* Aproxima o avatar do nome */
 }
 
 .text-name {
@@ -18,4 +19,13 @@
 .user-photo {
     width: 100px;
     height: 100px;
+}
+
+.footer-logout {
+    padding: 0px;
+    display: flex;
+}
+
+.footer-logout ion-button {
+    margin: 0;
 }

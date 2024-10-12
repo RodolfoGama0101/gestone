@@ -17,7 +17,7 @@ import {
   IonAvatar,
   IonImg
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, menuOutline,chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
 import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -26,7 +26,7 @@ import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc
 import Menu from '../components/Menu';
 import { meses } from '../variables/variables';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import { Bar, Pie } from 'react-chartjs-2';
+import { Bar, Pie, Doughnut } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
 
 // Registrando os componentes do Chart.js
@@ -290,18 +290,18 @@ const Home: React.FC = () => {
   }, [dataMesSelecionado, userInfo]);
 
   const tagColorMap: Record<string, string> = {
-    "Roupas": "#4490db99",
-    "Educação": "#1d1aeb99",
-    "Eletrônicos": "#0db51299",
-    "Saúde": "#c1e5e699",
-    "Casa": "#b3d95599",
-    "Lazer": "#e0d61099",
-    "Restaurante": "#e02f1099",
-    "Mercado": "#5118b599",
-    "Serviços": "#40341e99",
-    "Transporte": "#1a191899",
-    "Viagem": "#30b9d199",
-    "Outros": "#464e4f99"
+    "Roupas": "#8c11cf99",
+    "Educação": "#ffea2b99",
+    "Eletrônicos": "#1790d199",
+    "Saúde": "#7dff6699",
+    "Casa": "#f7b2e499",
+    "Lazer": "#fc7e0f99",
+    "Restaurante": "#ff242499",
+    "Mercado": "#0b801999",
+    "Serviços": "#13247d99",
+    "Transporte": "#5b607599",
+    "Viagem": "#69340599",
+    "Outros": "#ffffff99"
   };
 
   function obterCorParaTag(tag: string) {
@@ -334,7 +334,7 @@ const Home: React.FC = () => {
         font: {
           size: 20,
           family: 'Arial',
-          weight: 'bold', // Aqui ajustamos para o tipo correto
+          weight: 'bold',
         },
         padding: {
           top: 10,
@@ -343,36 +343,44 @@ const Home: React.FC = () => {
       },
       tooltip: {
         callbacks: {
-          label: function(tooltipItem: any) {
-            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Formato do tooltip
+          label: function (tooltipItem: any) {
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)} (${((tooltipItem.raw / despesaTotal) * 100).toFixed(2)}%)`; // Adiciona a porcentagem ao tooltip
           },
         },
         backgroundColor: '#333',
         titleColor: '#fff',
         bodyColor: '#fff',
         borderColor: '#fff',
-        borderWidth: 1,
+        borderWidth: 0,
+      },
+      datalabels: {
+        color: '#ffffff',
+        formatter: (value: any, context: any) => {
+          const total = context.chart._getDatasetTotal(context.datasetIndex);
+          const percentage = ((value / total) * 100).toFixed(2) + '%';
+          return percentage;
+        },
       },
     },
     elements: {
       arc: {
         borderWidth: 1,
-        borderColor: '#fff',
-        hoverBorderWidth: 2,
-        hoverBorderColor: '#ffffff',
-        hoverOffset: 10,
+        borderColor: '#202020',
+        hoverBorderWidth: 1,
+        hoverBorderColor: '#101010',
+        hoverOffset: 20,
       },
     },
     layout: {
       padding: {
         top: 20,
         bottom: 20,
-        right: 20, 
-        left: 20
+        right: 20,
+        left: 20,
       },
     },
   };
-  
+
 
   return (
     <>
@@ -401,16 +409,7 @@ const Home: React.FC = () => {
             {/* Menu button */}
             <IonButtons slot='end'>
               <IonMenuButton>
-                {userImg ? (
-                  <IonAvatar className='home-photo' >
-                    <IonImg src={userImg} />
-                  </IonAvatar>
-                ) : (
-                  <IonAvatar className='home-photo'>
-                    <IonImg src="/assets/default-avatar.png" className='default-photo' /> {/* Um avatar padrão se a foto não estiver disponível */}
-                  </IonAvatar>
-                )}
-                {/* <IonIcon icon={personCircleOutline} size='large' /> */}
+                <IonIcon icon={menuOutline} size='large' />
               </IonMenuButton>
             </IonButtons>
 
@@ -578,7 +577,7 @@ const Home: React.FC = () => {
                     </IonText>
                     <IonCol size='auto'>
                       <div className="chart-pie-container">
-                        <Pie data={dataPie} options={configPie} />
+                        <Doughnut data={dataPie} options={configPie} />
                       </div>
                     </IonCol>
                   </IonCardContent>

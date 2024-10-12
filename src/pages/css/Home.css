@@ -82,19 +82,19 @@ ion-card {
     height: 300px;
 }
 
-.home-photo {
-    width: 40px; /* Ajuste o tamanho conforme necessário */
-    height: 40px; /* Ajuste o tamanho conforme necessário */
-    border-radius: 50%; /* Torna o avatar circular */
-    overflow: hidden; /* Garante que a imagem não extrapole o contêiner */
-    display: flex; /* Para usar alinhamento flexível */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-}
 
-.default-photo {
-    width: 100%;
-    /* Ajusta a largura da imagem para 100% do contêiner */
-    height: auto;
-    /* Mantém a proporção da imagem */
-}
+/* Garante que as imagens tenham o mesmo tamanho */
+.home-photo {
+    width: 100%; /* Defina o tamanho desejado */
+    height: 100%;
+  }
+  
+  .avatar-image {
+    width: 85%;
+    height: 85%;
+    object-fit: cover; /* Garante que a imagem preencha o espaço e mantenha a proporção */
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  

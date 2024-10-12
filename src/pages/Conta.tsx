@@ -1,6 +1,6 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton, IonAvatar, IonCard } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton, IonAvatar, IonCard, IonFooter } from '@ionic/react';
 import "./css/Conta.css"
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../components/ThemeContext';
@@ -25,64 +25,58 @@ const Conta: React.FC = () => {
         return () => unsubscribe(); // Clean up the subscription when the component unmounts
     }, []);
 
+    function logout() {
+        signOut(auth).then(() => {
+          window.location.href = "/";
+        }).catch((error) => {
+          const errorMessage = error.message;
+          alert(errorMessage);
+        });
+      }
+
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar color={'success'}>
+            <IonHeader className='ion-no-border'>
+                <IonToolbar>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton>
                     </IonButtons>
                     <IonTitle>Sua Conta</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
+            <IonContent fullscreen>
                 <IonGrid>
                     <IonRow>
                         <IonCol className='user-info'>
                             {userImg ? (
-                                <IonAvatar className='user-photo' >
+                                <IonAvatar className='user-photo'>
                                     <IonImg src={userImg} />
                                 </IonAvatar>
                             ) : (
                                 <IonAvatar className='user-photo'>
-                                    <IonImg src="/assets/default-avatar.png" /> {/* Um avatar padrão se a foto não estiver disponível */}
+                                    <IonImg src="/assets/default-avatar.png" /> {/* Avatar padrão */}
                                 </IonAvatar>
                             )}
                         </IonCol>
                     </IonRow>
-                </IonGrid>
-
-                <IonText className='ion-aling-text-start'>
-                    <h4>Account Information:</h4>
-                </IonText>
-                <IonCard className='ion-padding'>
-                    <IonText className='text-name'>
-                        <h3>Nome: {userName ? userName : 'Usuário Desconhecido'}</h3>
-                    </IonText>
-                </IonCard>
-                <IonCard className='ion-padding'>
-                    <IonText className='text-name'>
-                        <h3>E-mail: {userEmail ? userEmail : 'Email Desconhecido'}</h3>
-                    </IonText>
- 
-                </IonCard>
-
-                <IonGrid>
-                    <IonRow>
-                        <IonButton color={'success'}>
-                            Editar
-                        </IonButton>
-                    </IonRow>
-                    <IonRow>
-                        <IonButton color={'danger'}>
-                            Logout
-                        </IonButton>
-                    </IonRow>
+                    <IonGrid>
+                        <div className='ion-text-center'>
+                            <h2 className='ion-text-capitalize'>{userName ? userName : 'Carregando...'}</h2>
+                            <p>{userEmail ? userEmail : 'Carregando...'}</p>
+                        </div>
+                    </IonGrid>
                 </IonGrid>
 
 
             </IonContent>
 
+            <IonFooter className='ion-no-border footer-logout ion-align-items-end'>
+                <IonToolbar>
+                    <IonButton expand="block" color={'danger'} className='ion-no-margin ion-float-' onClick={logout}>
+                        Logout
+                    </IonButton>
+                </IonToolbar>
+            </IonFooter>
         </IonPage>
     );
 }

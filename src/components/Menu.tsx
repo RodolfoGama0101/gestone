@@ -63,13 +63,6 @@ const Menu: React.FC = () => {
           <IonIcon aria-hidden="true" slot="start" icon={starHalfOutline} style={{'color': 'var(--ion-color-secondary-contrast'}} ></IonIcon>
           <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Avaliação</IonLabel>
         </IonItem>
-        <IonItem button={true} href="/login" onClick={logout} style={{
-            '--background': 'var(--ion-background-color)', 
-            '--color': 'var(--ion-text-color)',
-          }}>
-          <IonIcon aria-hidden="true" slot="start" icon={exitOutline} style={{'color': 'var(--ion-color-secondary-contrast'}}></IonIcon>
-          <IonLabel style={{'--color': 'var(--ion-text-color)', }}>Logout</IonLabel>
-        </IonItem>
       </IonContent>
     </IonMenu>
   );
