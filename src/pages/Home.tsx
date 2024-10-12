@@ -17,7 +17,7 @@ import {
   IonAvatar,
   IonImg
 } from '@ionic/react';
-import { arrowDown, arrowUp, barChart, cashOutline, chevronDownOutline, moonOutline, personCircleOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
 import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -25,11 +25,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from 'firebase/firestore';
 import Menu from '../components/Menu';
 import { meses } from '../variables/variables';
-import ChartBar from '../components/ChartBar';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { ThemeContext } from '../components/ThemeContext';
-import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
 // Registrando os componentes do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
