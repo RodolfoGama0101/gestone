@@ -95,7 +95,7 @@ const Avaliacoes: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent fullscreen>
+            <IonContent fullscreen className="ion-justfy-content-center">
                 <IonCard className="card-input-avaliacoes">
                     <IonCardContent>
                         {/* Sistema de avaliação por estrelas */}
