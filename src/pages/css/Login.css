@@ -1,36 +1,36 @@
-
 .texts-login {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin: 0.5%;
+    text-align: right;
 }
 
 .redefinir-senha {
     text-decoration: none;
     color: #2ea14d;
+    margin-left: auto;
 }
 
-.redefinir-senha:hover{
+.redefinir-senha:hover {
     text-decoration: none;
     color: #2ea14d;
 }
 
-.center-google-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
 
-.img-login{
+.img-login {
     width: 350px;
     margin: 0 auto;
 }
-  
-.row-login{
+
+.row-login {
     align-items: center;
     justify-content: center;
     text-align: left;
+}
+
+.texts-voltar {
+    display: flex;
+    justify-content: center;
 }
 
 .voltar {
@@ -44,23 +44,22 @@
     color: #065a1c;
 }
 
-.eye {
-    margin: 0px;
-    align-items: end;
-}
 
-.input-password-container {
-    position: relative;
-  }
-
-  .eye-button {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-  }
-
-.input-login{
+.input-login {
     margin-bottom: 10px;
 }
 
+.line-container {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--ion-text-color);
+    margin: 0 10px; 
+
+}

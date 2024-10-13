@@ -1,8 +1,19 @@
+.google-logo {    
+    width: 25px;
+    height: 25px;
+}
+
+.bnt-google {
+    margin-top: 10px;
+}
+
+.button-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .google-logo {
-    background-color: white;
-    color: black;
-    margin-right: 5px;
-    width: 30px;
-    height: 30px;
-    border-radius: 2px;
+  margin-left: auto; /* Isso empurra a logo para a direita */
 }
