@@ -28,7 +28,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import "./css/Despesas.css"
@@ -94,18 +94,26 @@ const Despesas: React.FC = () => {
 
     // Adicionar despesa
     async function addDespesa() {
-        const dateTime = new Date(data).getTime();
+        if (data) {
+            // Criar uma nova data no fuso horário local sem ajuste de UTC
+            const localDate = new Date(data);
 
-        const docRef = await addDoc(collection(db, "UserFinance"), {
-            data: new Date(data),
-            mes: new Date(data).getMonth(),
-            valor: Number(valorDespesa),
-            tipo: "despesa",
-            tag: tagSelecao,
-            uid: uid
-        });
+            // Para garantir que a data seja salva corretamente no Firestore, precisamos ajustar o horário
+            // Subtraímos o offset do fuso horário (minutos) e ajustamos para milissegundos
+            const adjustedDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
 
-        // window.alert("Despesa adicionada com sucesso!");
+            const docRef = await addDoc(collection(db, "UserFinance"), {
+                data: Timestamp.fromDate(adjustedDate), // Armazena a data corrigida
+                mes: adjustedDate.getMonth(), // Use a data corrigida para o mês
+                valor: Number(valorDespesa),
+                tipo: "despesa",
+                tag: tagSelecao,
+                uid: uid
+            });
+        } else {
+            console.error("Data não foi definida corretamente.");
+        }
+
         setUpdateDespesa(!updateDespesa);
     }
 

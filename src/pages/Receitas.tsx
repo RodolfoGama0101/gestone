@@ -86,21 +86,26 @@ const Receitas: React.FC = () => {
     });
 
     async function addReceita() {
-        const dateWithTimezone = new Date(new Date(data!).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
         if (data) {
-            const docRef = await addDoc(collection(db, "UserFinance"), {
-              data: Timestamp.fromDate(dateWithTimezone),  // Aqui, data é uma instância de Date
-              mes: dateWithTimezone.getMonth(), // Somente acessa getMonth() se data não for null
-              valor: Number(valorReceita),
-              tipo: "receita",
-              descricao: descricao,
-              uid: uid
-            });
-          } else {
-            console.error("Data não foi definida corretamente.");
-          }
+            // Criar uma nova data no fuso horário local sem ajuste de UTC
+            const localDate = new Date(data);
 
-        // window.alert("Receita adicionada com sucesso!");
+            // Para garantir que a data seja salva corretamente no Firestore, precisamos ajustar o horário
+            // Subtraímos o offset do fuso horário (minutos) e ajustamos para milissegundos
+            const adjustedDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
+
+            const docRef = await addDoc(collection(db, "UserFinance"), {
+                data: Timestamp.fromDate(adjustedDate), // Armazena a data corrigida
+                mes: adjustedDate.getMonth(), // Use a data corrigida para o mês
+                valor: Number(valorReceita),
+                tipo: "receita",
+                descricao: descricao,
+                uid: uid
+            });
+        } else {
+            console.error("Data não foi definida corretamente.");
+        }
+
         setUpdateReceita(!updateReceita);
     }
 
@@ -257,10 +262,18 @@ const Receitas: React.FC = () => {
                         }}>
                             <IonCardContent>
                                 <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => {
-                                    const dateWithTimezone = new Date(new Date(e.target.value).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
-                                    setData(dateWithTimezone);
-                                }} />
+                                <IonInput
+                                    required
+                                    label="Data: "
+                                    type="date"
+                                    color={'success'}
+                                    className="input "
+                                    fill="outline"
+                                    onIonChange={(e: any) => {
+                                        const selectedDate = new Date(e.detail.value);
+                                        setData(selectedDate);
+                                    }}
+                                />
                                 <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
