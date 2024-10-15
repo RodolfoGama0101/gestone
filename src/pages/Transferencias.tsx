@@ -26,6 +26,7 @@ const Transferencias: React.FC = () => {
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
     const { isDarkMode } = useContext(ThemeContext);
+    const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
 
 
     useEffect(() => {
@@ -68,31 +69,33 @@ const Transferencias: React.FC = () => {
     });
 
     useEffect(() => {
-        const imprimirDespesas = async () => {
+        const imprimirTransferencias = async () => {
             const coll = collection(db, 'UserFinance');
             const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
             const queryDocs = await getDocs(q);
 
+            // Mapeamos os dados para a estrutura SaldoData
             const saldoData = queryDocs.docs.map((doc) => {
                 const docId = doc.id;
                 const docData = doc.data();
-                const data = new Date(docData.data.seconds * 1000);
+                const data = new Date(docData.data.seconds * 1000); // Converter timestamp para data
 
-                const combinedData = {
+                return {
                     id: docId,
                     data: data,
                     valor: docData.valor,
-                    tipo: docData.tipo,
+                    tipo: docData.tipo,  // "receita" ou "despesa"
                     descricao: docData.descricao
                 };
-
-                return combinedData;
             });
 
-            setSaldo(saldoData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            const saldoOrdenado = saldoData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setSaldo(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
         };
 
-        imprimirDespesas();
+        imprimirTransferencias();
     }, [uid, dataMesSelecionado, updateSaldo]);
 
     async function excluirTransferencia(id: any) {
@@ -100,6 +103,14 @@ const Transferencias: React.FC = () => {
 
         setUpdateSaldo(!updateSaldo);
     }
+
+    // Função para filtrar transferências
+    const transferenciasFiltradas = saldo.filter((transf) => {
+        if (filtroTipo === 'tudo') {
+            return true; // Mostra todas as transferências
+        }
+        return transf.tipo === filtroTipo; // Filtra por tipo (receita ou despesa)
+    });
 
     return (
         <IonPage>
@@ -130,17 +141,42 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
+                <IonGrid>
+                    <IonRow>
+                        <IonCol>
+                            <IonButton
+                                color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
+                                onClick={() => setFiltroTipo('tudo')}
+                            >
+                                Todas
+                            </IonButton>
+                            <IonButton
+                                color={filtroTipo === 'receita' ? 'success' : 'medium'}
+                                onClick={() => setFiltroTipo('receita')}
+                            >
+                                Receitas
+                            </IonButton>
+                            <IonButton
+                                color={filtroTipo === 'despesa' ? 'danger' : 'medium'}
+                                onClick={() => setFiltroTipo('despesa')}
+                            >
+                                Despesas
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
+
                 <IonCard color={"medium"}>
                     <IonCardContent>
                         <IonList className="ion-no-padding list-transferencias" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
-                            {saldo.map(transferencias => {
-                                const negativo = transferencias.tipo === "receita" ? "+" : "-";
-                                const cor = transferencias.tipo === "receita" ? "success" : "";
+                            {transferenciasFiltradas.map(transferencia => {
+                                const negativo = transferencia.tipo === "receita" ? "+" : "-";
+                                const cor = transferencia.tipo === "receita" ? "success" : "";
                                 return (
-                                    <IonItem key={transferencias.id} style={{
+                                    <IonItem key={transferencia.id} style={{
                                         '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                         '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                     }}>
@@ -148,15 +184,15 @@ const Transferencias: React.FC = () => {
                                             <IonRow>
                                                 <IonCol>
                                                     <IonText color={cor}>
-                                                        <h1 className="ion-no-padding">{"R$ " + negativo + transferencias.valor}</h1>
+                                                        <h1 className="ion-no-padding">{"R$ " + negativo + transferencia.valor}</h1>
                                                     </IonText>
 
                                                     <IonText>
-                                                        <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>
+                                                        <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
                                                     </IonText>
 
                                                     <IonText>
-                                                        <p className="ion-no-margin">{transferencias.descricao}</p>
+                                                        <p className="ion-no-margin">{transferencia.descricao}</p>
                                                     </IonText>
                                                 </IonCol>
                                                 <IonCol size="auto">
@@ -187,7 +223,7 @@ const Transferencias: React.FC = () => {
                                                                 text: 'confirm',
                                                                 cssClass: 'alert-button-confirm',
                                                                 handler: () => {
-                                                                    excluirTransferencia(transferencias.id);
+                                                                    excluirTransferencia(transferencia.id);
                                                                 },
                                                             }
                                                         ]}
