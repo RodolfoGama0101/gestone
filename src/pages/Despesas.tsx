@@ -138,7 +138,10 @@ const Despesas: React.FC = () => {
                 return combinedData;
             });
 
-            setDespesas(despesasData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            const saldoOrdenado = despesasData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setDespesas(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
         };
 
         imprimirDespesas();

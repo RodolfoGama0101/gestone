@@ -131,7 +131,10 @@ const Receitas: React.FC = () => {
                 return combinedData;
             });
 
-            setReceitas(receitasData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            const saldoOrdenado = receitasData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setReceitas(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
         };
 
         imprimirReceitas();
