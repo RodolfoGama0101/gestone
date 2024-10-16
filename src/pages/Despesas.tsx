@@ -282,7 +282,7 @@ const Despesas: React.FC = () => {
                             <IonToolbar color="danger">
                                 <IonTitle>Adicionar</IonTitle>
                                 <IonButtons slot="end">
-                                    <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>

@@ -1,4 +1,4 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -24,6 +24,7 @@ const Transferencias: React.FC = () => {
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateSaldo, setUpdateSaldo] = useState(false);
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
+    const [isOpen, setIsOpen] = useState(false);
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
@@ -219,13 +220,47 @@ const Transferencias: React.FC = () => {
                                             </IonCol>
                                             <IonCol size="auto">
                                                 {/* Edit button */}
-                                                <IonButton onClick={() => { }} className="edit-btn" style={{
+                                                <IonButton onClick={() => { setIsOpen(true) }} className="edit-btn" style={{
                                                     '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                 }}>
                                                     <IonIcon icon={createOutline} ></IonIcon>
                                                     <IonText >Editar</IonText>
                                                 </IonButton>
+
+                                                <IonModal isOpen={isOpen} className="fullscreen-modal">
+                                                <IonHeader>
+                            <IonToolbar color="success">
+                                <IonTitle>Adicionar</IonTitle>
+                                <IonButtons slot="end">
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
+                                </IonButtons>
+                            </IonToolbar>
+                        </IonHeader>
+                        <IonContent className="ion-padding" style={{
+                            '--background': 'var(--ion-color-background-color)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
+                            <IonCardContent>
+                                {/* <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} /> */}
+                                <IonInput
+                                    required
+                                    label="Data: "
+                                    type="date"
+                                    color={'success'}
+                                    className="input "
+                                    fill="outline"
+                                    onIonChange={(e: any) => {
+                                        const selectedDate = new Date(e.detail.value);
+                                        // setData(selectedDate);
+                                    }}
+                                />
+                                {/* <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput> */}
+                                {/* <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton> */}
+                            </IonCardContent>
+                        </IonContent>
+                                                </IonModal>
+
                                                 {/* Delete button */}
                                                 <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
                                                     <IonIcon icon={trashOutline} color={'light'}></IonIcon>

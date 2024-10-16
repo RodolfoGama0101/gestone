@@ -255,7 +255,7 @@ const Receitas: React.FC = () => {
                             <IonToolbar color="success">
                                 <IonTitle>Adicionar</IonTitle>
                                 <IonButtons slot="end">
-                                    <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
