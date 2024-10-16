@@ -362,10 +362,13 @@ const Despesas: React.FC = () => {
                             <IonList className="ion-no-padding">
                                 {despesas.map(despesa => {
                                     return (
-                                        <IonItem key={despesa.id} style={{
-                                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                        }}>
+                                        <IonItem
+                                            key={despesa.id}
+                                            style={{
+                                                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                            }}
+                                        >
                                             <IonGrid>
                                                 <IonRow>
                                                     <IonCol>
@@ -374,19 +377,19 @@ const Despesas: React.FC = () => {
                                                         <IonCardSubtitle>{despesa.tag}</IonCardSubtitle>
                                                     </IonCol>
                                                     <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                        <IonButton id="present-alert" color={"danger"} className="delete-bt">
+                                                        <IonButton id={`present-alert-${despesa.id}`} color="danger" className="delete-bt">
                                                             <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                             <IonText color={'light'}>Excluir</IonText>
                                                         </IonButton>
                                                         <IonAlert
-                                                            trigger="present-alert"
-                                                            header="Tem certeza que deseja excluir"
+                                                            trigger={`present-alert-${despesa.id}`} 
+                                                            header="Tem certeza que deseja excluir?"
                                                             className="custom-alert"
                                                             buttons={[
                                                                 {
                                                                     text: 'cancel',
-                                                                    cssClass: 'alert-button-cancel',
-
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+                                                                    
                                                                 },
                                                                 {
                                                                     text: 'confirm',
@@ -396,11 +399,12 @@ const Despesas: React.FC = () => {
                                                                     },
                                                                 }
                                                             ]}
-                                                        ></IonAlert>
+                                                        />
                                                     </IonCol>
                                                 </IonRow>
                                             </IonGrid>
                                         </IonItem>
+
                                     )
                                 })}
                             </IonList>

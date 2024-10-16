@@ -343,30 +343,30 @@ const Receitas: React.FC = () => {
                                                     <IonText><p>{receita.descricao}</p></IonText>
                                                 </IonCol>
                                                 <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
-                                                    </IonButton>
-                                                    <IonAlert
-                                                        trigger="present-alert"
-                                                        header="Tem certeza que deseja excluir"
-                                                        className="custom-alert"
-                                                        buttons={[
-                                                            {
-                                                                text: 'cancel',
-                                                                cssClass: 'alert-button-cancel',
-
-                                                            },
-                                                            {
-                                                                text: 'confirm',
-                                                                cssClass: 'alert-button-confirm',
-                                                                handler: () => {
-                                                                    excluirReceita(receita.id);
+                                                        <IonButton id={`present-alert-${receita.id}`} color="danger" className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                            <IonText color={'light'}>Excluir</IonText>
+                                                        </IonButton>
+                                                        <IonAlert
+                                                            trigger={`present-alert-${receita.id}`} 
+                                                            header="Tem certeza que deseja excluir?"
+                                                            className="custom-alert"
+                                                            buttons={[
+                                                                {
+                                                                    text: 'cancel',
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+                                                                    
                                                                 },
-                                                            }
-                                                        ]}
-                                                    ></IonAlert>
-                                                </IonCol>
+                                                                {
+                                                                    text: 'confirm',
+                                                                    cssClass: 'alert-button-confirm',
+                                                                    handler: () => {
+                                                                        excluirReceita(receita.id);
+                                                                    },
+                                                                }
+                                                            ]}
+                                                        />
+                                                    </IonCol>
                                             </IonRow>
                                         </IonGrid>
                                     </IonItem>

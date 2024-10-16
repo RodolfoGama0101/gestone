@@ -205,29 +205,29 @@ const Transferencias: React.FC = () => {
                                                         <IonText >Editar</IonText>
                                                     </IonButton>
                                                     {/* Delete button */}
-                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
-                                                    </IonButton>
-                                                    <IonAlert
-                                                        trigger="present-alert"
-                                                        header="Tem certeza que deseja excluir"
-                                                        className="custom-alert"
-                                                        buttons={[
-                                                            {
-                                                                text: 'cancel',
-                                                                cssClass: 'alert-button-cancel',
-
-                                                            },
-                                                            {
-                                                                text: 'confirm',
-                                                                cssClass: 'alert-button-confirm',
-                                                                handler: () => {
-                                                                    excluirTransferencia(transferencia.id);
+                                                    <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                            <IonText color={'light'}>Excluir</IonText>
+                                                        </IonButton>
+                                                        <IonAlert
+                                                            trigger={`present-alert-${transferencia.id}`} 
+                                                            header="Tem certeza que deseja excluir?"
+                                                            className="custom-alert"
+                                                            buttons={[
+                                                                {
+                                                                    text: 'cancel',
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+                                                                    
                                                                 },
-                                                            }
-                                                        ]}
-                                                    ></IonAlert>
+                                                                {
+                                                                    text: 'confirm',
+                                                                    cssClass: 'alert-button-confirm',
+                                                                    handler: () => {
+                                                                        excluirTransferencia(transferencia.id);
+                                                                    },
+                                                                }
+                                                            ]}
+                                                        />
                                                 </IonCol>
                                             </IonRow>
                                         </IonGrid>
