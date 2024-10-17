@@ -18,8 +18,6 @@ import './css/Login.css';
 import React, { useState, useContext } from 'react';
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
-import SignGitHub from "../components/SignGitHub";
-import SignMicrosoft from "../components/SignMicrosoft";
 import { ThemeContext } from '../components/ThemeContext';
 
 
