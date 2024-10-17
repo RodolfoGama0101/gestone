@@ -1,10 +1,24 @@
 import { IonButton, IonContent, IonPage, IonText, IonImg, IonGrid, IonRow, IonCol } from '@ionic/react';
 import './css/Inicial.css';
 import { ThemeContext } from '../components/ThemeContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
 
 const Inicial: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // Se o usuário estiver logado, redireciona para a Home
+            window.location.href = "/Home";
+          }
+        });
+        
+        // Limpa o listener ao desmontar o componente
+        return () => unsubscribe();
+      }, []);
 
     return (
         <IonPage>
