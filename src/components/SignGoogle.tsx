@@ -63,7 +63,7 @@ const SignGoogle: React.FC = () => {
     return (
         <IonButton color={'success'} className="btn-google" onClick={googleLogin} expand='block' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <IonIcon slot="start" icon={logoGoogle} className="google-logo" />
-            <IonText className="ion-text-capitalize" style={{ flex: 1, textAlign: 'center' }}>
+            <IonText className="ion-text-uppercase" style={{ flex: 1, textAlign: 'center' }}>
                 <p>Sign in with Google</p>
             </IonText>
         </IonButton>
