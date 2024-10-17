@@ -1,6 +1,6 @@
 import { IonButton, IonCol, IonFooter, IonGrid, IonIcon, IonImg, IonRow, IonToolbar, IonActionSheet, } from "@ionic/react";
 import { barChartOutline, homeOutline, close, trendingDown, trendingUpSharp, repeat } from "ionicons/icons";
-import './FooterTab.css';
+import './css/FooterTab.css';
 
 const FooterTabBar: React.FC = () => {
     return (
