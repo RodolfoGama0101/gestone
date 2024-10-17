@@ -3,7 +3,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { IonButton, IonIcon, IonText } from "@ionic/react";
 import { logoGoogle } from "ionicons/icons";
-import "./SignGoogle.css"
+import "./css/SignGoogle.css"
 
 const SignGoogle: React.FC = () => {
     async function googleLogin() {
