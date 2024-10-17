@@ -287,8 +287,6 @@ const Charts: React.FC = () => {
               </div>
             </IonCol>
 
-
-
             <IonCol>
               <IonText>
                 <h1>Total de despesas: R${despesaTotal.toFixed(2)}</h1>
@@ -297,9 +295,6 @@ const Charts: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
-
-
-
       </IonContent>
     </IonPage>
   );
