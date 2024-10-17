@@ -28,7 +28,7 @@ import {
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
 import "./css/Despesas.css"
@@ -63,6 +63,7 @@ const Despesas: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [mesSelecionado, setMesSelecionado] = useState("");
     const [tagSelecao, setTagSelecao] = useState()
+    const [limite, setLimite] = useState(10)
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -94,25 +95,39 @@ const Despesas: React.FC = () => {
 
     // Adicionar despesa
     async function addDespesa() {
-        const dateTime = new Date(data).getTime();
+        if (data) {
+            // Criar uma nova data no fuso horário local sem ajuste de UTC
+            const localDate = new Date(data);
 
-        const docRef = await addDoc(collection(db, "UserFinance"), {
-            data: new Date(data),
-            mes: new Date(data).getMonth(),
-            valor: Number(valorDespesa),
-            tipo: "despesa",
-            tag: tagSelecao,
-            uid: uid
-        });
+            // Para garantir que a data seja salva corretamente no Firestore, precisamos ajustar o horário
+            // Subtraímos o offset do fuso horário (minutos) e ajustamos para milissegundos
+            const adjustedDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
 
-        // window.alert("Despesa adicionada com sucesso!");
+            const docRef = await addDoc(collection(db, "UserFinance"), {
+                data: Timestamp.fromDate(adjustedDate), // Armazena a data corrigida
+                mes: adjustedDate.getMonth(), // Use a data corrigida para o mês
+                valor: Number(valorDespesa),
+                tipo: "despesa",
+                tag: tagSelecao,
+                uid: uid
+            });
+        } else {
+            console.error("Data não foi definida corretamente.");
+        }
+
         setUpdateDespesa(!updateDespesa);
     }
 
     useEffect(() => {
         const imprimirDespesas = async () => {
             const coll = collection(db, 'UserFinance');
-            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
+            const q = query(coll,
+                where("uid", "==", uid),
+                where("mes", "==", dataMesSelecionado),
+                where("tipo", "==", "despesa"),
+                orderBy("data", "desc"), // Ordenar por data
+                limit(limite) // Limitar o número de resultados
+            );
             const queryDocs = await getDocs(q);
 
             const despesasData = queryDocs.docs.map((doc) => {
@@ -130,7 +145,10 @@ const Despesas: React.FC = () => {
                 return combinedData;
             });
 
-            setDespesas(despesasData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            // const saldoOrdenado = despesasData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setDespesas(despesasData); // Atualiza o estado com as transferências ordenadas
         };
 
         imprimirDespesas();
@@ -147,7 +165,7 @@ const Despesas: React.FC = () => {
         }
 
         imprimirTags()
-    }, [uid, dataMesSelecionado, updateDespesa])
+    }, [uid, dataMesSelecionado, updateDespesa, limite])
 
     async function excluirDespesa(id: any) {
         await deleteDoc(doc(db, "UserFinance", id));
@@ -264,7 +282,7 @@ const Despesas: React.FC = () => {
                             <IonToolbar color="danger">
                                 <IonTitle>Adicionar</IonTitle>
                                 <IonButtons slot="end">
-                                    <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
@@ -328,35 +346,50 @@ const Despesas: React.FC = () => {
                     </IonGrid>
 
                     <IonCardContent>
+                        <IonSelect
+                            placeholder="Limite"
+                            label="Limite"
+                            fill="outline"
+                            interface="popover"
+                            onIonChange={(e: any) => setLimite(e.target.value)} // Atualiza o valor do limite com base na seleção
+                        >
+                            <IonSelectOption value={2}>2</IonSelectOption>
+                            <IonSelectOption value={5}>5</IonSelectOption>
+                            <IonSelectOption value={10}>10</IonSelectOption>
+                            <IonSelectOption value={30}>30</IonSelectOption>
+                        </IonSelect>
                         <IonCard color={"danger"}>
                             <IonList className="ion-no-padding">
                                 {despesas.map(despesa => {
                                     return (
-                                        <IonItem key={despesa.id} style={{
-                                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                        }}>
+                                        <IonItem
+                                            key={despesa.id}
+                                            style={{
+                                                '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                                '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                            }}
+                                        >
                                             <IonGrid>
                                                 <IonRow>
                                                     <IonCol>
                                                         <IonCardTitle>{"R$ " + despesa.valor.toFixed(2)}</IonCardTitle>
                                                         <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>
-                                                        <IonCardContent>{despesa.tag}</IonCardContent>
+                                                        <IonCardSubtitle>{despesa.tag}</IonCardSubtitle>
                                                     </IonCol>
                                                     <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                        <IonButton id="present-alert" color={"danger"} className="delete-bt">
+                                                        <IonButton id={`present-alert-${despesa.id}`} color="danger" className="delete-bt">
                                                             <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                             <IonText color={'light'}>Excluir</IonText>
                                                         </IonButton>
                                                         <IonAlert
-                                                            trigger="present-alert"
-                                                            header="Tem certeza que deseja excluir"
+                                                            trigger={`present-alert-${despesa.id}`} 
+                                                            header="Tem certeza que deseja excluir?"
                                                             className="custom-alert"
                                                             buttons={[
                                                                 {
                                                                     text: 'cancel',
-                                                                    cssClass: 'alert-button-cancel',
-
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+                                                                    
                                                                 },
                                                                 {
                                                                     text: 'confirm',
@@ -366,11 +399,12 @@ const Despesas: React.FC = () => {
                                                                     },
                                                                 }
                                                             ]}
-                                                        ></IonAlert>
+                                                        />
                                                     </IonCol>
                                                 </IonRow>
                                             </IonGrid>
                                         </IonItem>
+
                                     )
                                 })}
                             </IonList>

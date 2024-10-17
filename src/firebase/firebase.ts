@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore, initializeFirestore, memoryLocalCache, persistentLocalCache } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,7 +11,7 @@ import { getFirestore, initializeFirestore, memoryLocalCache, persistentLocalCac
 const firebaseConfig = {
   apiKey: "AIzaSyA9jwO8zMER2O5-CHiW1lGtzaYTM_5QqXg",
   authDomain: "gestone-d508a.firebaseapp.com",
-  projectId: "gestone-d508a",
+  projectId: "gestone-d508a",   
   storageBucket: "gestone-d508a.appspot.com",
   messagingSenderId: "382008916816",
   appId: "1:382008916816:web:19f74b882d17a6d6fc8a55",

@@ -1,4 +1,4 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -24,8 +24,10 @@ const Transferencias: React.FC = () => {
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateSaldo, setUpdateSaldo] = useState(false);
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
+    const [isOpen, setIsOpen] = useState(false);
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
     const { isDarkMode } = useContext(ThemeContext);
+    const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
 
 
     useEffect(() => {
@@ -68,31 +70,33 @@ const Transferencias: React.FC = () => {
     });
 
     useEffect(() => {
-        const imprimirDespesas = async () => {
+        const imprimirTransferencias = async () => {
             const coll = collection(db, 'UserFinance');
             const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
             const queryDocs = await getDocs(q);
 
+            // Mapeamos os dados para a estrutura SaldoData
             const saldoData = queryDocs.docs.map((doc) => {
                 const docId = doc.id;
                 const docData = doc.data();
-                const data = new Date(docData.data.seconds * 1000);
+                const data = new Date(docData.data.seconds * 1000); // Converter timestamp para data
 
-                const combinedData = {
+                return {
                     id: docId,
                     data: data,
                     valor: docData.valor,
-                    tipo: docData.tipo,
+                    tipo: docData.tipo,  // "receita" ou "despesa"
                     descricao: docData.descricao
                 };
-
-                return combinedData;
             });
 
-            setSaldo(saldoData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            const saldoOrdenado = saldoData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setSaldo(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
         };
 
-        imprimirDespesas();
+        imprimirTransferencias();
     }, [uid, dataMesSelecionado, updateSaldo]);
 
     async function excluirTransferencia(id: any) {
@@ -100,6 +104,14 @@ const Transferencias: React.FC = () => {
 
         setUpdateSaldo(!updateSaldo);
     }
+
+    // Função para filtrar transferências
+    const transferenciasFiltradas = saldo.filter((transf) => {
+        if (filtroTipo === 'tudo') {
+            return true; // Mostra todas as transferências
+        }
+        return transf.tipo === filtroTipo; // Filtra por tipo (receita ou despesa)
+    });
 
     return (
         <IonPage>
@@ -130,72 +142,153 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
+                <IonGrid>
+                    <IonRow>
+                        <IonCol>
+                            <IonButton
+                                color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
+                                onClick={() => setFiltroTipo('tudo')}
+                            >
+                                Todas
+                            </IonButton>
+                            <IonButton
+                                color={filtroTipo === 'receita' ? 'success' : 'medium'}
+                                onClick={() => setFiltroTipo('receita')}
+                            >
+                                Receitas
+                            </IonButton>
+                            <IonButton
+                                color={filtroTipo === 'despesa' ? 'danger' : 'medium'}
+                                onClick={() => setFiltroTipo('despesa')}
+                            >
+                                Despesas
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
+
                 <IonCard color={"medium"}>
                     <IonCardContent>
                         <IonList className="ion-no-padding list-transferencias" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
                         }}>
-                            {saldo.map(transferencias => {
-                                const negativo = transferencias.tipo === "receita" ? "+" : "-";
-                                const cor = transferencias.tipo === "receita" ? "success" : "";
+                            {transferenciasFiltradas.map(transferencia => {
+                                const negativo = transferencia.tipo === "receita" ? "+" : "-";
+                                const cor = transferencia.tipo === "receita" ? "success" : "";
                                 return (
-                                    <IonItem key={transferencias.id} style={{
-                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                    }}>
-                                        <IonGrid>
-                                            <IonRow>
-                                                <IonCol>
-                                                    <IonText color={cor}>
-                                                        <h1 className="ion-no-padding">{"R$ " + negativo + transferencias.valor}</h1>
-                                                    </IonText>
+                                    // <IonItem key={transferencia.id} style={{
+                                    //     '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                    //     '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                    // }}>
+                                    <IonGrid>
+                                        <IonRow>
+                                            <IonCol>
+                                                <IonText>
+                                                    <p>Valor</p>
+                                                </IonText>
+                                            </IonCol>
+                                            <IonCol>
+                                                <IonText>
+                                                    <p>Data</p>
+                                                </IonText>
+                                            </IonCol>
+                                            <IonCol>
+                                                <IonText>
+                                                    <p>Descrição</p>
+                                                </IonText>
+                                            </IonCol>
+                                        </IonRow>
 
-                                                    <IonText>
-                                                        <p className="ion-no-margin">{transferencias.data.toLocaleDateString()}</p>
-                                                    </IonText>
+                                        <IonRow>
+                                            <IonCol>
+                                                <IonText color={cor}>
+                                                    <h1 className="ion-no-padding">{"R$ " + negativo + transferencia.valor}</h1>
+                                                </IonText>
+                                            </IonCol>
 
-                                                    <IonText>
-                                                        <p className="ion-no-margin">{transferencias.descricao}</p>
-                                                    </IonText>
-                                                </IonCol>
-                                                <IonCol size="auto">
-                                                    {/* Edit button */}
-                                                    <IonButton onClick={() => { }} className="edit-btn" style={{
-                                                        '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                                    }}>
-                                                        <IonIcon icon={createOutline} ></IonIcon>
-                                                        <IonText >Editar</IonText>
-                                                    </IonButton>
-                                                    {/* Delete button */}
-                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
-                                                    </IonButton>
-                                                    <IonAlert
-                                                        trigger="present-alert"
-                                                        header="Tem certeza que deseja excluir"
-                                                        className="custom-alert"
-                                                        buttons={[
-                                                            {
-                                                                text: 'cancel',
-                                                                cssClass: 'alert-button-cancel',
+                                            <IonCol>
+                                                <IonText>
+                                                    <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
+                                                </IonText>
+                                            </IonCol>
 
+                                            <IonCol>
+                                                <IonText>
+                                                    <p className="ion-no-margin">{transferencia.descricao}</p>
+                                                </IonText>
+                                            </IonCol>
+                                            <IonCol size="auto">
+                                                {/* Edit button */}
+                                                <IonButton onClick={() => { setIsOpen(true) }} className="edit-btn" style={{
+                                                    '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                                                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                                                }}>
+                                                    <IonIcon icon={createOutline} ></IonIcon>
+                                                    <IonText >Editar</IonText>
+                                                </IonButton>
+
+                                                <IonModal isOpen={isOpen} className="fullscreen-modal">
+                                                <IonHeader>
+                            <IonToolbar color="success">
+                                <IonTitle>Adicionar</IonTitle>
+                                <IonButtons slot="end">
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
+                                </IonButtons>
+                            </IonToolbar>
+                        </IonHeader>
+                        <IonContent className="ion-padding" style={{
+                            '--background': 'var(--ion-color-background-color)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
+                            <IonCardContent>
+                                {/* <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} /> */}
+                                <IonInput
+                                    required
+                                    label="Data: "
+                                    type="date"
+                                    color={'success'}
+                                    className="input "
+                                    fill="outline"
+                                    onIonChange={(e: any) => {
+                                        const selectedDate = new Date(e.detail.value);
+                                        // setData(selectedDate);
+                                    }}
+                                />
+                                {/* <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput> */}
+                                {/* <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton> */}
+                            </IonCardContent>
+                        </IonContent>
+                                                </IonModal>
+
+                                                {/* Delete button */}
+                                                <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
+                                                    <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                    <IonText color={'light'}>Excluir</IonText>
+                                                </IonButton>
+                                                <IonAlert
+                                                    trigger={`present-alert-${transferencia.id}`}
+                                                    header="Tem certeza que deseja excluir?"
+                                                    className="custom-alert"
+                                                    buttons={[
+                                                        {
+                                                            text: 'cancel',
+                                                            cssClass: 'alert-button-cancel cancel-bnt',
+
+                                                        },
+                                                        {
+                                                            text: 'confirm',
+                                                            cssClass: 'alert-button-confirm',
+                                                            handler: () => {
+                                                                excluirTransferencia(transferencia.id);
                                                             },
-                                                            {
-                                                                text: 'confirm',
-                                                                cssClass: 'alert-button-confirm',
-                                                                handler: () => {
-                                                                    excluirTransferencia(transferencias.id);
-                                                                },
-                                                            }
-                                                        ]}
-                                                    ></IonAlert>
-                                                </IonCol>
-                                            </IonRow>
-                                        </IonGrid>
-                                    </IonItem>
+                                                        }
+                                                    ]}
+                                                />
+                                            </IonCol>
+                                        </IonRow>
+                                    </IonGrid>
+                                    // </IonItem>
                                 )
                             })}
                         </IonList>

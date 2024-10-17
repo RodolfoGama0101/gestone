@@ -65,6 +65,13 @@ const Login: React.FC = () => {
                   <IonInputPasswordToggle slot="end" color={"success"}></IonInputPasswordToggle>
                 </IonInput>
 
+                <div className="texts-login">
+                  <IonText>
+                    <a href={"EsqueciSenha"} className="redefinir-senha">Redefinir senha</a>
+                  </IonText>
+                </div>
+
+
                 <IonButton
                   expand='block'
                   color={'success'}
@@ -74,19 +81,15 @@ const Login: React.FC = () => {
                   <IonText><h2>Entrar</h2></IonText>
                 </IonButton>
 
-                <div className="texts-login">
-                  <IonText>
-                    <a href={"EsqueciSenha"} className="redefinir-senha">Redefinir senha</a>
-                  </IonText>
+                <div className="line-container">
+                  <div className="line"></div>
+                    <IonText>OU</IonText>
+                  <div className="line"></div>
                 </div>
 
-                <div className="center-google-btn">
-                  <SignMicrosoft />
-                  <SignGoogle />
-                  <SignGitHub />
-                </div>
+                <SignGoogle />
 
-                <div className="texts-login">
+                <div className="texts-voltar">
                   <IonText>
                     <a href="/Inicial" className="voltar">Voltar</a>
                   </IonText>

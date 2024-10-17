@@ -86,21 +86,26 @@ const Receitas: React.FC = () => {
     });
 
     async function addReceita() {
-        const dateWithTimezone = new Date(new Date(data!).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
         if (data) {
-            const docRef = await addDoc(collection(db, "UserFinance"), {
-              data: Timestamp.fromDate(dateWithTimezone),  // Aqui, data é uma instância de Date
-              mes: dateWithTimezone.getMonth(), // Somente acessa getMonth() se data não for null
-              valor: Number(valorReceita),
-              tipo: "receita",
-              descricao: descricao,
-              uid: uid
-            });
-          } else {
-            console.error("Data não foi definida corretamente.");
-          }
+            // Criar uma nova data no fuso horário local sem ajuste de UTC
+            const localDate = new Date(data);
 
-        // window.alert("Receita adicionada com sucesso!");
+            // Para garantir que a data seja salva corretamente no Firestore, precisamos ajustar o horário
+            // Subtraímos o offset do fuso horário (minutos) e ajustamos para milissegundos
+            const adjustedDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
+
+            const docRef = await addDoc(collection(db, "UserFinance"), {
+                data: Timestamp.fromDate(adjustedDate), // Armazena a data corrigida
+                mes: adjustedDate.getMonth(), // Use a data corrigida para o mês
+                valor: Number(valorReceita),
+                tipo: "receita",
+                descricao: descricao,
+                uid: uid
+            });
+        } else {
+            console.error("Data não foi definida corretamente.");
+        }
+
         setUpdateReceita(!updateReceita);
     }
 
@@ -126,7 +131,10 @@ const Receitas: React.FC = () => {
                 return combinedData;
             });
 
-            setReceitas(receitasData);
+            // Ordenar as transferências por data, do mais recente para o mais antigo
+            const saldoOrdenado = receitasData.sort((a, b) => b.data.getTime() - a.data.getTime());
+
+            setReceitas(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
         };
 
         imprimirReceitas();
@@ -247,7 +255,7 @@ const Receitas: React.FC = () => {
                             <IonToolbar color="success">
                                 <IonTitle>Adicionar</IonTitle>
                                 <IonButtons slot="end">
-                                    <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+                                    <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                 </IonButtons>
                             </IonToolbar>
                         </IonHeader>
@@ -257,10 +265,18 @@ const Receitas: React.FC = () => {
                         }}>
                             <IonCardContent>
                                 <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} />
-                                <IonInput required label="Data: " type="date" color={'success'} className="input " fill="outline" onIonChange={(e: any) => {
-                                    const dateWithTimezone = new Date(new Date(e.target.value).toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
-                                    setData(dateWithTimezone);
-                                }} />
+                                <IonInput
+                                    required
+                                    label="Data: "
+                                    type="date"
+                                    color={'success'}
+                                    className="input "
+                                    fill="outline"
+                                    onIonChange={(e: any) => {
+                                        const selectedDate = new Date(e.detail.value);
+                                        setData(selectedDate);
+                                    }}
+                                />
                                 <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
@@ -327,30 +343,30 @@ const Receitas: React.FC = () => {
                                                     <IonText><p>{receita.descricao}</p></IonText>
                                                 </IonCol>
                                                 <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
-                                                    <IonButton id="present-alert" color={"danger"} className="delete-bt">
-                                                        <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
-                                                    </IonButton>
-                                                    <IonAlert
-                                                        trigger="present-alert"
-                                                        header="Tem certeza que deseja excluir"
-                                                        className="custom-alert"
-                                                        buttons={[
-                                                            {
-                                                                text: 'cancel',
-                                                                cssClass: 'alert-button-cancel',
-
-                                                            },
-                                                            {
-                                                                text: 'confirm',
-                                                                cssClass: 'alert-button-confirm',
-                                                                handler: () => {
-                                                                    excluirReceita(receita.id);
+                                                        <IonButton id={`present-alert-${receita.id}`} color="danger" className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}></IonIcon>
+                                                            <IonText color={'light'}>Excluir</IonText>
+                                                        </IonButton>
+                                                        <IonAlert
+                                                            trigger={`present-alert-${receita.id}`} 
+                                                            header="Tem certeza que deseja excluir?"
+                                                            className="custom-alert"
+                                                            buttons={[
+                                                                {
+                                                                    text: 'cancel',
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+                                                                    
                                                                 },
-                                                            }
-                                                        ]}
-                                                    ></IonAlert>
-                                                </IonCol>
+                                                                {
+                                                                    text: 'confirm',
+                                                                    cssClass: 'alert-button-confirm',
+                                                                    handler: () => {
+                                                                        excluirReceita(receita.id);
+                                                                    },
+                                                                }
+                                                            ]}
+                                                        />
+                                                    </IonCol>
                                             </IonRow>
                                         </IonGrid>
                                     </IonItem>

@@ -1,0 +1,32 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap; /* Alinhe eles em colunas */
+    justify-content: space-around; /* ELe deixa no centro */
+    padding: 16px;
+}
+
+.small-card {
+    width: 340px; /* Ajuste o tamanho conforme necessário */
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+.pesquisa {
+    margin-top: 50px;
+}
+
+.box-pesquisa {
+    margin-right: none;
+    width: 67%;
+    
+}
+
+.support-footer {
+    font-size: 15px;
+    margin: none;
+}
+
+.p-footer {
+    margin-bottom: 5px;
+    margin-top: 1px;
+}
