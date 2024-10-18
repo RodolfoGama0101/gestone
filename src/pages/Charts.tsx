@@ -1,4 +1,4 @@
-import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tooltip } from "chart.js";
+import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tooltip, PointElement, LineElement } from "chart.js";
 import { IonBackButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonToolbar } from '@ionic/react';
 import './css/Cadastro.css';
 import Verifica from '../firebase/verifica';
@@ -7,8 +7,9 @@ import { useContext, useEffect, useState } from 'react';
 import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from 'firebase/firestore';
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { ellipse } from "ionicons/icons";
+import Despesas from "./Despesas";
 
 interface DespesasData {
   valor: number;
@@ -16,7 +17,7 @@ interface DespesasData {
 }
 
 // Registrando os componentes do Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 const Charts: React.FC = () => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -30,6 +31,7 @@ const Charts: React.FC = () => {
   const [tags, setTags] = useState(Object);
   const [tagsData, setTagsData] = useState<DespesasData[]>([]);
   const [tagsDataAgrupado, setTagsDataAgrupado] = useState<{ [key: string]: number }>({});
+  const [despesasAnoAgrupadas, setDespesasAnoAgrupadas] = useState<number[]>(Array(12).fill(0)); // Array para armazenar as despesas por mês
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -49,6 +51,7 @@ const Charts: React.FC = () => {
     await getTagsDespesas(user);
     await buscarReceitasEDespesas(user);
     await buscarMesSelecionado(user);
+    await buscarDespesasAno(user);
   }
 
   // Função que busca receitas e despesas
@@ -96,6 +99,34 @@ const Charts: React.FC = () => {
       setTags(tagData.tags);
     } else {
       console.log("No such document!");
+    }
+  }
+
+  // Função para buscar despesas do ano e agrupar por mês
+  async function buscarDespesasAno(user: any) {
+    const collDespesas = collection(db, 'UserFinance');
+    const qDespesas = query(collDespesas,
+      where("uid", "==", user.uid),
+      where("tipo", "==", "despesa"),
+      // where("ano", "==", new Date().getFullYear()) // Filtro para o ano atual
+    );
+
+    try {
+      const querySnapshot = await getDocs(qDespesas);
+      const despesasPorMes = Array(12).fill(0); // Inicializa um array com 12 zeros para cada mês
+
+      querySnapshot.docs.forEach((doc) => {
+        const data = doc.data();
+        const valor = data.valor;
+        const mes = data.mes; // Assumindo que o mês é salvo como um número (0 para janeiro, 11 para dezembro)
+
+        despesasPorMes[mes] += valor; // Soma o valor da despesa ao mês correspondente
+      });
+
+      setDespesasAnoAgrupadas(despesasPorMes); // Atualiza o estado com as despesas agrupadas por mês
+      setDespesaTotal(despesasPorMes.reduce((acc, val) => acc + val, 0)); // Calcula o total de despesas
+    } catch (error) {
+      console.error("Erro ao buscar documentos de despesas do ano: ", error);
     }
   }
 
@@ -258,6 +289,164 @@ const Charts: React.FC = () => {
     );
   });
 
+  // Bar Chart
+  const dataBar = {
+    labels: ['Receitas', 'Despesas'],
+    datasets: [{
+      data: [receitaTotal, despesaTotal],
+      backgroundColor: [
+        'rgba(46, 161, 77, 0.6)',
+        'rgba(197, 0, 15, 0.6)',
+      ],
+      borderColor: [
+        'rgba(46, 161, 77, 1)',
+        'rgba(197, 0, 15, 1)',
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  const optionsBar = {
+    maintainAspectRatio: false,
+    aspectRatio: 2, // Proporção largura/altura
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo Y
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        }
+      },
+      x: {
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo X
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false, // Remover a legenda
+      },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem: any) {
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+          },
+        },
+      },
+    },
+  }
+
+  // Ordena as tags e os valores de despesas do menor para o maior
+  const despesasOrdenadas = Object.entries(tagsDataAgrupado).sort((a, b) => a[1] - b[1]);
+
+  // Cria arrays separados de tags e valores ordenados
+  const tagsOrdenadas = despesasOrdenadas.map(([tag]) => tag);
+  const valoresOrdenados = despesasOrdenadas.map(([, valor]) => valor);
+
+  // Bar Chart por Tags (com despesas ordenadas)
+  const dataBarTags = {
+    labels: tagsOrdenadas, // As tags ordenadas serão as labels no eixo X
+    datasets: [
+      {
+        label: 'Despesas por Tag',
+        data: valoresOrdenados, // Valores das despesas ordenados
+        backgroundColor: tagsOrdenadas.map(tag => obterCorParaTag(tag)), // Cor das barras conforme a tag
+        borderColor: tagsOrdenadas.map(tag => obterCorParaTag(tag)), // Mesma cor para a borda
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const optionsBarTags = {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo Y
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        },
+      },
+      x: {
+        ticks: {
+          color: '#FFFFFF', // Cor branca para as labels do eixo X
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false, // Remover a legenda
+      },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem: any) {
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+          },
+        },
+      },
+    },
+  };
+
+  // Dados para o Line Chart (despesas por mês)
+  const dataDespesasAno = {
+    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Despesas por Mês',
+        data: despesasAnoAgrupadas, // Valores agrupados por mês
+        borderColor: 'rgba(197, 0, 15, 1)',
+        backgroundColor: 'rgba(197, 0, 15, 0.3)',
+        fill: true, // Preencher a área abaixo da linha
+      },
+    ],
+  };
+
+  const optionsLineChart = {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo Y
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        },
+      },
+      x: {
+        ticks: {
+          color: '#FFFFFF', // Cor branca para os valores do eixo X
+        },
+        grid: {
+          color: '#555555', // Opcional: cor da linha do grid
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false, // Remover a legenda
+      },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem: any) {
+            return `R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+          },
+        },
+      },
+    },
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -284,6 +473,18 @@ const Charts: React.FC = () => {
             <IonCol>
               <div className="chart-doughnut">
                 <Doughnut data={dataPie} options={configPie} />
+              </div>
+
+              <div className="chart-bar">
+                <Bar data={dataBar} options={optionsBar}></Bar>
+              </div>
+
+              <div className="chart-bar-tags">
+                <Bar data={dataBarTags} options={optionsBarTags} />
+              </div>
+
+              <div>
+                <Line data={dataDespesasAno}></Line>
               </div>
             </IonCol>
 
