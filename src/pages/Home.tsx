@@ -15,7 +15,7 @@ import {
   IonCardContent,
   IonPopover
 } from '@ionic/react';
-import { arrowDown, arrowUp, cashOutline, menuOutline,chevronDownOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
+import { arrowDown, arrowUp, cashOutline, menuOutline,chevronDownOutline, moonOutline, sunnyOutline, arrowForwardCircleOutline } from 'ionicons/icons';
 import './css/Home.css';
 import FooterTabBar from '../components/FooterTabBar';
 import { auth, db } from '../firebase/firebase';
@@ -40,6 +40,7 @@ const Home: React.FC = () => {
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [anoSelecionado, setAnoSelecionado] = useState(new Date().getFullYear());
   const [mesSelecionado, setMesSelecionado] = useState("");
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
   const [userImg, setUserImg] = useState(Object);
@@ -418,7 +419,8 @@ const Home: React.FC = () => {
                 <IonButton id='trigger-button' className='select-month-btn' color={"success"}>{mesSelecionado}<IonIcon icon={chevronDownOutline} className='icon-select-month'></IonIcon></IonButton>
                 <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
                   <IonContent color={"success"} className='ion-text-center year-select'>
-                    <IonText>2024</IonText>
+                    <IonText>{anoSelecionado}</IonText>
+                    
                   </IonContent>
                   <IonButtons>
                     <IonGrid>

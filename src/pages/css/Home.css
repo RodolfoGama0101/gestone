@@ -62,7 +62,7 @@ ion-card {
 
 .year-select {
     margin: 0px;
-    height: 20px;
+    height: 30px;
 }
 
 .user-photo {
@@ -98,3 +98,11 @@ ion-card {
     margin-right: auto;
   }
   
+  .seta-direita {
+    font-size: 22px; /* Tamanho menor para o ícone */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0px;
+  }
+

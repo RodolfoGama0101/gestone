@@ -9,7 +9,6 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { ellipse } from "ionicons/icons";
-import Despesas from "./Despesas";
 
 interface DespesasData {
   valor: number;
