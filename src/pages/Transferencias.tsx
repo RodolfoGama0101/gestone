@@ -162,9 +162,13 @@ const Transferencias: React.FC = () => {
     }
 
     // Função para abrir o modal e setar o tipo
-    const abrirModal = (tipo: any) => {
-        setTipoAtual(tipo); // Define o tipo de transferência (receita ou despesa)
-        setIsOpen(true); // Abre o modal
+    const abrirModal = (transferencia: SaldoData) => {
+        setTipoAtual(transferencia.tipo as "receita" | "despesa");
+        setNewData(transferencia.data);
+        setNewDescricao(transferencia.descricao);
+        setNewTag(transferencia.tag);
+        setNewValor(transferencia.valor);
+        setIsOpen(true);
     };
 
     return (
@@ -232,15 +236,11 @@ const Transferencias: React.FC = () => {
                                 const cor = transferencia.tipo === "receita" ? "success" : "";
                                 const descricaoOrTag = transferencia.tipo === "receita" ? transferencia.descricao : transferencia.tag;
                                 return (
-                                    // <IonItem key={transferencia.id} style={{
-                                    //     '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                    //     '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                    // }}>
                                     <IonGrid>
-                                        <IonRow>
-                                            <IonCol>
+                                        {/* Ícone */}
+                                        <IonItem key={transferencia.id}>
+                                            <IonCol sizeLg="1">
                                                 <IonText>
-
                                                     {transferencia.tipo === "receita" ? (
                                                         <IonIcon icon={cashOutline} style={{ fontSize: '24px', marginRight: '8px' }}  // Diminui o ícone e adiciona espaço entre ícone e texto
                                                         >
@@ -250,30 +250,31 @@ const Transferencias: React.FC = () => {
                                                         <IonIcon
                                                             icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '24px', marginRight: '8px' }}></IonIcon>
                                                     )}
-
-                                                </IonText>
-                                            </IonCol>
-                                            <IonCol style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-
-                                                <IonText>
-                                                    <h2 className="ion-no-margin">{descricaoOrTag}</h2>
                                                 </IonText>
                                             </IonCol>
 
-                                            <IonCol>
-                                                <IonText color={cor} className="ion-text-end">
+                                            {/* Valor, Descrição ou Tag */}
+                                            <IonCol sizeLg="3">
+                                                <IonText color={cor} className="ion-text-start">
                                                     <h2 className="ion-no-padding">{negativo + "R$ " + transferencia.valor}</h2>
                                                 </IonText>
-                                                <IonText className="ion-text-end">
+
+                                                <IonText>
+                                                    <p className="ion-no-margin">{descricaoOrTag}</p>
+                                                </IonText>
+                                            </IonCol>
+
+                                            {/* Data */}
+                                            <IonCol sizeLg="3">
+                                                <IonText className="ion-text-start">
                                                     <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
                                                 </IonText>
                                             </IonCol>
 
-
-
-                                            <IonCol size="auto">
+                                            {/* Editar e Excluir */}
+                                            <IonCol sizeLg="6">
                                                 {/* Edit button */}
-                                                <IonButton onClick={() => { setIsOpen(true), abrirModal(transferencia.tipo) }} className="edit-btn" style={{
+                                                <IonButton onClick={() => { setIsOpen(true), abrirModal(transferencia) }} className="edit-btn" style={{
                                                     '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                 }}>
@@ -299,9 +300,10 @@ const Transferencias: React.FC = () => {
                                                             <IonInput
                                                                 required
                                                                 label="Data: "
-                                                                type="text"
+                                                                type="date"
                                                                 color={'success'}
-                                                                className="input "
+                                                                className=""
+                                                                value={newData ? newData.toISOString().split('T')[0] : ''}
                                                                 fill="outline"
                                                                 onIonChange={(e: any) => {
                                                                     const selectedDate = new Date(e.detail.value);
@@ -316,7 +318,7 @@ const Transferencias: React.FC = () => {
                                                                         label="Descrição:"
                                                                         type="text"
                                                                         color={'success'}
-                                                                        value={transferencia.descricao}
+                                                                        value={newDescricao}
                                                                         className="input"
                                                                         fill="outline"
                                                                         onIonChange={(e: any) => setNewDescricao(e.target.value)}
@@ -325,7 +327,7 @@ const Transferencias: React.FC = () => {
                                                                         required
                                                                         label="Valor:"
                                                                         type="number"
-                                                                        value={transferencia.valor}
+                                                                        value={newValor}
                                                                         color={'success'}
                                                                         className="input"
                                                                         fill="outline"
@@ -340,7 +342,7 @@ const Transferencias: React.FC = () => {
                                                                         label="Tag:"
                                                                         type="text"
                                                                         color={'success'}
-                                                                        value={transferencia.tag}
+                                                                        value={newTag}
                                                                         className="input"
                                                                         fill="outline"
                                                                         onIonChange={(e: any) => setNewTag(e.target.value)}
@@ -350,7 +352,7 @@ const Transferencias: React.FC = () => {
                                                                         label="Valor:"
                                                                         type="number"
                                                                         color={'success'}
-                                                                        value={transferencia.valor}
+                                                                        value={newTag}
                                                                         className="input"
                                                                         fill="outline"
                                                                         onIonChange={(e: any) => setNewValor(Number(e.target.value))}
@@ -369,6 +371,7 @@ const Transferencias: React.FC = () => {
                                                                         newDescricao,
                                                                         newTag
                                                                     );
+                                                                    setIsOpen(false);
                                                                 }}
                                                             >
                                                                 Salvar {tipoAtual === "receita" ? "Receita" : "Despesa"}
@@ -402,9 +405,8 @@ const Transferencias: React.FC = () => {
                                                     ]}
                                                 />
                                             </IonCol>
-                                        </IonRow>
+                                        </IonItem>
                                     </IonGrid>
-                                    // </IonItem>
                                 )
                             })}
                         </IonList>
