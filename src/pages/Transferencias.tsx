@@ -2,7 +2,7 @@ import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { airplaneOutline, arrowUp, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, trashOutline } from "ionicons/icons";
+import { airplaneOutline, arrowUp, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
@@ -202,21 +202,24 @@ const Transferencias: React.FC = () => {
                                     <IonGrid>
 
                                         <IonRow>
-
-                                            <IonCol style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                <IonText className="ion-align-items-center ion-justify-content-center">
-                                                    {/* <IonIcon icon={arrowUp} className='ion-float-right ion-padding ion-border home-buttons-icons'></IonIcon> */}
+                                            <IonCol>
+                                                <IonText>
 
                                                     {transferencia.tipo === "receita" ? (
-                                                        <IonIcon icon={cashOutline} className="ion-float-right ion-padding ion-border home-buttons-icons"></IonIcon>
+                                                        <IonIcon icon={cashOutline} style={{ fontSize: '24px', marginRight: '8px' }}  // Diminui o ícone e adiciona espaço entre ícone e texto
+                                                        >
+                                                        </IonIcon>
                                                     ) : (
                                                         // Exibir ícone da tag correspondente
                                                         <IonIcon
-                                                            icon={tagIconMap[transferencia.tag] || helpOutline} // Caso a tag não seja encontrada, usar um ícone de "Outros"
-                                                            className="ion-float-right ion-padding ion-border home-buttons-icons"
-                                                        ></IonIcon>
+                                                            icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '24px', marginRight: '8px' }}></IonIcon>
                                                     )}
 
+                                                </IonText>
+                                            </IonCol>
+                                            <IonCol style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+                                                <IonText>
                                                     <h2 className="ion-no-margin">{descricaoOrTag}</h2>
                                                 </IonText>
                                             </IonCol>
