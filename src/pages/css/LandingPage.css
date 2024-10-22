@@ -1,0 +1,432 @@
+/* Estilos Globais */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.landing-page {
+  text-align: center;
+}
+
+.header {
+  background-color: #4CAF50;
+  padding: 20px;
+  color: white;
+}
+
+.app-name {
+  font-size: 2.5rem;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline;
+  margin: 0 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.hero-section {
+  background-color: #f4f4f4;
+  padding: 100px 0;
+}
+
+.cta-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.features-section {
+  padding: 50px 0;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feature {
+  width: 30%;
+}
+
+.about-section {
+  background-color: #f4f4f4;
+  padding: 50px 0;
+}
+
+.contact-section {
+  padding: 50px 0;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+}
+
+/* Media Queries para Mobile */
+@media (max-width: 768px) {
+  .header {
+    text-align: center;
+  }
+
+  .app-name {
+    font-size: 2rem;
+  }
+
+  .nav-links li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .hero-section {
+    padding: 50px 20px;
+  }
+
+  .cta-button {
+    padding: 10px 20px;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .about-section,
+  .contact-section {
+    padding: 20px;
+  }
+}
+
+/* Media Queries para Web Desktop */
+@media (min-width: 769px) {
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .hero-section {
+    padding: 100px 0;
+  }
+
+  .features {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .feature {
+    width: 30%;
+  }
+}
+
+:root {
+  --verde: rgb(41, 149, 117);
+  --branco: rgb(255, 255, 255);
+  --preto: rgb(25, 31, 27);
+  --ion-background-color: #2f2f2f;
+  --ion-text-color: #ffffff;
+}
+
+.header {
+  color: var(--branco);
+  background: var(--io);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 15px;
+  box-shadow: 0 0.1rem 0.5rem #969595;
+  width: 100%;
+  background: var(--ion-background-color);
+  transition: all 0.5s;
+  position: fixed;
+}
+
+.navigation .logo {
+  height: 58px;
+  width: 80px;
+}
+
+.logo span {
+  color: var(--preto);
+}
+
+.navigation ul {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.navigation ul li a {
+  color: var(--preto);
+  font-size: 32px;
+  transition: 0.5s;
+}
+
+.navigation ul li a:hover {
+  color: var(--verde);
+}
+
+.navigation i {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.menu {
+  color: var(--branco);
+}
+
+.home {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10%;
+}
+
+.home-text {
+  max-width: 42rem;
+}
+
+.home-text .text-h2 {
+  font-size: 3rem;
+  color: var(--verde);
+  margin-bottom: 1rem;
+}
+
+.home-text .text-h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  line-height: 4rem;
+}
+
+.home-text p {
+  margin-bottom: 3rem;
+}
+
+.home-cad {
+  padding: 15px 45px;
+  background: var(--verde);
+  color: var(--branco);
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.5s;
+}
+
+.home-cad:hover {
+  background: rgb(30, 130, 90);
+}
+
+.home-img {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.home-img img {
+  width: 100%;
+}
+
+
+.testimonials {
+
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 30rem;
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divbox {
+  background-color: #ebe2e2;
+  border-radius: 10px;
+  position: absolute;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: carousel 15s linear infinite;
+}
+
+.divbox:nth-child(1) {
+  animation-delay: -3s;
+}
+
+.divbox:nth-child(2) {
+  animation-delay: 0;
+}
+
+.divbox:nth-child(3) {
+  animation-delay: 3s;
+}
+
+.divbox:nth-child(4) {
+  animation-delay: 6s;
+}
+
+.divbox:last-child {
+  animation-delay: 9s;
+}
+
+@keyframes carousel {
+  0% {
+    transform: translateY(100%) scale(0.5);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  3%,
+  20% {
+    /* 3, 100/total number of cards */
+    transform: translateY(100%) scale(0.7);
+    opacity: 0.4;
+    visibility: visible;
+  }
+
+  23%,
+  40% {
+    /* [(100/total number of cards) + 3], [(100/number of cards) * 2] */
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  43%,
+  60% {
+    /* [(100/total number of cards)*2 + 3], [(100/number of cards) * 3] */
+    transform: translateY(-100%) scale(0.7);
+    opacity: 0.4;
+    visibility: visible;
+  }
+
+  63% {
+    /* [(100/total number of cards) * 3] + 3 */
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    visibility: visible;
+  }
+
+  100% {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width:785px) {
+  .home {
+    padding: 100px 2%;
+    flex-direction: column;
+    text-align: center;
+    overflow: auto;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .home .text-h2 {
+    font-size: 32px;
+  }
+
+  .home .text-h1 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .home p {
+    font-size: 15px;
+  }
+
+  .home-img {
+    width: 115%;
+  }
+
+  .home-img img {
+    width: 80%;
+  }
+
+  .testimonials {
+    padding: 100px 2%;
+    flex-direction: column;
+    text-align: center;
+    overflow: auto;
+    gap: 30rem;
+  }
+
+  .carousel {
+    flex-direction: column;
+    height: 450px;
+    /* Ajusta a altura para caber melhor em telas pequenas */
+    gap: 60px;
+  }
+
+  .divbox {
+    position: static;
+    margin: 20px 0;
+    opacity: 1;
+  }
+
+  @keyframes carousel {
+    0% {
+      transform: translateY(50%) scale(0.5);
+      opacity: 0;
+    }
+
+    3%,
+    20% {
+      transform: translateY(50%) scale(0.7);
+      opacity: 0.4;
+    }
+
+    23%,
+    40% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    43%,
+    60% {
+      transform: translateY(-25%) scale(0.7);
+      opacity: 0.4;
+    }
+
+    63% {
+      transform: translateY(-50%) scale(0.5);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(-50%) scale(0.5);
+      opacity: 0;
+    }
+  }
+}
+
