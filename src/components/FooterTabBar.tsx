@@ -4,7 +4,6 @@ import './css/FooterTab.css';
 
 const FooterTabBar: React.FC = () => {
     return (
-
         <IonFooter>
             <IonToolbar style={{
                 '--background': 'var(--ion-color-primary)', // Controla o fundo da página

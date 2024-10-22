@@ -11,21 +11,10 @@ interface DespesasData {
     tag: string;
 }
 
-interface ChartDoughnutProps {
-    dataMesSelecionado: number;
-    setDataMesSelecionado: (mes: number) => void;
-    receitaTotal: number;
-    setReceitaTotal: (valor: number) => void;
-    despesaTotal: number;
-    setDespesaTotal: (valor: number) => void;
-    tagsDataAgrupado: Record<string, number>;
-    setTagsDataAgrupado: (data: Record<string, number>) => void;
-}
-
 // Registrando os componentes do Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-const ChartDoughnut: React.FC<ChartDoughnutProps> = () => {
+const ChartDoughnut: React.FC = () => {
     const [userInfo, setUserInfo] = useState(Object);
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth()); // Fazer procura de mês
     const [receitaTotal, setReceitaTotal] = useState(Number);

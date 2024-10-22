@@ -1,6 +1,5 @@
 import {
   IonContent,
-  IonIcon,
   IonCardHeader,
   IonCardTitle,
   IonCard,
@@ -15,12 +14,11 @@ import {
   IonInputPasswordToggle
 } from "@ionic/react";
 import './css/Login.css';
-import React, { useState, useContext } from 'react';
-import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState, useContext, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
-import SignGitHub from "../components/SignGitHub";
-import SignMicrosoft from "../components/SignMicrosoft";
 import { ThemeContext } from '../components/ThemeContext';
+import { auth } from "../firebase/firebase";
 
 
 const Login: React.FC = () => {
@@ -28,6 +26,17 @@ const Login: React.FC = () => {
   const [senha, setSenha] = useState("");
   const { isDarkMode } = useContext(ThemeContext);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Se o usuário estiver logado, redireciona para a Home
+        window.location.href = "/Home";
+      }
+    });
+    
+    // Limpa o listener ao desmontar o componente
+    return () => unsubscribe();
+  }, []);
 
   const loginUser = () => {
     const auth = getAuth();
@@ -83,7 +92,7 @@ const Login: React.FC = () => {
 
                 <div className="line-container">
                   <div className="line"></div>
-                    <IonText>OU</IonText>
+                  <IonText>OU</IonText>
                   <div className="line"></div>
                 </div>
 
