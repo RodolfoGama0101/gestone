@@ -420,7 +420,6 @@ const Home: React.FC = () => {
                 <IonPopover trigger='trigger-button' alignment='center' className='select-mes'>
                   <IonContent color={"success"} className='ion-text-center year-select'>
                     <IonText>{anoSelecionado}</IonText>
-                    
                   </IonContent>
                   <IonButtons>
                     <IonGrid>
