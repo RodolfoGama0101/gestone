@@ -1,5 +1,5 @@
 import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
-import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { airplaneOutline, arrowUp, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
@@ -30,6 +30,12 @@ const Transferencias: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
 
+    // Edit Finance
+    const [newData, setNewData] = useState<Date | null>(null);
+    const [newDescricao, setNewDescricao] = useState(String);
+    const [newTag, setNewTag] = useState(String);
+    const [newValor, setNewValor] = useState(Number);
+    const [tipoAtual, setTipoAtual] = useState<"receita" | "despesa">("receita"); // Estado para armazenar o tipo atual de transferência
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -130,6 +136,37 @@ const Transferencias: React.FC = () => {
         "Outros": helpOutline,
     };
 
+    const editFinance = async (
+        id: any,
+        tipo: any,
+        valor: any,
+        data: any,
+        descricao: any,
+        tag: any
+    ) => {
+        const userFinanceRef = doc(db, "UserFinance", id);
+        try {
+            if (tipo == "receita") {
+                await updateDoc(userFinanceRef, {
+
+                });
+            } else if (tipo == "despesa") {
+                await updateDoc(userFinanceRef, {
+
+                });
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+    // Função para abrir o modal e setar o tipo
+    const abrirModal = (tipo: any) => {
+        setTipoAtual(tipo); // Define o tipo de transferência (receita ou despesa)
+        setIsOpen(true); // Abre o modal
+    };
+
     return (
         <IonPage>
             <IonHeader>
@@ -200,7 +237,6 @@ const Transferencias: React.FC = () => {
                                     //     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                     // }}>
                                     <IonGrid>
-
                                         <IonRow>
                                             <IonCol>
                                                 <IonText>
@@ -237,7 +273,7 @@ const Transferencias: React.FC = () => {
 
                                             <IonCol size="auto">
                                                 {/* Edit button */}
-                                                <IonButton onClick={() => { setIsOpen(true) }} className="edit-btn" style={{
+                                                <IonButton onClick={() => { setIsOpen(true), abrirModal(transferencia.tipo) }} className="edit-btn" style={{
                                                     '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                 }}>
@@ -259,21 +295,84 @@ const Transferencias: React.FC = () => {
                                                         '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                     }}>
                                                         <IonCardContent>
-                                                            {/* <IonInput required label="R$:" type="number" color={'success'} className="input " fill='outline' onIonChange={(e: any) => setValorReceita(e.target.value)} /> */}
+
                                                             <IonInput
                                                                 required
                                                                 label="Data: "
-                                                                type="date"
+                                                                type="text"
                                                                 color={'success'}
                                                                 className="input "
                                                                 fill="outline"
                                                                 onIonChange={(e: any) => {
                                                                     const selectedDate = new Date(e.detail.value);
-                                                                    // setData(selectedDate);
+                                                                    setNewData(selectedDate);
                                                                 }}
                                                             />
-                                                            {/* <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput> */}
-                                                            {/* <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton> */}
+                                                            {/* Condicional para "Receita" */}
+                                                            {tipoAtual === "receita" ? (
+                                                                <>
+                                                                    <IonInput
+                                                                        required
+                                                                        label="Descrição:"
+                                                                        type="text"
+                                                                        color={'success'}
+                                                                        value={transferencia.descricao}
+                                                                        className="input"
+                                                                        fill="outline"
+                                                                        onIonChange={(e: any) => setNewDescricao(e.target.value)}
+                                                                    />
+                                                                    <IonInput
+                                                                        required
+                                                                        label="Valor:"
+                                                                        type="number"
+                                                                        value={transferencia.valor}
+                                                                        color={'success'}
+                                                                        className="input"
+                                                                        fill="outline"
+                                                                        onIonChange={(e: any) => setNewValor(Number(e.target.value))}
+                                                                    />
+                                                                </>
+                                                            ) : (
+                                                                /* Condicional para "Despesa" */
+                                                                <>
+                                                                    <IonInput
+                                                                        required
+                                                                        label="Tag:"
+                                                                        type="text"
+                                                                        color={'success'}
+                                                                        value={transferencia.tag}
+                                                                        className="input"
+                                                                        fill="outline"
+                                                                        onIonChange={(e: any) => setNewTag(e.target.value)}
+                                                                    />
+                                                                    <IonInput
+                                                                        required
+                                                                        label="Valor:"
+                                                                        type="number"
+                                                                        color={'success'}
+                                                                        value={transferencia.valor}
+                                                                        className="input"
+                                                                        fill="outline"
+                                                                        onIonChange={(e: any) => setNewValor(Number(e.target.value))}
+                                                                    />
+                                                                </>
+                                                            )}
+                                                            <IonButton
+                                                                color={'success'}
+                                                                onClick={() => {
+                                                                    setIsOpen(false);
+                                                                    editFinance(
+                                                                        transferencia.id,
+                                                                        tipoAtual,
+                                                                        newValor,
+                                                                        newData,
+                                                                        newDescricao,
+                                                                        newTag
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Salvar {tipoAtual === "receita" ? "Receita" : "Despesa"}
+                                                            </IonButton>
                                                         </IonCardContent>
                                                     </IonContent>
                                                 </IonModal>
