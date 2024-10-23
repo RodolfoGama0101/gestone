@@ -1,59 +1,90 @@
 .input-avaliacoes {
-    margin: 10px;
-    margin-left: 2px;
-    width: 100%;
-    height: 150px;
+  height: 100px;
+  min-height: 200px; /* Altura mínima para o campo de comentário */
+  width: 100%; /* Largura total dentro do contêiner */
 }
 
+.comentario {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px; /* Define a largura máxima do campo de comentário */
+  margin-bottom: 16px; /* Espaço entre o campo de comentário e o botão */
+}
+
+.submit-button {
+  display: block;
+  margin: 0 auto;
+  width: 200px; /* Largura do botão */
+  text-align: center;
+}
+
+.comentario-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+}
+
+
 .star-rating {
-    display: flex;
-    margin-top: 20px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .star {
-    font-size: 32px;
-    margin: 0 5px;
-    cursor: pointer;
+  font-size: 32px;
+  margin: 0 5px;
+  cursor: pointer;
 }
 
-.card-input-avaliacoes {
-    width: 400px;
-}
 
 .modal-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .custom-modal {
-    --width: 400px; /* Defina a largura desejada */
-    --height: 400px; /* Defina a altura desejada */
-    --max-width: 80vw; /* Limite de largura máximo para telas pequenas */
-    --max-height: 80vh; /* Limite de altura máximo para telas pequenas */
-  }
+.modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  .custom-card {
-    width: 600px; /* Defina a largura desejada */
-    height: 500px;
-    max-height: 90%;
-    max-width: 90%; /* Para manter responsivo em telas pequenas */
-    margin: 0 auto; /* Centralizar horizontalmente */
-    padding: 16px; /* Espaçamento interno */
-  }
+.custom-modal {
+  --width: 800px;
+  /* Defina a largura desejada */
+  --height: 500px;
+  /* Defina a altura desejada */
+  --max-width: 90vw;
+  /* Limite de largura máximo para telas pequenas */
+  --max-height: 50vh;
+  /* Limite de altura máximo para telas pequenas */
   
-  .custom-card p {
-    font-size: 14px; /* Diminuir o tamanho do texto */
-    margin: 8px 0; /* Ajustar o espaçamento entre parágrafos */
-  }
-  
-  
+}
+
+.custom-card {
+  width: 70%;
+  /* Defina a largura desejada */
+  height: 50%;
+  max-height: 90%;
+  max-width: 90%;
+  /* Para manter responsivo em telas pequenas */
+  margin: 0 auto;
+  /* Centralizar horizontalmente */
+  padding: 16px;
+  /* Espaçamento interno */
+  color: var(--ion-text-color);
+  background-color: var(--ion-color-primary-shade);
+}
+
+.custom-card p {
+  font-size: 15px;
+  /* Diminuir o tamanho do texto */
+  margin: 8px 0;
+  /* Ajustar o espaçamento entre parágrafos */
+}
