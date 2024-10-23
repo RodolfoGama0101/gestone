@@ -13,9 +13,10 @@ import {
     IonButton,
     IonTextarea,
     IonCardTitle,
-    IonText
+    IonText,
+    IonModal
 } from "@ionic/react";
-import { star, starOutline } from "ionicons/icons";
+import { arrowBackOutline, star, starOutline } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import "./css/Avaliacoes.css";
 import { doc, getDoc, query, setDoc } from "firebase/firestore";
@@ -28,6 +29,8 @@ const Avaliacoes: React.FC = () => {
     const [userInfo, setUserInfo] = useState(Object);
     const [comment, setComment] = useState<string>("");
     const [userRatingData, setUserRatingData] = useState(Object);
+    const [isOpen, setIsOpen] = useState(false);
+
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -84,6 +87,7 @@ const Avaliacoes: React.FC = () => {
         }
     }, [userInfo]);
 
+
     return (
         <IonPage>
             <IonHeader>
@@ -96,8 +100,29 @@ const Avaliacoes: React.FC = () => {
             </IonHeader>
 
             <IonContent fullscreen className="ion-justfy-content-center">
-                <IonCard className="card-input-avaliacoes">
-                    <IonCardContent>
+
+                <IonButton color={'success'} onClick={() => setIsOpen(true)} className="ion-justify-content-center" style={{
+                    '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
+                    <IonText >Avaliar</IonText>
+                </IonButton>
+
+            </IonContent>
+
+            <IonModal isOpen={isOpen} className="custom-modal" backdropDismiss={false}>
+                <IonHeader>
+                    <IonToolbar color="success">
+                        <IonButtons slot="start">
+                            <IonButton onClick={() => setIsOpen(false)}><IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} /></IonButton>
+                        </IonButtons>
+                        <IonText>Voltar</IonText>
+                    </IonToolbar>
+                </IonHeader>
+
+                <div className="modal-content">
+                    <IonContent className="card-input-avaliacoes">
+
                         {/* Sistema de avaliação por estrelas */}
                         <div className="star-rating">
                             {Array.from({ length: 5 }, (_, index) => (
@@ -112,22 +137,34 @@ const Avaliacoes: React.FC = () => {
                         </div>
 
                         {/* Campo de comentário */}
-                        <IonTextarea
-                            fill="outline"
-                            label="Comentário: "
-                            className="input-avaliacoes"
-                            labelPlacement="stacked"
-                            color={"light"}
-                            value={comment}
-                            onIonChange={(e: any) => setComment(e.target.value)}
-                        />
+                        <div className="comentario-container">
+                            <div className="comentario">
+                                <IonTextarea
+                                    fill="outline"
+                                    label="Comentário: "
+                                    className="input-avaliacoes"
+                                    labelPlacement="stacked"
+                                    color={"success"}
+                                    value={comment}
+                                    onIonChange={(e: any) => setComment(e.target.value)}
+                                />
+                            </div>
 
-                        <IonButton onClick={addRating}>Enviar avaliação</IonButton>
-                    </IonCardContent>
-                </IonCard>
+                            <IonButton className="submit-button" color="success" onClick={addRating}>
+                                Enviar avaliação
+                            </IonButton>
+                        </div>
 
+
+                    </IonContent>
+                </div>
+            </IonModal>
+
+
+
+            <IonContent>
                 {userRatingData && (
-                    <IonCard>
+                    <IonCard className="custom-card">
                         <IonCardContent>
                             <IonText>
                                 <p>UID: {userRatingData.uid}</p>
