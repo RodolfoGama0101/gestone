@@ -6,21 +6,21 @@
 }
 
 
-.bnt-login{
+.bnt-login {
     margin-top: 1rem;
     height: 56%;
     width: 58%;
     font-size: 1.23em;
     --border-radius: 5px;
-    
+
 }
 
-.row-inicial{
-    margin-top: 3%; 
+.row-inicial {
+    margin-top: 3%;
 }
 
 
-.content-inicial{
+.content-inicial {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,12 +30,12 @@
     padding: 20px;
 }
 
-a{
+a {
     color: #2ea14d;
     font-size: 86%;
 }
 
-.img-inicial{
+.img-inicial {
     width: 350px;
     margin: 0 auto;
 }
@@ -52,15 +52,29 @@ a{
     color: #065a1c;
 }
 
-.text-inicial > h1, h6 {
+.text-inicial>h1,
+h6 {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.text-inicial > h1 {
+.text-inicial>h1 {
     font-size: 25pt;
 }
 
-.text-inicial > h6 {
+.text-inicial>h6 {
     font-size: 11pt;
+}
+
+.rotate {
+    animation: rotateImage 1s ease-in-out forwards;
+}
+
+@keyframes rotateImage {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
