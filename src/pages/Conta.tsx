@@ -39,7 +39,7 @@ const Conta: React.FC = () => {
             <IonHeader className='ion-no-border'>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/Home" color={'light'}></IonBackButton>
+                        <IonBackButton defaultHref="/Home"></IonBackButton>
                     </IonButtons>
                     <IonTitle>Sua Conta</IonTitle>
                 </IonToolbar>

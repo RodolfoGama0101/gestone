@@ -451,25 +451,40 @@ const Charts: React.FC = () => {
   // Grafico mudar de lugar
   const [currentGraph, setCurrentGraph] = useState(0);
 
+  const renderListaDespesas = () => (
+    <IonGrid>
+      {listaDespesas.map((despesa, index) => {
+        if (index % 3 === 0) {
+          return (
+            <IonRow key={index}>
+              <IonCol>{listaDespesas[index]}</IonCol>
+              <IonCol>{listaDespesas[index + 1] || ''}</IonCol>
+              <IonCol>{listaDespesas[index + 2] || ''}</IonCol>
+            </IonRow>
+          );
+        }
+        return null;
+      })}
+    </IonGrid>
+  );
+
   //Array
   const graphs = [
-    <div className="chart-doughnut">
+    <div className="chart-doughnut"  style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)',}}>
       <IonRow>
         <Doughnut data={dataPie} options={configPie} />
       </IonRow>
-      <IonRow>
-        <IonList>{listaDespesas}</IonList>
-      </IonRow>
+      <IonRow>{renderListaDespesas()}</IonRow>
     </div>,
     <div className="chart-bar">
-      <Bar data={dataBar} options={optionsBar} />
+      <Bar data={dataBar} options={optionsBar} style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)',}} />
     </div>,
     <div className="chart-bar-tags">
-      <Bar data={dataBarTags} options={optionsBarTags} />
+      <Bar data={dataBarTags} options={optionsBarTags} style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)', }} />
     </div>,
     <div>
-      <Line data={dataDespesasAno}></Line>
-    </div>
+      <Line data={dataDespesasAno}  style={{ width: '80%', height: '80%', 'color': 'var(--ion-text-color)', }}  />
+    </div>,
   ];
 
   const proxGraph = () => {
