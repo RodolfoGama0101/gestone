@@ -454,12 +454,12 @@ const Charts: React.FC = () => {
   //Array
   const graphs = [
     <div className="chart-doughnut">
-      <IonCol>
-      <Doughnut data={dataPie} options={configPie} />
-      </IonCol>
-      <IonCol>
+      <IonRow>
+        <Doughnut data={dataPie} options={configPie} />
+      </IonRow>
+      <IonRow>
         <IonList>{listaDespesas}</IonList>
-      </IonCol>
+      </IonRow>
     </div>,
     <div className="chart-bar">
       <Bar data={dataBar} options={optionsBar} />
@@ -504,7 +504,7 @@ const Charts: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonText>
+              <IonText className="text-despesas">
                 <h1>Total de despesas: R${despesaTotal.toFixed(2)}</h1>
               </IonText>
             </IonCol>
@@ -512,15 +512,17 @@ const Charts: React.FC = () => {
           <IonRow>
             <IonCol>
 
-              {graphs[currentGraph]}
+
 
               <IonRow className="ion-justfy-content-between">
                 <IonCol>
                   <IonButton onClick={antGraph} color="success">Anterior</IonButton>
                 </IonCol>
                 <IonButton onClick={proxGraph} color="success">Próximo</IonButton>
-                
+
               </IonRow>
+
+              {graphs[currentGraph]}
             </IonCol>
           </IonRow>
         </IonGrid>
