@@ -58,7 +58,8 @@ const Avaliacoes: React.FC = () => {
                 await setDoc(doc(db, "UserRating", userInfo.uid), {
                     uid: userInfo.uid,
                     stars: rating,
-                    comment: comment
+                    comment: comment,
+                    UserName: userInfo.displayName
                 });
                 setRating(0);
                 setComment("");
@@ -69,12 +70,12 @@ const Avaliacoes: React.FC = () => {
         }
     }
 
-    async function userRating(uid: string) {
+    async function userRating(User: string) {
         const docRef = doc(db, "UserRating", userInfo.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            setUserRatingData(docSnap.data());
+            setUserRatingData(docSnap.data(),);
             console.log("teste")
         } else {
 
@@ -140,6 +141,8 @@ const Avaliacoes: React.FC = () => {
                         <div className="comentario-container">
                             <div className="comentario">
                                 <IonTextarea
+                                    counter={true} 
+                                    maxlength={200}
                                     fill="outline"
                                     label="Comentário: "
                                     className="input-avaliacoes"
@@ -150,7 +153,7 @@ const Avaliacoes: React.FC = () => {
                                 />
                             </div>
 
-                            <IonButton className="submit-button" color="success" onClick={addRating}>
+                            <IonButton className="submit-button" color="success" onClick={() => { addRating(), setIsOpen(false) }}>
                                 Enviar avaliação
                             </IonButton>
                         </div>
@@ -167,9 +170,9 @@ const Avaliacoes: React.FC = () => {
                     <IonCard className="custom-card">
                         <IonCardContent>
                             <IonText>
-                                <p>UID: {userRatingData.uid}</p>
-                                <p>Comentário: {userRatingData.comment}</p>
+                                <p>User: {userInfo.displayName}</p>
                                 <p>Estrelas: {userRatingData.stars}</p>
+                                <p>Comentário: {userRatingData.comment}</p>
                             </IonText>
                         </IonCardContent>
                     </IonCard>
