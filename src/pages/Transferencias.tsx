@@ -8,17 +8,17 @@ import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
 import { ThemeContext } from '../components/ThemeContext';
 
+interface SaldoData {
+    id: string;
+    data: Date;
+    valor: number;
+    tipo: string;
+    descricao: string;
+    tag: string;
+}
+
 const Transferencias: React.FC = () => {
     Verifica();
-
-    interface SaldoData {
-        id: string;
-        data: Date;
-        valor: number;
-        tipo: string;
-        descricao: string;
-        tag: string;
-    }
 
     const [uid, setUid] = useState("");
     const [saldo, setSaldo] = useState<SaldoData[]>(Array);
@@ -141,7 +141,6 @@ const Transferencias: React.FC = () => {
     const editFinance = async (
         id: any,
         tipo: any,
-
     ) => {
         const userFinanceRef = doc(db, "UserFinance", id);
         try {
@@ -159,15 +158,14 @@ const Transferencias: React.FC = () => {
                 });
             }
 
+
+
         } catch (error) {
             console.error(error)
         } finally {
             setIsLoading(false); // Finaliza o carregamento
         }
-
-        setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
-        setIsOpen(false); // Fecha o modal após a edição
-    }
+    };
 
     // Atualize a função de edição para definir a transferência selecionada
     const handleEditClick = (transferencia: SaldoData) => {
@@ -381,6 +379,9 @@ const Transferencias: React.FC = () => {
                                                                             transferenciaSelecionada.tipo
                                                                         );
                                                                     }
+
+                                                                    setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
+                                                                    setIsOpen(false); // Fecha o modal após a edição
 
                                                                 }}
                                                             >
