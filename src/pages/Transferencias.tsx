@@ -373,6 +373,8 @@ const Transferencias: React.FC = () => {
                                                             <IonButton
                                                                 color={corModal}
                                                                 onClick={() => {
+                                                                    setIsLoading(true); // Inicia o carregamento
+
                                                                     if (transferenciaSelecionada) {
                                                                         editFinance(
                                                                             transferenciaSelecionada.id,
@@ -384,7 +386,7 @@ const Transferencias: React.FC = () => {
                                                             >
 
                                                                 <IonText>
-                                                                    <p>{isLoading ? "Cadastrando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
+                                                                    <p>{isLoading ? "Carregando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
                                                                 </IonText>
                                                             </IonButton>
                                                         </IonCardContent>
