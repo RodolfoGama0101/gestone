@@ -1,4 +1,4 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -37,6 +37,7 @@ const Transferencias: React.FC = () => {
     const [newTag, setNewTag] = useState(String);
     const [newValor, setNewValor] = useState(Number);
     const [tipoAtual, setTipoAtual] = useState(""); // Estado para armazenar o tipo atual de transferência
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -140,7 +141,7 @@ const Transferencias: React.FC = () => {
     const editFinance = async (
         id: any,
         tipo: any,
-        
+
     ) => {
         const userFinanceRef = doc(db, "UserFinance", id);
         try {
@@ -160,6 +161,8 @@ const Transferencias: React.FC = () => {
 
         } catch (error) {
             console.error(error)
+        } finally {
+            setIsLoading(false); // Finaliza o carregamento
         }
 
         setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
@@ -239,8 +242,9 @@ const Transferencias: React.FC = () => {
                         }}>
                             {transferenciasFiltradas.map(transferencia => {
                                 const negativo = transferencia.tipo === "receita" ? "+" : "-";
-                                const cor = transferencia.tipo === "receita" ? "success" : "";
+                                const cor = transferencia.tipo === "receita" ? "success" : "danger";
                                 const descricaoOrTag = transferencia.tipo === "receita" ? transferencia.descricao : transferencia.tag;
+                                const corModal = transferenciaSelecionada?.tipo === "receita" ? "success" : "danger";
 
                                 return (
                                     <IonGrid>
@@ -279,7 +283,7 @@ const Transferencias: React.FC = () => {
 
                                             {/* Editar e Excluir */}
                                             <IonCol sizeLg="6">
-                                                {/* Edit button */} 
+                                                {/* Edit button */}
                                                 <IonButton onClick={() => { setIsOpen(true), handleEditClick(transferencia) }} className="edit-btn" style={{
                                                     '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
@@ -291,8 +295,8 @@ const Transferencias: React.FC = () => {
                                                 {/* Modal */}
                                                 <IonModal isOpen={isOpen} backdropDismiss={false}>
                                                     <IonHeader>
-                                                        <IonToolbar color="success">
-                                                            <IonTitle>Adicionar</IonTitle>
+                                                        <IonToolbar color={corModal}>
+                                                            <IonTitle>Editar</IonTitle>
                                                             <IonButtons slot="end">
                                                                 <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                                             </IonButtons>
@@ -367,7 +371,7 @@ const Transferencias: React.FC = () => {
                                                                 </>
                                                             )}
                                                             <IonButton
-                                                                color={'success'}
+                                                                color={corModal}
                                                                 onClick={() => {
                                                                     if (transferenciaSelecionada) {
                                                                         editFinance(
@@ -375,10 +379,13 @@ const Transferencias: React.FC = () => {
                                                                             transferenciaSelecionada.tipo
                                                                         );
                                                                     }
-                                                                   
+
                                                                 }}
                                                             >
-                                                                Salvar {tipoAtual === "receita" ? "Receita" : "Despesa"}
+
+                                                                <IonText>
+                                                                    <p>{isLoading ? "Cadastrando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
+                                                                </IonText>
                                                             </IonButton>
                                                         </IonCardContent>
                                                     </IonContent>

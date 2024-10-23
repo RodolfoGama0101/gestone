@@ -408,7 +408,7 @@ const Home: React.FC = () => {
             </IonButtons>
 
             <IonText>
-              <h1 className='nome ion-text-start ion-margin-start'>{userInfo.displayName}</h1>
+              <h1 className='nome ion-text-start ion-margin-start ion-text-capitalize'>{userInfo.displayName}</h1>
             </IonText>
           </IonToolbar>
 
