@@ -1,6 +1,6 @@
 import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tooltip, PointElement, LineElement } from "chart.js";
-import { IonBackButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonToolbar } from '@ionic/react';
-import './css/Cadastro.css';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonToolbar } from '@ionic/react';
+import './css/Charts.css';
 import Verifica from '../firebase/verifica';
 import { ThemeContext } from '../components/ThemeContext';
 import { useContext, useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { ellipse } from "ionicons/icons";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 interface DespesasData {
   valor: number;
@@ -446,6 +447,39 @@ const Charts: React.FC = () => {
     },
   };
 
+
+  // Grafico mudar de lugar
+  const [currentGraph, setCurrentGraph] = useState(0);
+
+  //Array
+  const graphs = [
+    <div className="chart-doughnut">
+      <IonCol>
+      <Doughnut data={dataPie} options={configPie} />
+      </IonCol>
+      <IonCol>
+        <IonList>{listaDespesas}</IonList>
+      </IonCol>
+    </div>,
+    <div className="chart-bar">
+      <Bar data={dataBar} options={optionsBar} />
+    </div>,
+    <div className="chart-bar-tags">
+      <Bar data={dataBarTags} options={optionsBarTags} />
+    </div>,
+    <div>
+      <Line data={dataDespesasAno}></Line>
+    </div>
+  ];
+
+  const proxGraph = () => {
+    setCurrentGraph((prev) => (prev + 1) % graphs.length);
+  };
+
+  const antGraph = () => {
+    setCurrentGraph((prev) => (prev - 1 + graphs.length) % graphs.length);
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -470,33 +504,28 @@ const Charts: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <div className="chart-doughnut">
-                <Doughnut data={dataPie} options={configPie} />
-              </div>
-
-              <div className="chart-bar">
-                <Bar data={dataBar} options={optionsBar}></Bar>
-              </div>
-
-              <div className="chart-bar-tags">
-                <Bar data={dataBarTags} options={optionsBarTags} />
-              </div>
-
-              <div>
-                <Line data={dataDespesasAno}></Line>
-              </div>
-            </IonCol>
-
-            <IonCol>
               <IonText>
                 <h1>Total de despesas: R${despesaTotal.toFixed(2)}</h1>
               </IonText>
-              <IonList>{listaDespesas}</IonList>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+
+              {graphs[currentGraph]}
+
+              <IonRow className="ion-justfy-content-between">
+                <IonCol>
+                  <IonButton onClick={antGraph} color="success">Anterior</IonButton>
+                </IonCol>
+                <IonButton onClick={proxGraph} color="success">Próximo</IonButton>
+                
+              </IonRow>
             </IonCol>
           </IonRow>
         </IonGrid>
-      </IonContent>
-    </IonPage>
+      </IonContent >
+    </IonPage >
   );
 };
 
