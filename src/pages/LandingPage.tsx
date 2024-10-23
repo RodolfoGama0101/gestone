@@ -26,7 +26,6 @@ const LandingPage: React.FC = () => {
             <IonPage id="main-content">
 
                 <header className="header" id="main-content">
-
                     <nav className="navigation">
                         <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
                         <IonButtons>

@@ -2,7 +2,7 @@ import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { airplaneOutline, arrowUp, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
+import { airplaneOutline, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
