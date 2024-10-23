@@ -309,25 +309,6 @@ const Charts: React.FC = () => {
   const optionsBar = {
     maintainAspectRatio: false,
     aspectRatio: 2, // Proporção largura/altura
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo Y
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        }
-      },
-      x: {
-        ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo X
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        }
-      }
-    },
     plugins: {
       legend: {
         display: false, // Remover a legenda
@@ -365,25 +346,6 @@ const Charts: React.FC = () => {
 
   const optionsBarTags = {
     maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo Y
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        },
-      },
-      x: {
-        ticks: {
-          color: '#FFFFFF', // Cor branca para as labels do eixo X
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        },
-      },
-    },
     plugins: {
       legend: {
         display: false, // Remover a legenda
@@ -414,25 +376,7 @@ const Charts: React.FC = () => {
 
   const optionsLineChart = {
     maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo Y
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        },
-      },
-      x: {
-        ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo X
-        },
-        grid: {
-          color: '#555555', // Opcional: cor da linha do grid
-        },
-      },
-    },
+    
     plugins: {
       legend: {
         display: false, // Remover a legenda
