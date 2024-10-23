@@ -68,19 +68,29 @@
 }
 
 .custom-card {
-  width: 70%;
-  /* Defina a largura desejada */
-  height: 50%;
-  max-height: 90%;
-  max-width: 90%;
-  /* Para manter responsivo em telas pequenas */
-  margin: 0 auto;
-  /* Centralizar horizontalmente */
-  padding: 16px;
-  /* Espaçamento interno */
+  width: 90%;
+  max-width: 950px;
+  /* Defina um limite máximo para larguras maiores */
+  height: 45%;
+  max-height: 900px;
+  /* Para manter uma altura máxima */
+  margin: 20px auto;
+  /* Centralizar horizontalmente com espaçamento */
   color: var(--ion-text-color);
   background-color: var(--ion-color-primary-shade);
+  display: flex;
+
 }
+
+@media (max-width: 768px) {
+  /* Ajustes para telas menores */
+  .custom-card {
+    width: 95%;
+    padding: 10px;
+  }
+}
+
+
 
 .custom-card p {
   font-size: 15px;
