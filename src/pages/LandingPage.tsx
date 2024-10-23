@@ -24,16 +24,19 @@ const LandingPage: React.FC = () => {
                 </IonContent>
             </IonMenu>
             <IonPage id="main-content">
+                <IonContent>
 
-                <header className="header" id="main-content">
-                    <nav className="navigation">
-                        <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
-                        <IonButtons>
-                            <IonMenuButton className="menu"></IonMenuButton>
-                        </IonButtons>
-                    </nav>
-                    <main>
-                        <section className="home">
+                    <header id="main-content">
+                        <nav className="navigation">
+                            <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
+                            <IonButtons>
+                                <IonMenuButton className="menu"></IonMenuButton>
+                            </IonButtons>
+                        </nav>
+                    </header>
+
+                    <section className="container">
+                        <div className="home">
                             <div className="home-text">
                                 <h2 className="text-h2">Bem vindo ao Gestone</h2>
                                 <h1 className="text-h1">Controle suas Finanças de Forma Simples e Eficaz</h1>
@@ -43,30 +46,33 @@ const LandingPage: React.FC = () => {
                             <div className="home-img">
                                 <img src='versaoLetraBranca.png'></img>
                             </div>
-                        </section>
-                    </main>
-                </header>
+                        </div>
+                    </section>
 
-                <section className="testimonials">
-                    <h2>O Que Nossos Usuários Dizem</h2>
-                    <div className='carousel'>
-                        <div className="divbox">
-                            <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                    <section className="teste">
+                        <h2>O Que Nossos Usuários Dizem</h2>
+                        <div className='carousel'>
+                            <div className="divbox">
+                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                            </div>
+                            <div className="divbox">
+                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                            </div>
+                            <div className="divbox">
+                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                            </div>
+                            <div className="divbox">
+                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                            </div>
+                            <div className="divbox">
+                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                            </div>
                         </div>
-                        <div className="divbox">
-                            <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
-                        </div>
-                        <div className="divbox">
-                            <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
-                        </div>
-                        <div className="divbox">
-                            <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
-                        </div>
-                        <div className="divbox">
-                            <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </IonContent>
+                <footer>
+                    <p>&copy; 2024 Gestone. Todos os direitos reservados.</p>
+                </footer>
             </IonPage>
         </>
     );
