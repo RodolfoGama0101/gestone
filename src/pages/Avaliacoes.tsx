@@ -142,7 +142,7 @@ const Avaliacoes: React.FC = () => {
                             <div className="comentario">
                                 <IonTextarea
                                     counter={true} 
-                                    maxlength={200}
+                                    maxlength={150}
                                     fill="outline"
                                     label="Comentário: "
                                     className="input-avaliacoes"
