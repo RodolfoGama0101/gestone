@@ -8,6 +8,8 @@
 .star-rating {
     display: flex;
     margin-top: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .star {
@@ -19,3 +21,39 @@
 .card-input-avaliacoes {
     width: 400px;
 }
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .custom-modal {
+    --width: 400px; /* Defina a largura desejada */
+    --height: 400px; /* Defina a altura desejada */
+    --max-width: 80vw; /* Limite de largura máximo para telas pequenas */
+    --max-height: 80vh; /* Limite de altura máximo para telas pequenas */
+  }
+
+  .custom-card {
+    width: 600px; /* Defina a largura desejada */
+    height: 500px;
+    max-height: 90%;
+    max-width: 90%; /* Para manter responsivo em telas pequenas */
+    margin: 0 auto; /* Centralizar horizontalmente */
+    padding: 16px; /* Espaçamento interno */
+  }
+  
+  .custom-card p {
+    font-size: 14px; /* Diminuir o tamanho do texto */
+    margin: 8px 0; /* Ajustar o espaçamento entre parágrafos */
+  }
+  
+  

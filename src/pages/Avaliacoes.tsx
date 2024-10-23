@@ -13,9 +13,10 @@ import {
     IonButton,
     IonTextarea,
     IonCardTitle,
-    IonText
+    IonText,
+    IonModal
 } from "@ionic/react";
-import { star, starOutline } from "ionicons/icons";
+import { arrowBackOutline, star, starOutline } from "ionicons/icons";
 import { useEffect, useState } from "react";
 import "./css/Avaliacoes.css";
 import { doc, getDoc, query, setDoc } from "firebase/firestore";
@@ -28,6 +29,8 @@ const Avaliacoes: React.FC = () => {
     const [userInfo, setUserInfo] = useState(Object);
     const [comment, setComment] = useState<string>("");
     const [userRatingData, setUserRatingData] = useState(Object);
+    const [isOpen, setIsOpen] = useState(false);
+
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -84,6 +87,7 @@ const Avaliacoes: React.FC = () => {
         }
     }, [userInfo]);
 
+
     return (
         <IonPage>
             <IonHeader>
@@ -96,38 +100,62 @@ const Avaliacoes: React.FC = () => {
             </IonHeader>
 
             <IonContent fullscreen className="ion-justfy-content-center">
-                <IonCard className="card-input-avaliacoes">
-                    <IonCardContent>
-                        {/* Sistema de avaliação por estrelas */}
-                        <div className="star-rating">
-                            {Array.from({ length: 5 }, (_, index) => (
-                                <IonIcon
-                                    key={index}
-                                    icon={index < rating ? star : starOutline}
-                                    className="star"
-                                    color={"warning"}
-                                    onClick={() => handleRating(index + 1)}
-                                />
-                            ))}
-                        </div>
 
-                        {/* Campo de comentário */}
-                        <IonTextarea
-                            fill="outline"
-                            label="Comentário: "
-                            className="input-avaliacoes"
-                            labelPlacement="stacked"
-                            color={"light"}
-                            value={comment}
-                            onIonChange={(e: any) => setComment(e.target.value)}
-                        />
+                <IonButton color={'success'} onClick={() => setIsOpen(true)} className="ion-justify-content-center" style={{
+                    '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                }}>
+                    <IonText >Avaliar</IonText>
+                </IonButton>
 
-                        <IonButton onClick={addRating}>Enviar avaliação</IonButton>
-                    </IonCardContent>
-                </IonCard>
+                <IonModal isOpen={isOpen} className="custom-modal" backdropDismiss={false}>
+                    <IonHeader>
+                        <IonToolbar color="success">
+                            <IonButtons slot="start">
+                                <IonButton onClick={() => setIsOpen(false)}><IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} /></IonButton>
+                            </IonButtons>
+                            <IonText>Voltar</IonText>
+                        </IonToolbar>
+                    </IonHeader>
+
+                    <div className="modal-content">
+                        <IonContent className="card-input-avaliacoes">
+
+                            {/* Sistema de avaliação por estrelas */}
+                            <div className="star-rating">
+                                {Array.from({ length: 5 }, (_, index) => (
+                                    <IonIcon
+                                        key={index}
+                                        icon={index < rating ? star : starOutline}
+                                        className="star"
+                                        color={"warning"}
+                                        onClick={() => handleRating(index + 1)}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Campo de comentário */}
+                            <IonTextarea
+                                fill="outline"
+                                label="Comentário: "
+                                className="input-avaliacoes"
+                                labelPlacement="stacked"
+                                color={"success"}
+                                value={comment}
+                                onIonChange={(e: any) => setComment(e.target.value)}
+                            />
+
+                            <IonButton className="" color={'success'} onClick={addRating}>Enviar avaliação</IonButton>
+
+                        </IonContent>
+                    </div>
+                </IonModal>
+
+
+
 
                 {userRatingData && (
-                    <IonCard>
+                    <IonCard className="custom-card">
                         <IonCardContent>
                             <IonText>
                                 <p>UID: {userRatingData.uid}</p>
@@ -136,6 +164,7 @@ const Avaliacoes: React.FC = () => {
                             </IonText>
                         </IonCardContent>
                     </IonCard>
+
                 )}
             </IonContent>
         </IonPage>
