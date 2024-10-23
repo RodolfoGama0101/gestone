@@ -1,4 +1,4 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -8,17 +8,17 @@ import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
 import { ThemeContext } from '../components/ThemeContext';
 
+interface SaldoData {
+    id: string;
+    data: Date;
+    valor: number;
+    tipo: string;
+    descricao: string;
+    tag: string;
+}
+
 const Transferencias: React.FC = () => {
     Verifica();
-
-    interface SaldoData {
-        id: string;
-        data: Date;
-        valor: number;
-        tipo: string;
-        descricao: string;
-        tag: string;
-    }
 
     const [uid, setUid] = useState("");
     const [saldo, setSaldo] = useState<SaldoData[]>(Array);
@@ -29,13 +29,15 @@ const Transferencias: React.FC = () => {
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
+    const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
 
     // Edit Finance
     const [newData, setNewData] = useState<Date | null>(null);
     const [newDescricao, setNewDescricao] = useState(String);
     const [newTag, setNewTag] = useState(String);
     const [newValor, setNewValor] = useState(Number);
-    const [tipoAtual, setTipoAtual] = useState<"receita" | "despesa">("receita"); // Estado para armazenar o tipo atual de transferência
+    const [tipoAtual, setTipoAtual] = useState(""); // Estado para armazenar o tipo atual de transferência
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -139,35 +141,40 @@ const Transferencias: React.FC = () => {
     const editFinance = async (
         id: any,
         tipo: any,
-        valor: any,
-        data: any,
-        descricao: any,
-        tag: any
     ) => {
         const userFinanceRef = doc(db, "UserFinance", id);
         try {
-            if (tipo == "receita") {
+            if (tipo === "receita") {
                 await updateDoc(userFinanceRef, {
-
+                    data: newData,
+                    valor: newValor,
+                    descricao: newDescricao,
                 });
-            } else if (tipo == "despesa") {
+            } else if (tipo === "despesa") {
                 await updateDoc(userFinanceRef, {
-
+                    data: newData,
+                    valor: newValor,
+                    tag: newTag,
                 });
             }
 
+
+
         } catch (error) {
-
+            console.error(error)
+        } finally {
+            setIsLoading(false); // Finaliza o carregamento
         }
-    }
+    };
 
-    // Função para abrir o modal e setar o tipo
-    const abrirModal = (transferencia: SaldoData) => {
-        setTipoAtual(transferencia.tipo as "receita" | "despesa");
+    // Atualize a função de edição para definir a transferência selecionada
+    const handleEditClick = (transferencia: SaldoData) => {
+        setTransferenciaSelecionada(transferencia);
         setNewData(transferencia.data);
         setNewDescricao(transferencia.descricao);
         setNewTag(transferencia.tag);
         setNewValor(transferencia.valor);
+        setTipoAtual(transferencia.tipo);
         setIsOpen(true);
     };
 
@@ -190,7 +197,7 @@ const Transferencias: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonText>
-                                <h1 className="ion-margin saldo-total-tf">R$ {valorTotalReceitas - valorTotalDespesas}</h1>
+                                <h1 className="ion-margin saldo-total-tf">R$ {(valorTotalReceitas - valorTotalDespesas).toFixed(2)}</h1>
                             </IonText>
                         </IonCol>
                         <IonCol size="auto" className="ion-justify-content-end ion-margin">
@@ -233,8 +240,10 @@ const Transferencias: React.FC = () => {
                         }}>
                             {transferenciasFiltradas.map(transferencia => {
                                 const negativo = transferencia.tipo === "receita" ? "+" : "-";
-                                const cor = transferencia.tipo === "receita" ? "success" : "";
+                                const cor = transferencia.tipo === "receita" ? "success" : "danger";
                                 const descricaoOrTag = transferencia.tipo === "receita" ? transferencia.descricao : transferencia.tag;
+                                const corModal = transferenciaSelecionada?.tipo === "receita" ? "success" : "danger";
+
                                 return (
                                     <IonGrid>
                                         {/* Ícone */}
@@ -243,12 +252,11 @@ const Transferencias: React.FC = () => {
                                                 <IonText>
                                                     {transferencia.tipo === "receita" ? (
                                                         <IonIcon icon={cashOutline} style={{ fontSize: '24px', marginRight: '8px' }}  // Diminui o ícone e adiciona espaço entre ícone e texto
-                                                        >
-                                                        </IonIcon>
+                                                        />
+
                                                     ) : (
                                                         // Exibir ícone da tag correspondente
-                                                        <IonIcon
-                                                            icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '24px', marginRight: '8px' }}></IonIcon>
+                                                        <IonIcon icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '24px', marginRight: '8px' }} />
                                                     )}
                                                 </IonText>
                                             </IonCol>
@@ -274,7 +282,7 @@ const Transferencias: React.FC = () => {
                                             {/* Editar e Excluir */}
                                             <IonCol sizeLg="6">
                                                 {/* Edit button */}
-                                                <IonButton onClick={() => { setIsOpen(true), abrirModal(transferencia) }} className="edit-btn" style={{
+                                                <IonButton onClick={() => { setIsOpen(true), handleEditClick(transferencia) }} className="edit-btn" style={{
                                                     '--background': 'var(--ion-background-color)', // Controla o fundo da página
                                                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                                                 }}>
@@ -282,10 +290,11 @@ const Transferencias: React.FC = () => {
                                                     <IonText >Editar</IonText>
                                                 </IonButton>
 
-                                                <IonModal isOpen={isOpen} className="fullscreen-modal">
+                                                {/* Modal */}
+                                                <IonModal isOpen={isOpen} backdropDismiss={false}>
                                                     <IonHeader>
-                                                        <IonToolbar color="success">
-                                                            <IonTitle>Adicionar</IonTitle>
+                                                        <IonToolbar color={corModal}>
+                                                            <IonTitle>Editar</IonTitle>
                                                             <IonButtons slot="end">
                                                                 <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
                                                             </IonButtons>
@@ -297,22 +306,22 @@ const Transferencias: React.FC = () => {
                                                     }}>
                                                         <IonCardContent>
 
-                                                            <IonInput
-                                                                required
-                                                                label="Data: "
-                                                                type="date"
-                                                                color={'success'}
-                                                                className=""
-                                                                value={newData ? newData.toISOString().split('T')[0] : ''}
-                                                                fill="outline"
-                                                                onIonChange={(e: any) => {
-                                                                    const selectedDate = new Date(e.detail.value);
-                                                                    setNewData(selectedDate);
-                                                                }}
-                                                            />
                                                             {/* Condicional para "Receita" */}
                                                             {tipoAtual === "receita" ? (
                                                                 <>
+                                                                    <IonInput
+                                                                        required
+                                                                        label="Data: "
+                                                                        type="date"
+                                                                        color={'success'}
+                                                                        className=""
+                                                                        value={newData ? newData.toISOString().substring(0, 10) : ''}
+                                                                        fill="outline"
+                                                                        onIonChange={(e: any) => {
+                                                                            const selectedDate = new Date(e.detail.value);
+                                                                            setNewData(selectedDate);
+                                                                        }}
+                                                                    />
                                                                     <IonInput
                                                                         required
                                                                         label="Descrição:"
@@ -352,7 +361,7 @@ const Transferencias: React.FC = () => {
                                                                         label="Valor:"
                                                                         type="number"
                                                                         color={'success'}
-                                                                        value={newTag}
+                                                                        value={newValor}
                                                                         className="input"
                                                                         fill="outline"
                                                                         onIonChange={(e: any) => setNewValor(Number(e.target.value))}
@@ -360,21 +369,26 @@ const Transferencias: React.FC = () => {
                                                                 </>
                                                             )}
                                                             <IonButton
-                                                                color={'success'}
+                                                                color={corModal}
                                                                 onClick={() => {
-                                                                    setIsOpen(false);
-                                                                    editFinance(
-                                                                        transferencia.id,
-                                                                        tipoAtual,
-                                                                        newValor,
-                                                                        newData,
-                                                                        newDescricao,
-                                                                        newTag
-                                                                    );
-                                                                    setIsOpen(false);
+                                                                    setIsLoading(true); // Inicia o carregamento
+
+                                                                    if (transferenciaSelecionada) {
+                                                                        editFinance(
+                                                                            transferenciaSelecionada.id,
+                                                                            transferenciaSelecionada.tipo
+                                                                        );
+                                                                    }
+
+                                                                    setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
+                                                                    setIsOpen(false); // Fecha o modal após a edição
+
                                                                 }}
                                                             >
-                                                                Salvar {tipoAtual === "receita" ? "Receita" : "Despesa"}
+
+                                                                <IonText>
+                                                                    <p>{isLoading ? "Carregando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
+                                                                </IonText>
                                                             </IonButton>
                                                         </IonCardContent>
                                                     </IonContent>
