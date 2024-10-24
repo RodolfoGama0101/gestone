@@ -7,7 +7,7 @@
 
 .container {
   color: var(--branco);
-  background:  linear-gradient( 340deg,  rgb(40, 150, 20) , rgb(40, 100, 10), rgb(50, 80, 50)  );
+  background: linear-gradient(340deg, rgb(40, 150, 20), rgb(40, 100, 10), rgb(50, 80, 50));
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,12 +40,11 @@
 
 .home {
   width: 100%;
-  
   min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 100px 10%;
+  padding: 205px 10%;
 }
 
 .home-text {
@@ -87,8 +86,10 @@
   width: 100%;
 }
 
-.teste {
-  background: radial-gradient(rgb(3, 161, 0), rgb(40, 255, 8,0));
+/* Testomonials */
+
+.testimonials {
+  background: radial-gradient(rgb(3, 161, 0), rgb(40, 255, 8, 0));
   /* background: linear-gradient( 3deg,  rgb(50, 80, 50) , rgb(40, 100, 10), rgb(40, 150, 20)  ); */
   text-align: center;
   padding: 10px;
@@ -132,6 +133,48 @@
 
 .divbox:last-child {
   animation-delay: 9s;
+}
+
+/* Benefits */
+
+.left {
+  height: 465px;
+  width: 50%;
+  background-color: rgb(61, 117, 100);
+  ;
+  float: left;
+}
+
+.right {
+  height: 465px;
+  width: 50%;
+  background-color: rgb(158, 0, 0);
+  ;
+  float: right;
+}
+
+.qrcode {
+  background: rgb(59, 109, 46);
+  max-width: 320px;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 10px 10px 19px 19px rgb(0, 0, 0);
+  text-align: center;
+  margin: 16px auto;
+}
+
+.qrcode p {
+  margin-bottom: 10px;
+  text-align: center;
+  color: aliceblue;
+  font-size: 20px;
+}
+
+.qrcode-img {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  margin: 1px auto;
 }
 
 footer {
@@ -229,7 +272,6 @@ footer {
     flex-direction: column;
     height: 300px;
   }
-  
 
   @keyframes carousel {
     0% {
@@ -251,7 +293,7 @@ footer {
 
     43%,
     60% {
-      transform: translateY(-25%) scale(0.7);
+      transform: translateY(-50%) scale(0.7);
       opacity: 0.4;
     }
 
@@ -261,9 +303,8 @@ footer {
     }
 
     100% {
-      transform: translateY(-50%) scale(0.5);
+      transform: translateY(-25%) scale(0.5);
       opacity: 0;
     }
   }
 }
-

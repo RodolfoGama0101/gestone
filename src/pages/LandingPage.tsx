@@ -1,4 +1,4 @@
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon } from "@ionic/react";
+import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon, IonNav, IonNavLink, IonGrid, IonRow, IonCol } from "@ionic/react";
 import "./css/LandingPage.css"
 import React from "react";
 
@@ -29,33 +29,43 @@ const LandingPage: React.FC = () => {
 
                     </IonList>
                 </IonContent>
+
+                {/* Menu */}
             </IonMenu>
             <IonPage id="main-content">
                 <IonContent>
                     <IonHeader id="main-content">
-                        <nav className="navigation">
+                        <IonNavLink className="navigation">
                             <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
                             <IonButtons>
                                 <IonMenuButton className="menu"></IonMenuButton>
                             </IonButtons>
-                        </nav>
+                        </IonNavLink>
                     </IonHeader>
 
+
                     <section className="container">
-                        <div className="home">
-                            <div className="home-text">
-                                <h2 className="text-h2">Bem vindo ao Gestone</h2>
-                                <h1 className="text-h1">Controle suas Finanças de Forma Simples e Eficaz</h1>
-                                <p>Descubra como gerenciar seu dinheiro e alcançar seus objetivos financeiros com nosso sistema de gestão financeira pessoal</p>
-                                <a href="Cadastro" className="home-cad">Fazer Cadastro</a>
-                            </div>
-                            <div className="home-img">
-                                <img src='versaoLetraBranca.png'></img>
-                            </div>
-                        </div>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol>
+                                    <div className="home">
+                                        <div className="home-text">
+                                            <h2 className="text-h2">Bem vindo ao Gestone</h2>
+                                            <h1 className="text-h1">Controle suas Finanças de Forma Simples e Eficaz</h1>
+                                            <p>Descubra como gerenciar seu dinheiro e alcançar seus objetivos financeiros com nosso sistema de gestão financeira pessoal</p>
+                                            <a href="Cadastro" className="home-cad">Fazer Cadastro</a>
+                                        </div>
+                                        <div className="home-img">
+                                            <img src='versaoLetraBranca.png'></img>
+                                        </div>
+                                    </div>
+                                </IonCol>
+                            </IonRow>
+                        </IonGrid>
                     </section>
 
-                    <section className="teste">
+                    {/* Testimonials */}
+                    <section className="testimonials">
                         <h2>O Que Nossos Usuários Dizem</h2>
                         <div className='carousel'>
                             <div className="divbox">
@@ -75,9 +85,26 @@ const LandingPage: React.FC = () => {
                             </div>
                         </div>
                     </section>
+
+                    {/* Benefits */}
+                    <IonRow>
+                        <IonCol className="left">
+                            <div className="video">
+                                <IonLabel className="video-dim">Video</IonLabel>
+                            </div>
+                        </IonCol>
+                        <IonCol className="right">
+                            <div className="qrcode">
+                                <IonLabel className="qrcode-img">
+                                    <p>Baixe Aqui!!</p>
+                                    <img src='QRCode_Fácil.png'></img>
+                                </IonLabel>
+                            </div>
+                        </IonCol>
+                    </IonRow>
                 </IonContent>
 
-            </IonPage>
+            </IonPage >
         </>
     );
 }
