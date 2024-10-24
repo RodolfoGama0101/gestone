@@ -224,7 +224,10 @@ const Transferencias: React.FC = () => {
 
                 <IonGrid>
                     <IonRow>
-                        <IonCol>
+                        <IonCol style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}>
                             <IonButton
                                 color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
                                 onClick={() => setFiltroTipo('tudo')}
@@ -245,19 +248,19 @@ const Transferencias: React.FC = () => {
                             </IonButton>
                         </IonCol>
 
-
-                    </IonRow>
-                </IonGrid>
-
-                <IonCard color={"medium"}>
-                    <IonCardContent>
-                        <IonCol size="auto" className="ion-justify-content-end ion-margin">
+                        <IonCol size="auto" className="ion-justify-content-end">
                             {/* Add a single button to toggle the filter */}
                             <IonSelect className="filter-select" aria-label="Order" interface="popover" placeholder="Order" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
                                 <IonSelectOption value="data">Data</IonSelectOption>
                                 <IonSelectOption value="valor">Valor</IonSelectOption>
                             </IonSelect>
                         </IonCol>
+                    </IonRow>
+                </IonGrid>
+
+                <IonCard color={"medium"}>
+                    <IonCardContent>
+                        
                         <IonList className="ion-no-padding list-transferencias" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
