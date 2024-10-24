@@ -250,7 +250,7 @@ const Receitas: React.FC = () => {
                     '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
                     '--color': 'var(--ion-text-color)', // Controla a cor do texto
                 }}>
-                    <IonModal isOpen={isOpen} className="fullscreen-modal">
+                    <IonModal isOpen={isOpen} backdropDismiss={false}>
                         <IonHeader>
                             <IonToolbar color="success">
                                 <IonTitle>Adicionar</IonTitle>
