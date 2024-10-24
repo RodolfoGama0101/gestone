@@ -6,7 +6,6 @@ import {
     IonToolbar,
     IonCard,
     IonButtons,
-    IonBackButton,
     IonPage,
     IonCardContent,
     IonInput,
