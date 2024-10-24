@@ -1,4 +1,4 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, orderBy, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
@@ -304,74 +304,102 @@ const Transferencias: React.FC = () => {
                                                             </IonButtons>
                                                         </IonToolbar>
                                                     </IonHeader>
-                                                    <IonContent className="ion-padding" style={{
-                                                        '--background': 'var(--ion-color-background-color)', // Controla o fundo da página
-                                                        '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                                    }}>
+                                                    <IonContent
+                                                        className="ion-padding"
+                                                        style={{
+                                                            '--background': 'var(--ion-color-background-color)',
+                                                            '--color': 'var(--ion-text-color)'
+                                                        }}
+                                                    >
                                                         <IonCardContent>
+                                                            <form>
+                                                                {/* Condicional para "Receita" */}
+                                                                {tipoAtual === "receita" ? (
+                                                                    <>
+                                                                        <IonItem>
 
-                                                            {/* Condicional para "Receita" */}
-                                                            {tipoAtual === "receita" ? (
-                                                                <>
-                                                                    <IonInput
-                                                                        required
-                                                                        label="Data: "
-                                                                        type="date"
-                                                                        color={'success'}
-                                                                        className=""
-                                                                        value={newData ? newData.toISOString().substring(0, 10) : ''}
-                                                                        fill="outline"
-                                                                        onIonChange={(e: any) => {
-                                                                            const selectedDate = new Date(e.detail.value);
-                                                                            setNewData(selectedDate);
-                                                                        }}
-                                                                    />
-                                                                    <IonInput
-                                                                        required
-                                                                        label="Descrição:"
-                                                                        type="text"
-                                                                        color={'success'}
-                                                                        value={newDescricao}
-                                                                        className="input"
-                                                                        fill="outline"
-                                                                        onIonChange={(e: any) => setNewDescricao(e.target.value)}
-                                                                    />
-                                                                    <IonInput
-                                                                        required
-                                                                        label="Valor:"
-                                                                        type="number"
-                                                                        value={newValor}
-                                                                        color={'success'}
-                                                                        className="input"
-                                                                        fill="outline"
-                                                                        onIonChange={(e: any) => setNewValor(Number(e.target.value))}
-                                                                    />
-                                                                </>
-                                                            ) : (
-                                                                /* Condicional para "Despesa" */
-                                                                <>
-                                                                    <IonInput
-                                                                        required
-                                                                        label="Tag:"
-                                                                        type="text"
-                                                                        color={'success'}
-                                                                        value={newTag}
-                                                                        className="input"
-                                                                        fill="outline"
-                                                                        onIonChange={(e: any) => setNewTag(e.target.value)}
-                                                                    />
-                                                                    <IonInput
-                                                                        required
-                                                                        label="Valor:"
-                                                                        type="number"
-                                                                        color={'success'}
-                                                                        value={newValor}
-                                                                        className="input"
-                                                                        fill="outline"
-                                                                        onIonChange={(e: any) => setNewValor(Number(e.target.value))}
-                                                                    />
-                                                                </>
-                                                            )}
+                                                                            <IonInput
+                                                                                className="input-editar"
+                                                                                label="Data: "
+                                                                                required
+                                                                                type="date"
+                                                                                color="success"
+                                                                                value={newData ? newData.toISOString().substring(0, 10) : ''}
+                                                                                fill="outline"
+                                                                                onIonChange={(e: any) => {
+                                                                                    const selectedDate = new Date(e.detail.value);
+                                                                                    setNewData(selectedDate);
+                                                                                }}
+                                                                                aria-label="Data da receita"
+                                                                            />
+                                                                        </IonItem>
+
+                                                                        <IonItem>
+
+                                                                            <IonInput
+                                                                                className="input-editar"
+                                                                                label="Descrição:"
+                                                                                required
+                                                                                type="text"
+                                                                                color="success"
+                                                                                value={newDescricao}
+                                                                                fill="outline"
+                                                                                onIonChange={(e: any) => setNewDescricao(e.target.value)}
+                                                                                aria-label="Descrição da receita"
+                                                                            />
+                                                                        </IonItem>
+
+                                                                        <IonItem>
+
+                                                                            <IonInput
+                                                                                className="input-editar"
+                                                                                label="Valor:"
+                                                                                required
+                                                                                type="number"
+                                                                                color="success"
+                                                                                value={newValor}
+                                                                                fill="outline"
+                                                                                onIonChange={(e: any) => setNewValor(Number(e.target.value))}
+                                                                                aria-label="Valor da receita"
+                                                                            />
+                                                                        </IonItem>
+                                                                    </>
+                                                                ) : (
+                                                                    // Condicional para "Despesa"
+                                                                    <>
+                                                                        <IonItem>
+
+                                                                            <IonInput
+                                                                                className="input-editar"
+                                                                                label="Tag:"
+                                                                                required
+                                                                                type="text"
+                                                                                color="success"
+                                                                                value={newTag}
+                                                                                fill="outline"
+                                                                                onIonChange={(e: any) => setNewTag(e.target.value)}
+                                                                                aria-label="Tag da despesa"
+                                                                            />
+                                                                        </IonItem>
+
+                                                                        <IonItem>
+
+                                                                            <IonInput
+                                                                                className="input-editar"
+                                                                                label="Valor:"
+                                                                                required
+                                                                                type="number"
+                                                                                color="success"
+                                                                                value={newValor}
+                                                                                fill="outline"
+                                                                                onIonChange={(e: any) => setNewValor(Number(e.target.value))}
+                                                                                aria-label="Valor da despesa"
+                                                                            />
+                                                                        </IonItem>
+                                                                    </>
+                                                                )}
+                                                            </form>
+
                                                             <IonButton
                                                                 color={corModal}
                                                                 onClick={() => {
@@ -386,16 +414,15 @@ const Transferencias: React.FC = () => {
 
                                                                     setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
                                                                     setIsOpen(false); // Fecha o modal após a edição
-
                                                                 }}
                                                             >
-
                                                                 <IonText>
                                                                     <p>{isLoading ? "Carregando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
                                                                 </IonText>
                                                             </IonButton>
                                                         </IonCardContent>
                                                     </IonContent>
+
                                                 </IonModal>
 
                                                 {/* Delete button */}
