@@ -14,26 +14,32 @@ const LandingPage: React.FC = () => {
                 </IonHeader>
                 <IonContent>
                     <IonList>
-                        <IonItem routerLink="/settings">
-                            <IonLabel>Settings</IonLabel>
+                        <IonItem routerLink="/cadastro">
+                            <IonLabel>Cadastro</IonLabel>
+                        </IonItem>
+                        <IonItem routerLink="/login">
+                            <IonLabel>Login</IonLabel>
+                        </IonItem>
+                        <IonItem routerLink="/support">
+                            <IonLabel>Support</IonLabel>
                         </IonItem>
                         <IonItem routerLink="/home">
                             <IonLabel>Home</IonLabel>
                         </IonItem>
+
                     </IonList>
                 </IonContent>
             </IonMenu>
             <IonPage id="main-content">
                 <IonContent>
-
-                    <header id="main-content">
+                    <IonHeader id="main-content">
                         <nav className="navigation">
                             <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
                             <IonButtons>
                                 <IonMenuButton className="menu"></IonMenuButton>
                             </IonButtons>
                         </nav>
-                    </header>
+                    </IonHeader>
 
                     <section className="container">
                         <div className="home">
@@ -70,9 +76,7 @@ const LandingPage: React.FC = () => {
                         </div>
                     </section>
                 </IonContent>
-                <footer>
-                    <p>&copy; 2024 Gestone. Todos os direitos reservados.</p>
-                </footer>
+
             </IonPage>
         </>
     );

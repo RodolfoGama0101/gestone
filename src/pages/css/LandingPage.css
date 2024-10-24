@@ -54,7 +54,7 @@
 
 .home-text .text-h2 {
   font-size: 3rem;
-  color: var(--verde);
+  color: rgb(240, 248, 255);
 }
 
 .home-text .text-h1 {
@@ -88,16 +88,15 @@
 }
 
 .teste {
-  background: content-box radial-gradient(rgb(3, 161, 0), rgb(120, 32, 20));
+  background: radial-gradient(rgb(3, 161, 0), rgb(40, 255, 8,0));
   /* background: linear-gradient( 3deg,  rgb(50, 80, 50) , rgb(40, 100, 10), rgb(40, 150, 20)  ); */
   text-align: center;
-
   padding: 10px;
   height: 450px;
 }
 
 .carousel {
-  height: 400px;
+  height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
