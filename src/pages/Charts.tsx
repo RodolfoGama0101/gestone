@@ -276,9 +276,9 @@ const Charts: React.FC = () => {
         <IonLabel>
           <IonGrid>
             <IonRow>
-              <IonCol>
+              <IonCol style={{ display: "flex", flexDirection: "row" }}>
+                <IonIcon icon={ellipse} style={{ color: obterCorParaTag(tag) }} className="ion-margin" />
                 <IonText>
-                  <IonIcon icon={ellipse} style={{ color: obterCorParaTag(tag) }} />
                   <p>{tag}: R$ {valor.toFixed(2)} ({porcentagem}%)</p>
                 </IonText>
               </IonCol>
@@ -307,21 +307,22 @@ const Charts: React.FC = () => {
   };
 
   const optionsBar = {
-    maintainAspectRatio: false,
-    aspectRatio: 2, // Proporção largura/altura
+    maintainAspectRatio: true, // Mantém a proporção do gráfico
+    responsive: true, // O gráfico será responsivo
+    aspectRatio: 2.5, // Mesmo aspecto utilizado no gráfico de linha
     plugins: {
       legend: {
-        display: false, // Remover a legenda
+        display: false, // Remove a legenda
       },
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`;
           },
         },
       },
     },
-  }
+  };
 
   // Ordena as tags e os valores de despesas do menor para o maior
   const despesasOrdenadas = Object.entries(tagsDataAgrupado).sort((a, b) => a[1] - b[1]);
@@ -344,16 +345,19 @@ const Charts: React.FC = () => {
     ],
   };
 
+
   const optionsBarTags = {
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
+    responsive: true,
+    aspectRatio: 2.5, // Mesmo aspecto utilizado no gráfico de linha
     plugins: {
       legend: {
-        display: false, // Remover a legenda
+        display: false,
       },
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`;
           },
         },
       },
@@ -374,17 +378,26 @@ const Charts: React.FC = () => {
     ],
   };
 
-  const optionsLineChart = {
-    maintainAspectRatio: false,
-
+  const optionsLineBar = {
+    maintainAspectRatio: true, // Mantém a proporção definida
+    responsive: true, // O gráfico se ajustará dinamicamente ao contêiner
+    aspectRatio: 2.5, // Aumentar a proporção para dar mais largura ao gráfico
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
     plugins: {
       legend: {
-        display: false, // Remover a legenda
+        display: false, // Remove a legenda se não for necessária
       },
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `R$${tooltipItem.raw.toFixed(2)}`; // Exibe o valor no tooltip
+            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)}`;
           },
         },
       },
@@ -412,49 +425,57 @@ const Charts: React.FC = () => {
     </IonGrid>
   );
 
-  //Array
-  const graphStyle = {
-    width: '90%',      // Para telas menores (mobile)
-    height: '60vh',    // Altura relativa à viewport
-    margin: '0 auto',  // Centraliza o gráfico
-    color: 'var(--ion-text-color)', // Mantém a cor do texto
-    maxWidth: '600px', // Limite de largura para telas maiores
-  };
+  // //Array
+  // const graphStyle = {
+  //   width: '100%',      // Para telas menores (mobile)
+  //   height: '60vh',    // Altura relativa à viewport
+  //   margin: '0 auto',  // Centraliza o gráfico
+  //   color: 'var(--ion-text-color)', // Mantém a cor do texto
+  //   maxWidth: '600px', // Limite de largura para telas maiores
+  // };
 
-  const responsiveGraphStyle = {
-    ...graphStyle,
-    '@media(min-width: 768px)': { // Ajusta para tablets e desktops
-      width: '65%',    // Ajusta a largura para telas maiores
-      height: '70vh',  // Aumenta a altura relativa
-    }
-  };
+  // const responsiveGraphStyle = {
+  //   ...graphStyle,
+  //   '@media(min-width: 768px)': { // Ajusta para tablets e desktops
+  //     width: '65%',    // Ajusta a largura para telas maiores
+  //     height: '70vh',  // Aumenta a altura relativa
+  //   }
+  // };
 
 
+  // Layout Responsivo com Tamanhos Consistentes
   const graphs = [
-    <div className="chart-line" style={graphStyle}>
-      {/* Um pouco maior para o gráfico de linha */}
-      <Line data={dataDespesasAno} />
-    </div>,
-    <div className="chart-doughnut" style={graphStyle}>
+    <div className="chart-doughnut" style={{ maxWidth: "100%", maxHeight: "400px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
       <IonGrid>
         <IonRow>
-          <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
+          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
+            className="ion-align-items-top"
+            style={{ width: "100%" }}
+          >
             <Doughnut data={dataPie} options={configPie} />
           </IonCol>
-          <IonCol></IonCol>
-        </IonRow>{renderListaDespesas()}
-        
+
+          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6">
+            {renderListaDespesas()}
+          </IonCol>
+        </IonRow>
       </IonGrid>
     </div>,
 
-    <div className="chart-bar" style={graphStyle}>
-      <Bar data={dataBar} options={optionsBar} style={graphStyle} />
+    <div className="chart-bar" style={{ maxWidth: "100%", maxHeight: "400px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
+      {/* Controlando o tamanho do gráfico de barras */}
+      <Bar data={dataBar} options={optionsBar} />
     </div>,
 
-    <div className="chart-bar-tags" style={graphStyle}>
-      <Bar data={dataBarTags} options={optionsBarTags} style={graphStyle} />
+    <div className="chart-bar-tags" style={{ maxWidth: "100%", maxHeight: "400px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
+      {/* Controlando o tamanho do gráfico de barras com tags */}
+      <Bar data={dataBarTags} options={optionsBarTags} />
     </div>,
 
+    <div className="chart-line" style={{ maxWidth: "100%", maxHeight: "400px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
+      {/* Controlando o tamanho do gráfico de linha */}
+      <Line data={dataDespesasAno} options={optionsLineBar} />
+    </div>,
   ];
 
   // Funções para navegação
@@ -475,11 +496,12 @@ const Charts: React.FC = () => {
             '--background': 'var(--ion-background-color)', // Controla o fundo da página
             '--color': 'var(--ion-text-color)', // Controla a cor do texto
           }}
+          color={"dark"}
         >
           <IonButtons slot="start">
             <IonBackButton defaultHref="/Home" />
           </IonButtons>
-          <IonTitle className="ion-text-center ion-margin">Gráficos</IonTitle>
+          <IonTitle>Gráficos</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -490,35 +512,38 @@ const Charts: React.FC = () => {
         }}
       >
         <IonGrid>
-          <IonRow>
+          <IonRow className="ion-align-items-center">
+            {/* Botão à esquerda */}
+            <IonCol size="auto" className="ion-align-self-start">
+              <IonButton onClick={antGraph} color="medium" shape="round">
+                <IonIcon icon={chevronBackOutline} slot="icon-only" />
+              </IonButton>
+            </IonCol>
+
+            {/* Texto centralizado */}
             <IonCol className="ion-text-center">
               <IonText className="text-despesas">
                 <h2>Total de despesas: R${despesaTotal.toFixed(2)}</h2>
               </IonText>
             </IonCol>
-          </IonRow>
 
-          <IonRow className="ion-align-items-center">
-            <IonCol>
-              <IonButton onClick={antGraph} color="success"> <IonIcon icon={chevronBackOutline} /></IonButton>
+            {/* Botão à direita */}
+            <IonCol size="auto" className="ion-align-self-end ion-text-right">
+              <IonButton onClick={proxGraph} color="medium" shape="round">
+                <IonIcon icon={chevronForwardOutline} slot="icon-only" />
+              </IonButton>
             </IonCol>
-            <IonButton onClick={proxGraph} color="success"> <IonIcon icon={chevronForwardOutline} /></IonButton>
-
-
-
-
-
-
-
-
           </IonRow>
-          <div className="ion-text-center">
-            {graphs[currentGraph]}
-          </div>
+
+          {/* Conteúdo gráfico centralizado */}
+          <IonRow className="ion-justify-content-center">
+            <IonCol size="12" className="ion-text-center">
+              {graphs[currentGraph]}
+            </IonCol>
+          </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
-
   );
 };
 

@@ -1,8 +1,8 @@
 import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonLoading, IonModal, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react"
-import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, orderBy, query, sum, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { airplaneOutline, bookOutline, calendarOutline, carOutline, carSportOutline, cartOutline, cashOutline, createOutline, funnelOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
+import { airplaneOutline, bookOutline, calendarOutline, carOutline, carSportOutline, cartOutline, cashOutline, createOutline, filterOutline, funnelOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
@@ -30,6 +30,7 @@ const Transferencias: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
     const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
+    const [limite, setLimite] = useState(10);
     // const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
 
     // // Edit Finance
@@ -86,6 +87,7 @@ const Transferencias: React.FC = () => {
                 where("uid", "==", uid),
                 where("mes", "==", dataMesSelecionado),
                 orderBy("data", "desc"), // Ordenar por data
+                limit(limite) // Limitar o número de resultados
             );
             const queryDocs = await getDocs(q);
 
@@ -112,7 +114,7 @@ const Transferencias: React.FC = () => {
         };
 
         imprimirTransferencias();
-    }, [uid, dataMesSelecionado, updateSaldo]);
+    }, [uid, dataMesSelecionado, updateSaldo, limite]);
 
     async function excluirTransferencia(id: any) {
         await deleteDoc(doc(db, "UserFinance", id));
@@ -224,7 +226,10 @@ const Transferencias: React.FC = () => {
 
                 <IonGrid>
                     <IonRow>
-                        <IonCol>
+                        <IonCol style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}>
                             <IonButton
                                 color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
                                 onClick={() => setFiltroTipo('tudo')}
@@ -245,19 +250,32 @@ const Transferencias: React.FC = () => {
                             </IonButton>
                         </IonCol>
 
+                        <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center", marginRight: "10px"}}>
+                            <IonIcon icon={filterOutline} size="large" />
+                            {/* Add a single button to toggle the filter */}
+                            <IonSelect className="filter-select" aria-label="Limite" interface="popover" placeholder="Limite" label=""  onIonChange={e => setLimite(Number(e.detail.value))}>
+                                <IonSelectOption value="10">10</IonSelectOption>
+                                <IonSelectOption value="20">20</IonSelectOption>
+                                <IonSelectOption value="30">30</IonSelectOption>
+                                <IonSelectOption value="40">40</IonSelectOption>
+                                <IonSelectOption value="100">100</IonSelectOption>
+                            </IonSelect>
+                        </IonCol>
 
+                        <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
+                            <IonIcon icon={funnelOutline} size="large" />
+                            {/* Add a single button to toggle the filter */}
+                            <IonSelect className="filter-select" aria-label="Ordem" interface="popover" placeholder="Ordem" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                <IonSelectOption value="data">Data</IonSelectOption>
+                                <IonSelectOption value="valor">Valor</IonSelectOption>
+                            </IonSelect>
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
 
                 <IonCard color={"medium"}>
                     <IonCardContent>
-                        <IonCol size="auto" className="ion-justify-content-end ion-margin">
-                            {/* Add a single button to toggle the filter */}
-                            <IonSelect className="filter-select" aria-label="Order" interface="popover" placeholder="Order" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
-                                <IonSelectOption value="data">Data</IonSelectOption>
-                                <IonSelectOption value="valor">Valor</IonSelectOption>
-                            </IonSelect>
-                        </IonCol>
+
                         <IonList className="ion-no-padding list-transferencias" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
@@ -336,6 +354,12 @@ const Transferencias: React.FC = () => {
                                 )
                             })}
                         </IonList>
+
+                        {/* <IonCol size="auto" className="ion-justify-content-end">
+                            <IonButton color={"dark"} onClick={() => setLimite(limite + 10)}>
+                                Carregar Mais
+                            </IonButton>
+                        </IonCol> */}
                     </IonCardContent>
 
                 </IonCard>
