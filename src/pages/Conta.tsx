@@ -84,7 +84,11 @@ const Conta: React.FC = () => {
                             <p>{userEmail ? userEmail : 'Carregando...'}</p>
                         </div>
 
-                        <IonButton onClick={() => setIsOpen(true)}>Editar</IonButton>
+                        <div className="ion-text-center">
+                            <IonButton onClick={() => setIsOpen(true)} className="ion-justify-content-center">
+                                Editar
+                            </IonButton>
+                        </div>
 
                         <IonModal isOpen={isOpen} backdropDismiss={false}>
                             <IonHeader>
