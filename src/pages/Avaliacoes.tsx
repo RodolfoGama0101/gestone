@@ -14,7 +14,10 @@ import {
     IonTextarea,
     IonCardTitle,
     IonText,
-    IonModal
+    IonModal,
+    IonGrid,
+    IonRow,
+    IonItem
 } from "@ionic/react";
 import { arrowBackOutline, star, starOutline } from "ionicons/icons";
 import { useEffect, useState } from "react";
@@ -99,75 +102,79 @@ const Avaliacoes: React.FC = () => {
                     <IonTitle>Avaliações</IonTitle>
                 </IonToolbar>
             </IonHeader>
+            <IonContent>
+                <IonGrid style={{ height: '20vh' }}>
+                    <IonRow class="ion-justify-content-center ion-align-items-center" style={{ height: '100%' }}>
+                        <IonButton color={'success'} onClick={() => setIsOpen(true)} className="ion-justify-content-center" style={{
+                            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+                            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+                        }}>
+                            <IonText >Avaliar</IonText>
+                        </IonButton>
+                    </IonRow>
+                </IonGrid>
 
-            <IonContent fullscreen className="ion-justfy-content-center">
 
-                <IonButton color={'success'} onClick={() => setIsOpen(true)} className="ion-justify-content-center" style={{
-                    '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                }}>
-                    <IonText >Avaliar</IonText>
-                </IonButton>
 
-            </IonContent>
 
-            <IonModal isOpen={isOpen} className="custom-modal" backdropDismiss={false}>
-                <IonHeader>
-                    <IonToolbar color="success">
-                        <IonButtons slot="start">
-                            <IonButton onClick={() => setIsOpen(false)}><IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} /></IonButton>
-                        </IonButtons>
-                        <IonText>Voltar</IonText>
-                    </IonToolbar>
-                </IonHeader>
 
-                <div className="modal-content">
-                    <IonContent className="card-input-avaliacoes">
+                <IonModal isOpen={isOpen} className="custom-modal" backdropDismiss={false}>
+                    <IonHeader>
+                        <IonToolbar color="success">
+                            <IonButtons slot="start">
+                                <IonButton onClick={() => setIsOpen(false)}><IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} /></IonButton>
+                            </IonButtons>
+                            <IonText>Voltar</IonText>
+                        </IonToolbar>
+                    </IonHeader>
 
-                        {/* Sistema de avaliação por estrelas */}
-                        <div className="star-rating">
-                            {Array.from({ length: 5 }, (_, index) => (
-                                <IonIcon
-                                    key={index}
-                                    icon={index < rating ? star : starOutline}
-                                    className="star"
-                                    color={"warning"}
-                                    onClick={() => handleRating(index + 1)}
-                                />
-                            ))}
-                        </div>
+                    <div className="modal-content">
+                        <IonContent className="card-input-avaliacoes">
 
-                        {/* Campo de comentário */}
-                        <div className="comentario-container">
-                            <div className="comentario">
-                                <IonTextarea
-                                    counter={true} 
-                                    maxlength={150}
-                                    fill="outline"
-                                    label="Comentário: "
-                                    className="input-avaliacoes"
-                                    labelPlacement="stacked"
-                                    color={"success"}
-                                    value={comment}
-                                    onIonChange={(e: any) => setComment(e.target.value)}
-                                />
+                            {/* Sistema de avaliação por estrelas */}
+                            <div className="star-rating">
+                                {Array.from({ length: 5 }, (_, index) => (
+                                    <IonIcon
+                                        key={index}
+                                        icon={index < rating ? star : starOutline}
+                                        className="star"
+                                        color={"warning"}
+                                        onClick={() => handleRating(index + 1)}
+                                    />
+                                ))}
                             </div>
 
-                            <IonButton className="submit-button" color="success" onClick={() => { addRating(), setIsOpen(false) }}>
-                                Enviar avaliação
-                            </IonButton>
-                        </div>
+                            {/* Campo de comentário */}
+                            <div className="comentario-container">
+                                <div className="comentario">
+                                    <IonTextarea
+                                        counter={true}
+                                        maxlength={150}
+                                        fill="outline"
+                                        label="Comentário: "
+                                        className="input-avaliacoes"
+                                        labelPlacement="stacked"
+                                        color={"success"}
+                                        value={comment}
+                                        onIonChange={(e: any) => setComment(e.target.value)}
+                                    />
+                                </div>
+                                <IonButton className="submit-button" color="success" onClick={() => { addRating(), setIsOpen(false) }}>
+                                    Enviar avaliação
+                                </IonButton>
+                            </div>
+                        </IonContent>
+
+                    </div>
+                </IonModal>
 
 
-                    </IonContent>
-                </div>
-            </IonModal>
 
 
-
-            <IonContent>
                 {userRatingData && (
+
                     <IonCard className="custom-card">
+                        
                         <IonCardContent>
                             <IonText>
                                 <p>User: {userInfo.displayName}</p>
