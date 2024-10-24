@@ -1,5 +1,5 @@
 import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
-import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, sum, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, orderBy, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { airplaneOutline, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
@@ -81,7 +81,11 @@ const Transferencias: React.FC = () => {
     useEffect(() => {
         const imprimirTransferencias = async () => {
             const coll = collection(db, 'UserFinance');
-            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado));
+            const q = query(coll,
+                where("uid", "==", uid),
+                where("mes", "==", dataMesSelecionado),
+                orderBy("data", "desc"), // Ordenar por data
+            );
             const queryDocs = await getDocs(q);
 
             // Mapeamos os dados para a estrutura SaldoData
@@ -101,9 +105,9 @@ const Transferencias: React.FC = () => {
             });
 
             // Ordenar as transferências por data, do mais recente para o mais antigo
-            const saldoOrdenado = saldoData.sort((a, b) => b.data.getTime() - a.data.getTime());
+            // const saldoOrdenado = saldoData.sort((a, b) => b.data.getTime() - a.data.getTime());
 
-            setSaldo(saldoOrdenado); // Atualiza o estado com as transferências ordenadas
+            setSaldo(saldoData); // Atualiza o estado com as transferências ordenadas
         };
 
         imprimirTransferencias();
