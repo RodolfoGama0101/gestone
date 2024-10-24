@@ -138,18 +138,56 @@
 /* Benefits */
 
 .left {
-  height: 465px;
+  height: 600px;
   width: 50%;
-  background-color: rgb(61, 117, 100);
-  ;
+  background-color: rgb(132, 185, 148);
   float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.video-dim {
+  background-color: rgb(0, 1, 7);
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 40px 40px 40px rgba(0, 0, 0, 0.250);
+  transition: transform 0.5s, box-shadow 0.5s;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fadeInZoom 2.2s ease-in-out forwards;
+}
+
+.video:hover {
+  border-radius: 20px;
+  transform: scale(1.1);
+}
+
+@keyframes fadeInZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    /* Início com zoom menor */
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    /* Retorna ao tamanho original */
+  }
+}
+
+
 .right {
-  height: 465px;
+  height: 600px;
   width: 50%;
   background-color: rgb(158, 0, 0);
-  ;
   float: right;
 }
 
@@ -273,38 +311,56 @@ footer {
     height: 300px;
   }
 
-  @keyframes carousel {
-    0% {
-      transform: translateY(50%) scale(0.5);
-      opacity: 0;
-    }
+  .benefits {
+    display: block;
+  }
 
-    3%,
-    20% {
-      transform: translateY(50%) scale(0.7);
-      opacity: 0.4;
-    }
+  .left {
+    width: 100%;
+    float: none;
+  }
 
-    23%,
-    40% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
+  .video {
+    max-width: 90%; /* Ajusta a largura máxima para telas menores */
+    max-height: 90%; /* Ajusta a altura máxima para telas menores */
+    object-fit: contain; /* Mantém o vídeo dentro do contêiner */
+  }
 
-    43%,
-    60% {
-      transform: translateY(-50%) scale(0.7);
-      opacity: 0.4;
-    }
+  .video-dim {
+    padding: 5px; /* Ajusta o padding para telas menores */
+    border-radius: 16px; /* Ajusta o border-radius para telas menores */
+    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.2); /* Ajusta a sombra */
+  }
 
-    63% {
-      transform: translateY(-50%) scale(0.5);
-      opacity: 0;
-    }
+  .video:hover {
+    transform: scale(1.05); /* Ajusta o efeito de hover para telas menores */
+  }
 
-    100% {
-      transform: translateY(-25%) scale(0.5);
-      opacity: 0;
-    }
+  .right {
+    padding: 70px;
+    width: 100%;
+  }
+
+  .qrcode {
+    max-width: 100%;
+    /* Ajusta a largura da div .qrcode */
+    padding: 10px;
+    /* Ajusta o padding para se adequar a telas menores */
+    border-radius: 8px;
+    /* Ajusta a borda para telas menores */
+    box-shadow: 5px 5px 10px 10px rgb(0, 0, 0);
+    /* Ajusta a sombra */
+    margin: 8px auto;
+    /* Ajusta a margem para manter a centralização */
+  }
+
+  .qrcode p {
+    font-size: 18px;
+    /* Reduz o tamanho da fonte para telas menores */
+  }
+  
+  .qrcode-img {
+    height: auto;
+    /* Mantém a proporção da imagem */
   }
 }

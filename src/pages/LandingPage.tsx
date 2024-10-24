@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
                 {/* Menu */}
             </IonMenu>
             <IonPage id="main-content">
-                <IonContent>
+                <IonContent fullscreen>
                     <IonHeader id="main-content">
                         <IonNavLink className="navigation">
                             <a href="landingpage" className="logo"> <img src="versao106.png" /></a>
@@ -87,17 +87,19 @@ const LandingPage: React.FC = () => {
                     </section>
 
                     {/* Benefits */}
-                    <IonRow>
+                    <IonRow className="benefits">
                         <IonCol className="left">
                             <div className="video">
-                                <IonLabel className="video-dim">Video</IonLabel>
+                                <div className="video-dim">
+                                <video autoPlay muted loop src="videoteste.mp4"></video>
+                                </div>
                             </div>
                         </IonCol>
                         <IonCol className="right">
                             <div className="qrcode">
                                 <IonLabel className="qrcode-img">
                                     <p>Baixe Aqui!!</p>
-                                    <img src='QRCode_Fácil.png'></img>
+                                    <img src='QRCode.jpg'></img>
                                 </IonLabel>
                             </div>
                         </IonCol>
