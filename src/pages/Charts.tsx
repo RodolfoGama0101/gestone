@@ -414,11 +414,21 @@ const Charts: React.FC = () => {
 
   //Array
   const graphStyle = {
-    width: '70%',   // Padrão para todos os gráficos
-    height: '70%',  // Padrão para todos os gráficos
-    margin: '0 auto', // Centraliza o gráfico
+    width: '90%',      // Para telas menores (mobile)
+    height: '60vh',    // Altura relativa à viewport
+    margin: '0 auto',  // Centraliza o gráfico
     color: 'var(--ion-text-color)', // Mantém a cor do texto
+    maxWidth: '600px', // Limite de largura para telas maiores
   };
+
+  const responsiveGraphStyle = {
+    ...graphStyle,
+    '@media(min-width: 768px)': { // Ajusta para tablets e desktops
+      width: '65%',    // Ajusta a largura para telas maiores
+      height: '70vh',  // Aumenta a altura relativa
+    }
+  };
+
 
   const graphs = [
     <div className="chart-line" style={graphStyle}>
@@ -426,20 +436,25 @@ const Charts: React.FC = () => {
       <Line data={dataDespesasAno} />
     </div>,
     <div className="chart-doughnut" style={graphStyle}>
-      <IonRow>
-        <Doughnut data={dataPie} options={configPie} />
-      </IonRow>
-      <IonRow>{renderListaDespesas()}</IonRow>
+      <IonGrid>
+        <IonRow>
+          <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
+            <Doughnut data={dataPie} options={configPie} />
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>{renderListaDespesas()}
+        
+      </IonGrid>
     </div>,
 
     <div className="chart-bar" style={graphStyle}>
-      <Bar data={dataBar} options={optionsBar} />
+      <Bar data={dataBar} options={optionsBar} style={graphStyle} />
     </div>,
 
     <div className="chart-bar-tags" style={graphStyle}>
-      <Bar data={dataBarTags} options={optionsBarTags} />
+      <Bar data={dataBarTags} options={optionsBarTags} style={graphStyle} />
     </div>,
-    
+
   ];
 
   // Funções para navegação
