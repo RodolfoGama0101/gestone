@@ -98,3 +98,10 @@
   margin: 8px 0;
   /* Ajustar o espaçamento entre parágrafos */
 }
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 100vh; /* Define a altura do container como a altura da tela */
+}
