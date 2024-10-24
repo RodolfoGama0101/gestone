@@ -248,7 +248,8 @@ const Transferencias: React.FC = () => {
                             </IonButton>
                         </IonCol>
 
-                        <IonCol size="auto" className="ion-justify-content-end">
+                        <IonCol size="auto" className="ion-justify-content-end" style={{display: "flex", alignItems: "center"}}>
+                            <IonIcon icon={funnelOutline} size="large"/>
                             {/* Add a single button to toggle the filter */}
                             <IonSelect className="filter-select" aria-label="Order" interface="popover" placeholder="Order" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
                                 <IonSelectOption value="data">Data</IonSelectOption>
