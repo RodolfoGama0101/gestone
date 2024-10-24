@@ -1,5 +1,5 @@
 import { Chart as ChartJS, ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tooltip, PointElement, LineElement } from "chart.js";
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import './css/Charts.css';
 import Verifica from '../firebase/verifica';
 import { ThemeContext } from '../components/ThemeContext';
@@ -8,7 +8,7 @@ import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, sum, w
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import { ellipse } from "ionicons/icons";
+import { chevronBackOutline, chevronForwardOutline, ellipse } from "ionicons/icons";
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 interface DespesasData {
@@ -376,7 +376,7 @@ const Charts: React.FC = () => {
 
   const optionsLineChart = {
     maintainAspectRatio: false,
-    
+
     plugins: {
       legend: {
         display: false, // Remover a legenda
@@ -413,24 +413,36 @@ const Charts: React.FC = () => {
   );
 
   //Array
+  const graphStyle = {
+    width: '70%',   // Padrão para todos os gráficos
+    height: '70%',  // Padrão para todos os gráficos
+    margin: '0 auto', // Centraliza o gráfico
+    color: 'var(--ion-text-color)', // Mantém a cor do texto
+  };
+
   const graphs = [
-    <div className="chart-doughnut"  style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)',}}>
+    <div className="chart-line" style={graphStyle}>
+      {/* Um pouco maior para o gráfico de linha */}
+      <Line data={dataDespesasAno} />
+    </div>,
+    <div className="chart-doughnut" style={graphStyle}>
       <IonRow>
         <Doughnut data={dataPie} options={configPie} />
       </IonRow>
       <IonRow>{renderListaDespesas()}</IonRow>
     </div>,
-    <div className="chart-bar">
-      <Bar data={dataBar} options={optionsBar} style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)',}} />
+
+    <div className="chart-bar" style={graphStyle}>
+      <Bar data={dataBar} options={optionsBar} />
     </div>,
-    <div className="chart-bar-tags">
-      <Bar data={dataBarTags} options={optionsBarTags} style={{ width: '50%', height: '50%', 'color': 'var(--ion-text-color)', }} />
+
+    <div className="chart-bar-tags" style={graphStyle}>
+      <Bar data={dataBarTags} options={optionsBarTags} />
     </div>,
-    <div>
-      <Line data={dataDespesasAno}  style={{ width: '80%', height: '80%', 'color': 'var(--ion-text-color)', }}  />
-    </div>,
+    
   ];
 
+  // Funções para navegação
   const proxGraph = () => {
     setCurrentGraph((prev) => (prev + 1) % graphs.length);
   };
@@ -439,54 +451,59 @@ const Charts: React.FC = () => {
     setCurrentGraph((prev) => (prev - 1 + graphs.length) % graphs.length);
   };
 
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={{
-          '--background': 'var(--ion-background-color)', // Controla o fundo da página
-          '--color': 'var(--ion-text-color)', // Controla a cor do texto
-        }}>
+        <IonToolbar
+          style={{
+            '--background': 'var(--ion-background-color)', // Controla o fundo da página
+            '--color': 'var(--ion-text-color)', // Controla a cor do texto
+          }}
+        >
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/Home"></IonBackButton>
+            <IonBackButton defaultHref="/Home" />
           </IonButtons>
-          <IonText>
-            <h1 className='ion-margin'>Gráficos</h1>
-          </IonText>
+          <IonTitle className="ion-text-center ion-margin">Gráficos</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent style={{
-        '--background': 'var(--ion-background-color)', // Controla o fundo da página
-        '--color': 'var(--ion-text-color)', // Controla a cor do texto
-      }}>
-
+      <IonContent
+        style={{
+          '--background': 'var(--ion-background-color)', // Controla o fundo da página
+          '--color': 'var(--ion-text-color)', // Controla a cor do texto
+        }}
+      >
         <IonGrid>
           <IonRow>
-            <IonCol>
+            <IonCol className="ion-text-center">
               <IonText className="text-despesas">
-                <h1>Total de despesas: R${despesaTotal.toFixed(2)}</h1>
+                <h2>Total de despesas: R${despesaTotal.toFixed(2)}</h2>
               </IonText>
             </IonCol>
           </IonRow>
-          <IonRow>
+
+          <IonRow className="ion-align-items-center">
             <IonCol>
-
-
-
-              <IonRow className="ion-justfy-content-between">
-                <IonCol>
-                  <IonButton onClick={antGraph} color="success">Anterior</IonButton>
-                </IonCol>
-                <IonButton onClick={proxGraph} color="success">Próximo</IonButton>
-
-              </IonRow>
-
-              {graphs[currentGraph]}
+              <IonButton onClick={antGraph} color="success"> <IonIcon icon={chevronBackOutline} /></IonButton>
             </IonCol>
+            <IonButton onClick={proxGraph} color="success"> <IonIcon icon={chevronForwardOutline} /></IonButton>
+
+
+
+
+
+
+
+
           </IonRow>
+          <div className="ion-text-center">
+            {graphs[currentGraph]}
+          </div>
         </IonGrid>
-      </IonContent >
-    </IonPage >
+      </IonContent>
+    </IonPage>
+
   );
 };
 
