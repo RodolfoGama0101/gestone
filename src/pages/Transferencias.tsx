@@ -1,8 +1,8 @@
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonLoading, IonModal, IonPage, IonRow, IonText, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonLoading, IonModal, IonPage, IonRow, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from "@ionic/react"
 import { collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, orderBy, query, sum, updateDoc, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { airplaneOutline, bookOutline, carOutline, cartOutline, cashOutline, createOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
+import { airplaneOutline, bookOutline, calendarOutline, carOutline, carSportOutline, cartOutline, cashOutline, createOutline, funnelOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medicalOutline, medkitOutline, restaurantOutline, shirtOutline, text, trashOutline } from "ionicons/icons";
 import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import "./css/Transferencias.css"
@@ -25,19 +25,20 @@ const Transferencias: React.FC = () => {
     const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth());
     const [updateSaldo, setUpdateSaldo] = useState(false);
     const [valorTotalReceitas, setValorTotalReceitas] = useState(Number)
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     const [valorTotalDespesas, setValorTotalDespesas] = useState(Number)
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
-    const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
+    const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
+    // const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
 
-    // Edit Finance
-    const [newData, setNewData] = useState<Date | null>(null);
-    const [newDescricao, setNewDescricao] = useState(String);
-    const [newTag, setNewTag] = useState(String);
-    const [newValor, setNewValor] = useState(Number);
-    const [tipoAtual, setTipoAtual] = useState(""); // Estado para armazenar o tipo atual de transferência
-    const [isLoading, setIsLoading] = useState(false);
+    // // Edit Finance
+    // const [newData, setNewData] = useState<Date | null>(null);
+    // const [newDescricao, setNewDescricao] = useState(String);
+    // const [newTag, setNewTag] = useState(String);
+    // const [newValor, setNewValor] = useState(Number);
+    // const [tipoAtual, setTipoAtual] = useState(""); // Estado para armazenar o tipo atual de transferência
+    // const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -125,6 +126,11 @@ const Transferencias: React.FC = () => {
             return true; // Mostra todas as transferências
         }
         return transf.tipo === filtroTipo; // Filtra por tipo (receita ou despesa)
+    }).sort((a, b) => {
+        if (filtroOrdenacao === 'data') {
+            return b.data.getTime() - a.data.getTime(); // Ordenar por data, do mais recente para o mais antigo
+        }
+        return b.valor - a.valor; // Ordenar por valor, do maior para o menor
     });
 
     const tagIconMap: Record<string, string> = {
@@ -142,45 +148,50 @@ const Transferencias: React.FC = () => {
         "Outros": helpOutline,
     };
 
-    const editFinance = async (
-        id: any,
-        tipo: any,
-    ) => {
-        const userFinanceRef = doc(db, "UserFinance", id);
-        try {
-            if (tipo === "receita") {
-                await updateDoc(userFinanceRef, {
-                    data: newData,
-                    valor: newValor,
-                    descricao: newDescricao,
-                });
-            } else if (tipo === "despesa") {
-                await updateDoc(userFinanceRef, {
-                    data: newData,
-                    valor: newValor,
-                    tag: newTag,
-                });
-            }
+    // const editFinance = async (
+    //     id: any,
+    //     tipo: any,
+    //     newData: any,
+    //     newValor: number,
+    //     newDescricao: string,
+    //     newTag: string,
+    // ) => {
+    //     const userFinanceRef = doc(db, "UserFinance", id);
+    //     try {
+    //         if (tipo === "receita") {
+    //             await updateDoc(userFinanceRef, {
+    //                 data: newData,
+    //                 valor: newValor,
+    //                 descricao: newDescricao,
+    //             });
+    //         } else if (tipo === "despesa") {
+    //             await updateDoc(userFinanceRef, {
+    //                 data: newData,
+    //                 valor: newValor,
+    //                 tag: newTag,
+    //             });
+    //         }
 
 
 
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setIsLoading(false); // Finaliza o carregamento
-        }
-    };
+    //     } catch (error) {
+    //         console.error(error)
+    //     } finally {
+    //         setIsLoading(false); // Finaliza o carregamento
+    //     }
+    // };
 
-    // Atualize a função de edição para definir a transferência selecionada
-    const handleEditClick = (transferencia: SaldoData) => {
-        setTransferenciaSelecionada(transferencia);
-        setNewData(transferencia.data);
-        setNewDescricao(transferencia.descricao);
-        setNewTag(transferencia.tag);
-        setNewValor(transferencia.valor);
-        setTipoAtual(transferencia.tipo);
-        setIsOpen(true);
-    };
+    // // Atualize a função de edição para definir a transferência selecionada
+    // const handleEditClick = (transferencia: SaldoData) => {
+    //     setTransferenciaSelecionada(transferencia);
+    //     setNewData(transferencia.data);
+    //     setNewDescricao(transferencia.descricao);
+    //     setNewTag(transferencia.tag);
+    //     setNewValor(transferencia.valor);
+    //     setTipoAtual(transferencia.tipo);
+    //     setIsOpen(true);
+    //     editFinance(transferencia.id, transferencia.tipo, newData, newValor, newDescricao, newTag);
+    // };
 
     return (
         <IonPage>
@@ -233,11 +244,22 @@ const Transferencias: React.FC = () => {
                                 Despesas
                             </IonButton>
                         </IonCol>
+
+
                     </IonRow>
                 </IonGrid>
 
                 <IonCard color={"medium"}>
                     <IonCardContent>
+                        <IonCol size="auto" className="ion-justify-content-end ion-margin">
+                            {/* Add a single button to toggle the filter */}
+
+                            
+                            <IonSelect aria-label="Order" interface="popover" placeholder="Order" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                <IonSelectOption value="data">Data</IonSelectOption>
+                                <IonSelectOption value="valor">Valor</IonSelectOption>
+                            </IonSelect>
+                        </IonCol>
                         <IonList className="ion-no-padding list-transferencias" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
@@ -246,7 +268,7 @@ const Transferencias: React.FC = () => {
                                 const negativo = transferencia.tipo === "receita" ? "+" : "-";
                                 const cor = transferencia.tipo === "receita" ? "success" : "danger";
                                 const descricaoOrTag = transferencia.tipo === "receita" ? transferencia.descricao : transferencia.tag;
-                                const corModal = transferenciaSelecionada?.tipo === "receita" ? "success" : "danger";
+                                // const corModal = transferenciaSelecionada?.tipo === "receita" ? "success" : "danger";
 
                                 return (
                                     <IonGrid>
@@ -285,145 +307,6 @@ const Transferencias: React.FC = () => {
 
                                             {/* Editar e Excluir */}
                                             <IonCol sizeLg="6">
-                                                {/* Edit button */}
-                                                <IonButton onClick={() => { setIsOpen(true), handleEditClick(transferencia) }} className="edit-btn" style={{
-                                                    '--background': 'var(--ion-background-color)', // Controla o fundo da página
-                                                    '--color': 'var(--ion-text-color)', // Controla a cor do texto
-                                                }}>
-                                                    <IonIcon icon={createOutline} ></IonIcon>
-                                                    <IonText >Editar</IonText>
-                                                </IonButton>
-
-                                                {/* Modal */}
-                                                <IonModal isOpen={isOpen} backdropDismiss={false}>
-                                                    <IonHeader>
-                                                        <IonToolbar color={corModal}>
-                                                            <IonTitle>Editar</IonTitle>
-                                                            <IonButtons slot="end">
-                                                                <IonButton onClick={() => setIsOpen(false)}>Fechar</IonButton>
-                                                            </IonButtons>
-                                                        </IonToolbar>
-                                                    </IonHeader>
-                                                    <IonContent
-                                                        className="ion-padding"
-                                                        style={{
-                                                            '--background': 'var(--ion-color-background-color)',
-                                                            '--color': 'var(--ion-text-color)'
-                                                        }}
-                                                    >
-                                                        <IonCardContent>
-                                                            <form>
-                                                                {/* Condicional para "Receita" */}
-                                                                {tipoAtual === "receita" ? (
-                                                                    <>
-                                                                        <IonItem>
-
-                                                                            <IonInput
-                                                                                className="input-editar"
-                                                                                label="Data: "
-                                                                                required
-                                                                                type="date"
-                                                                                color="success"
-                                                                                value={newData ? newData.toISOString().substring(0, 10) : ''}
-                                                                                fill="outline"
-                                                                                onIonChange={(e: any) => {
-                                                                                    const selectedDate = new Date(e.detail.value);
-                                                                                    setNewData(selectedDate);
-                                                                                }}
-                                                                                aria-label="Data da receita"
-                                                                            />
-                                                                        </IonItem>
-
-                                                                        <IonItem>
-
-                                                                            <IonInput
-                                                                                className="input-editar"
-                                                                                label="Descrição:"
-                                                                                required
-                                                                                type="text"
-                                                                                color="success"
-                                                                                value={newDescricao}
-                                                                                fill="outline"
-                                                                                onIonChange={(e: any) => setNewDescricao(e.target.value)}
-                                                                                aria-label="Descrição da receita"
-                                                                            />
-                                                                        </IonItem>
-
-                                                                        <IonItem>
-
-                                                                            <IonInput
-                                                                                className="input-editar"
-                                                                                label="Valor:"
-                                                                                required
-                                                                                type="number"
-                                                                                color="success"
-                                                                                value={newValor}
-                                                                                fill="outline"
-                                                                                onIonChange={(e: any) => setNewValor(Number(e.target.value))}
-                                                                                aria-label="Valor da receita"
-                                                                            />
-                                                                        </IonItem>
-                                                                    </>
-                                                                ) : (
-                                                                    // Condicional para "Despesa"
-                                                                    <>
-                                                                        <IonItem>
-
-                                                                            <IonInput
-                                                                                className="input-editar"
-                                                                                label="Tag:"
-                                                                                required
-                                                                                type="text"
-                                                                                color="success"
-                                                                                value={newTag}
-                                                                                fill="outline"
-                                                                                onIonChange={(e: any) => setNewTag(e.target.value)}
-                                                                                aria-label="Tag da despesa"
-                                                                            />
-                                                                        </IonItem>
-
-                                                                        <IonItem>
-
-                                                                            <IonInput
-                                                                                className="input-editar"
-                                                                                label="Valor:"
-                                                                                required
-                                                                                type="number"
-                                                                                color="success"
-                                                                                value={newValor}
-                                                                                fill="outline"
-                                                                                onIonChange={(e: any) => setNewValor(Number(e.target.value))}
-                                                                                aria-label="Valor da despesa"
-                                                                            />
-                                                                        </IonItem>
-                                                                    </>
-                                                                )}
-                                                            </form>
-
-                                                            <IonButton
-                                                                color={corModal}
-                                                                onClick={() => {
-                                                                    setIsLoading(true); // Inicia o carregamento
-
-                                                                    if (transferenciaSelecionada) {
-                                                                        editFinance(
-                                                                            transferenciaSelecionada.id,
-                                                                            transferenciaSelecionada.tipo
-                                                                        );
-                                                                    }
-
-                                                                    setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
-                                                                    setIsOpen(false); // Fecha o modal após a edição
-                                                                }}
-                                                            >
-                                                                <IonText>
-                                                                    <p>{isLoading ? "Carregando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p>
-                                                                </IonText>
-                                                            </IonButton>
-                                                        </IonCardContent>
-                                                    </IonContent>
-
-                                                </IonModal>
 
                                                 {/* Delete button */}
                                                 <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
