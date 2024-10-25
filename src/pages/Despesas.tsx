@@ -29,7 +29,7 @@ import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
 import "./css/Despesas.css"
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
@@ -62,7 +62,8 @@ const Despesas: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [mesSelecionado, setMesSelecionado] = useState("");
     const [tagSelecao, setTagSelecao] = useState()
-    const [limite, setLimite] = useState(10)
+    const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
+    const [limite, setLimite] = useState(10);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -242,6 +243,19 @@ const Despesas: React.FC = () => {
         armazenarMesSelecionado();
     }, [selectedMonth])
 
+    // Função para filtrar transferências
+    const despesasFiltradas = despesas.sort((a: any, b: any) => {
+        if (filtroOrdenacao === 'data') {
+            return b.data.getTime() - a.data.getTime(); // Ordenar por data, do mais recente para o mais antigo
+        }
+        return b.valor - a.valor; // Ordenar por valor, do maior para o menor
+    }).filter((transf) => {
+        // Add your filtering conditions here
+        // For example, to filter transactions with a value greater than 100:
+        // return transf.valor > 100;
+        return true; // Return true to include all transactions
+    });
+
     return (
         <IonPage>
             <IonHeader>
@@ -271,6 +285,33 @@ const Despesas: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+
+                <IonToolbar style={{ maxWidth: '1800px', marginLeft: '5px', marginRight: '5px' }}>
+                    <IonGrid>
+                        <IonRow style={{display: 'flex', justifyContent: "end"}}>
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
+                                <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select-limit" aria-label="Limite" interface="popover" placeholder="Limite" onIonChange={e => setLimite(Number(e.detail.value))}>
+                                    <IonSelectOption value="10">10</IonSelectOption>
+                                    <IonSelectOption value="20">20</IonSelectOption>
+                                    <IonSelectOption value="30">30</IonSelectOption>
+                                    <IonSelectOption value="40">40</IonSelectOption>
+                                    <IonSelectOption value="100">100</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
+                                <IonIcon icon={funnelOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select-order" aria-label="Ordenar" interface="popover" placeholder="Ordenar" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                    <IonSelectOption value="data">Data</IonSelectOption>
+                                    <IonSelectOption value="valor">Valor</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
+                </IonToolbar>
 
                 <IonCard className="card-add-receita" style={{
                     '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
@@ -345,21 +386,9 @@ const Despesas: React.FC = () => {
                     </IonGrid>
 
                     <IonCardContent>
-                        <IonSelect
-                            placeholder="Limite"
-                            label="Limite"
-                            fill="outline"
-                            interface="popover"
-                            onIonChange={(e: any) => setLimite(e.target.value)} // Atualiza o valor do limite com base na seleção
-                        >
-                            <IonSelectOption value={2}>2</IonSelectOption>
-                            <IonSelectOption value={5}>5</IonSelectOption>
-                            <IonSelectOption value={10}>10</IonSelectOption>
-                            <IonSelectOption value={30}>30</IonSelectOption>
-                        </IonSelect>
-                        <IonCard color={"danger"}>
+                        <IonCard color={"danger"} className="ion-no-padding">
                             <IonList className="ion-no-padding">
-                                {despesas.map(despesa => {
+                                {despesasFiltradas.map(despesa => {
                                     return (
                                         <IonItem
                                             key={despesa.id}

@@ -20,14 +20,16 @@ import {
     IonItem,
     IonModal,
     IonPopover,
-    IonAlert
+    IonAlert,
+    IonSelect,
+    IonSelectOption
 } from "@ionic/react";
 import Verifica from "../firebase/verifica";
 import './css/Receitas.css';
-import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { addOutline, arrowBackOutline, chevronDownOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
 
@@ -54,6 +56,8 @@ const Receitas: React.FC = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [mesSelecionado, setMesSelecionado] = useState("");
     const { isDarkMode } = useContext(ThemeContext);
+    const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
+    const [limite, setLimite] = useState(10);
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -113,7 +117,12 @@ const Receitas: React.FC = () => {
     useEffect(() => {
         const imprimirReceitas = async () => {
             const coll = collection(db, 'UserFinance');
-            const q = query(coll, where("uid", "==", uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "receita"));
+            const q = query(coll,
+                where("uid", "==", uid),
+                where("mes", "==", dataMesSelecionado),
+                where("tipo", "==", "receita"),
+                limit(limite),
+            );
             const queryDocs = await getDocs(q);
 
             const receitasData = queryDocs.docs.map((doc) => {
@@ -215,6 +224,19 @@ const Receitas: React.FC = () => {
         armazenarMesSelecionado();
     }, [selectedMonth])
 
+    // Função para filtrar transferências
+    const receitasFiltradas = receitas.sort((a, b) => {
+        if (filtroOrdenacao === 'data') {
+            return b.data.getTime() - a.data.getTime(); // Ordenar por data, do mais recente para o mais antigo
+        }
+        return b.valor - a.valor; // Ordenar por valor, do maior para o menor
+    }).filter((transf) => {
+        // Add your filtering conditions here
+        // For example, to filter transactions with a value greater than 100:
+        // return transf.valor > 100;
+        return true; // Return true to include all transactions
+    });
+
     return (
         <IonPage>
             <IonHeader>
@@ -245,6 +267,33 @@ const Receitas: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+
+                <IonToolbar style={{ maxWidth: '1800px', marginLeft: '5px', marginRight: '5px' }}>
+                    <IonGrid>
+                        <IonRow style={{display: 'flex', justifyContent: "end"}}>
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
+                                <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select-limit" aria-label="Limite" interface="popover" placeholder="Limite" onIonChange={e => setLimite(Number(e.detail.value))}>
+                                    <IonSelectOption value="10">10</IonSelectOption>
+                                    <IonSelectOption value="20">20</IonSelectOption>
+                                    <IonSelectOption value="30">30</IonSelectOption>
+                                    <IonSelectOption value="40">40</IonSelectOption>
+                                    <IonSelectOption value="100">100</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
+                                <IonIcon icon={funnelOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select-order" aria-label="Ordenar" interface="popover" placeholder="Ordenar" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                    <IonSelectOption value="data">Data</IonSelectOption>
+                                    <IonSelectOption value="valor">Valor</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
+                </IonToolbar>
 
                 <IonCard className="card-add-receita" style={{
                     '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
@@ -286,7 +335,7 @@ const Receitas: React.FC = () => {
                         </IonContent>
                     </IonModal>
 
-                    {/* FAZER UM ION MODAL PARA A FUNÇÃO ADICIONAR RECEITA */}
+
 
                     {/* Selecão de mês */}
                     <IonGrid style={{
@@ -329,10 +378,9 @@ const Receitas: React.FC = () => {
                         </IonRow>
                     </IonGrid>
 
-
                     <IonCardContent color={"success"}>
                         <IonList className="ion-no-padding">
-                            {receitas.map(receita => {
+                            {receitasFiltradas.map(receita => {
                                 return (
                                     <IonItem key={receita.id} style={{
                                         '--background': 'var(--ion-background-color)', // Controla o fundo da página
