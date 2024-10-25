@@ -211,13 +211,13 @@ const Transferencias: React.FC = () => {
                 '--color': 'var(--ion-text-color)', // Controla a cor do texto
             }}>
                 <IonGrid>
-                    <IonRow>
+                    <IonRow style={{display: "flex", alignItems: 'center'}}>
                         <IonCol>
                             <IonText>
                                 <h1 className="ion-margin saldo-total-tf">R$ {(valorTotalReceitas - valorTotalDespesas).toFixed(2)}</h1>
                             </IonText>
                         </IonCol>
-                        <IonCol size="auto" className="ion-justify-content-end ion-margin">
+                        <IonCol size="auto" className="ion-justify-content-end">
                             <IonButton color={"success"} href="receitas">Nova Receita</IonButton>
                             <IonButton color={"danger"} href="despesas">Nova Despesa</IonButton>
                         </IonCol>
@@ -232,18 +232,13 @@ const Transferencias: React.FC = () => {
                                 Todas
                             </IonButton>
 
-
-
                             <IonButton color={filtroTipo === 'receita' ? 'success' : 'medium'} onClick={() => setFiltroTipo('receita')}>
                                 Receitas
                             </IonButton>
 
-
-
                             <IonButton color={filtroTipo === 'despesa' ? 'danger' : 'medium'} onClick={() => setFiltroTipo('despesa')}>
                                 Despesas
                             </IonButton>
-
 
                             <IonCol sizeLg="7"></IonCol>
                             <IonCol></IonCol>
