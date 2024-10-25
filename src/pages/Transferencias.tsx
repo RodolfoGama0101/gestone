@@ -224,35 +224,34 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonToolbar style={{maxWidth: '1800px',margin: '0 auto'}}>
+                <IonToolbar style={{ maxWidth: '1800px', margin: '0 auto' }}>
                     <IonGrid>
                         <IonRow>
 
-                            <IonCol>
-                                <IonButton
-                                    color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
-                                    onClick={() => setFiltroTipo('tudo')}
-                                >
-                                    Todas
-                                </IonButton>
-                                <IonButton
-                                    color={filtroTipo === 'receita' ? 'success' : 'medium'}
-                                    onClick={() => setFiltroTipo('receita')}
-                                >
-                                    Receitas
-                                </IonButton>
-                                <IonButton
-                                    color={filtroTipo === 'despesa' ? 'danger' : 'medium'}
-                                    onClick={() => setFiltroTipo('despesa')}
-                                >
-                                    Despesas
-                                </IonButton>
-                            </IonCol>
+                            <IonButton color={filtroTipo === 'tudo' ? 'primary' : 'medium'} onClick={() => setFiltroTipo('tudo')}>
+                                Todas
+                            </IonButton>
 
-                            <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
-                                <IonIcon icon={filterOutline} size="large" />
+
+
+                            <IonButton color={filtroTipo === 'receita' ? 'success' : 'medium'} onClick={() => setFiltroTipo('receita')}>
+                                Receitas
+                            </IonButton>
+
+
+
+                            <IonButton color={filtroTipo === 'despesa' ? 'danger' : 'medium'} onClick={() => setFiltroTipo('despesa')}>
+                                Despesas
+                            </IonButton>
+
+
+                            <IonCol sizeLg="7"></IonCol>
+                            <IonCol></IonCol>
+
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
+                                <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
                                 {/* Add a single button to toggle the filter */}
-                                <IonSelect className="filter-select" aria-label="Limite" interface="popover" placeholder="Limite" label="" onIonChange={e => setLimite(Number(e.detail.value))}>
+                                <IonSelect className="filter-select" aria-label="Limite" interface="popover" placeholder="Limite" onIonChange={e => setLimite(Number(e.detail.value))}>
                                     <IonSelectOption value="10">10</IonSelectOption>
                                     <IonSelectOption value="20">20</IonSelectOption>
                                     <IonSelectOption value="30">30</IonSelectOption>
@@ -261,14 +260,15 @@ const Transferencias: React.FC = () => {
                                 </IonSelect>
                             </IonCol>
 
-                            <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
-                                <IonIcon icon={funnelOutline} size="large" />
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
+                                <IonIcon icon={funnelOutline} size="large" style={{ marginRight: "8px" }} />
                                 {/* Add a single button to toggle the filter */}
-                                <IonSelect className="filter-select" aria-label="Ordem" interface="popover" placeholder="Ordem" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                <IonSelect className="filter-select" aria-label="Ordenar" interface="popover" placeholder="Ordenar" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
                                     <IonSelectOption value="data">Data</IonSelectOption>
                                     <IonSelectOption value="valor">Valor</IonSelectOption>
                                 </IonSelect>
                             </IonCol>
+
 
                         </IonRow>
                     </IonGrid>
