@@ -445,7 +445,7 @@ const Charts: React.FC = () => {
 
   // Layout Responsivo com Tamanhos Consistentes
   const graphs = [
-    <div className="chart-doughnut" style={{ maxWidth: "100%", maxHeight: "400px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
+    <div className="chart-doughnut" style={{ maxWidth: "100%", maxHeight: "500px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
       <IonGrid>
         <IonRow>
           <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
@@ -513,23 +513,24 @@ const Charts: React.FC = () => {
       >
         <IonGrid>
           <IonRow className="ion-align-items-center">
-            {/* Botão à esquerda */}
-            <IonCol size="auto" className="ion-align-self-start">
-              <IonButton onClick={antGraph} color="medium" shape="round">
-                <IonIcon icon={chevronBackOutline} slot="icon-only" />
-              </IonButton>
-            </IonCol>
-
-            {/* Texto centralizado */}
             <IonCol className="ion-text-center">
               <IonText className="text-despesas">
                 <h2>Total de despesas: R${despesaTotal.toFixed(2)}</h2>
               </IonText>
             </IonCol>
+          </IonRow>
+          <IonRow>
 
-            {/* Botão à direita */}
-            <IonCol size="auto" className="ion-align-self-end ion-text-right">
-              <IonButton onClick={proxGraph} color="medium" shape="round">
+
+
+            <IonCol sizeLg="11" className="ion-align-self-start ion-text-left" style={{ display: "flex", alignItems: "center" }}>
+              <IonButton onClick={antGraph} color="success" shape="round">
+                <IonIcon icon={chevronBackOutline} slot="icon-only" />
+              </IonButton>
+            </IonCol>
+
+            <IonCol sizeLg="1" className="ion-align-self-end ion-text-right" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+              <IonButton onClick={proxGraph} color="success" shape="round">
                 <IonIcon icon={chevronForwardOutline} slot="icon-only" />
               </IonButton>
             </IonCol>
