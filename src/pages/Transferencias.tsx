@@ -224,7 +224,7 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonToolbar style={{ maxWidth: '1800px', margin: '0 auto' }}>
+                <IonToolbar style={{ maxWidth: '1800px', marginLeft: '5px', marginRight: '5px' }}>
                     <IonGrid>
                         <IonRow>
 
@@ -274,7 +274,7 @@ const Transferencias: React.FC = () => {
                     </IonGrid>
                 </IonToolbar>
 
-                <IonCard color={"medium"} style={{ maxWidth: '1800px', margin: '0 auto' }}>
+                <IonCard color={"medium"} style={{ maxWidth: '1800px' }}>
                     <IonCardContent>
 
                         <IonList className="ion-no-padding list-transferencias" style={{
@@ -289,9 +289,9 @@ const Transferencias: React.FC = () => {
 
                                 return (
                                     <IonGrid>
-                                        {/* Ícone */}
+
                                         <IonItem key={transferencia.id}>
-                                            <IonCol sizeLg="1">
+                                            {/*  <IonCol sizeLg="1">
 
                                                 <IonText className="ion-text-center" style={{ display: 'flex', justifyContent: 'center' }}>
                                                     {transferencia.tipo === "receita" ? (
@@ -309,16 +309,16 @@ const Transferencias: React.FC = () => {
 
                                             </IonCol>
 
-                                            {/* Data */}
+                                            {/* Data 
                                             <IonCol sizeLg="10">
                                                 <IonText className="ion-text-center">
                                                     <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
                                                 </IonText>
                                             </IonCol>
 
-                                            {/* Editar e Excluir */}
+                                            {/* Editar e Excluir 
                                             <IonCol sizeLg="1">
-                                                {/* Delete button */}
+                                                {/* Delete button 
                                                 <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt" style={{ float: 'right' }}>
                                                     <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                     <IonText color={'light'}>Excluir</IonText>
@@ -342,7 +342,54 @@ const Transferencias: React.FC = () => {
                                                         }
                                                     ]}
                                                 />
-                                            </IonCol>
+                                            </IonCol>*/}
+
+                                            <IonGrid>
+                                                <IonRow>
+                                                    <IonCol size="auto" style={{ display: "flex", alignItems: "center", marginLeft: "0" }} className="ion-margin">
+                                                        <IonText className="ion-text-center" style={{ display: 'flex', justifyContent: 'center' }}>
+                                                            {transferencia.tipo === "receita" ? (
+                                                                <IonIcon icon={cashOutline} style={{ fontSize: '28px' }} /> // Move the icon to the left and remove the marginLeft
+                                                            ) : (
+                                                                <IonIcon icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '28px' }} />
+                                                            )}
+                                                        </IonText>
+                                                    </IonCol>
+                                                    <IonCol>
+                                                        <IonText color={cor}>
+                                                            <h1 className="">{negativo + "R$ " + transferencia.valor}</h1>
+                                                        </IonText>
+                                                        <IonText><p>{transferencia.data.toLocaleDateString()}</p></IonText>
+                                                        <IonText>
+                                                            <p className="ion-no-margin">{descricaoOrTag}</p>
+                                                        </IonText>
+                                                    </IonCol>
+                                                    <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
+                                                        <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
+                                                            <IonIcon icon={trashOutline} color={'light'}/>
+                                                        </IonButton>
+                                                        <IonAlert
+                                                            trigger={`present-alert-${transferencia.id}`}
+                                                            header="Tem certeza que deseja excluir?"
+                                                            className="custom-alert"
+                                                            buttons={[
+                                                                {
+                                                                    text: 'cancel',
+                                                                    cssClass: 'alert-button-cancel cancel-bnt',
+
+                                                                },
+                                                                {
+                                                                    text: 'confirm',
+                                                                    cssClass: 'alert-button-confirm',
+                                                                    handler: () => {
+                                                                        excluirTransferencia(transferencia.id);
+                                                                    },
+                                                                }
+                                                            ]}
+                                                        />
+                                                    </IonCol>
+                                                </IonRow>
+                                            </IonGrid>
                                         </IonItem>
                                     </IonGrid>
                                 )
