@@ -8,22 +8,22 @@ const LandingPage: React.FC = () => {
         <>
             <IonMenu contentId="main-content" side='end'>
                 <IonHeader>
-                    <IonToolbar color={'dark'}>
+                    <IonToolbar>
                         <IonTitle></IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
                     <IonList>
-                        <IonItem routerLink="/cadastro">
+                        <IonItem routerLink="/Cadastro">
                             <IonLabel>Cadastro</IonLabel>
                         </IonItem>
-                        <IonItem routerLink="/login">
+                        <IonItem routerLink="/Login">
                             <IonLabel>Login</IonLabel>
                         </IonItem>
                         <IonItem routerLink="/support">
                             <IonLabel>Support</IonLabel>
                         </IonItem>
-                        <IonItem routerLink="/home">
+                        <IonItem routerLink="/Inicial">
                             <IonLabel>Home</IonLabel>
                         </IonItem>
 
@@ -91,17 +91,18 @@ const LandingPage: React.FC = () => {
                         <IonCol className="left">
                             <div className="video">
                                 <div className="video-dim">
-                                <video autoPlay muted loop src="videoteste.mp4"></video>
+                                    <video autoPlay muted loop src="videoteste.mp4"></video>
                                 </div>
                             </div>
                         </IonCol>
                         <IonCol className="right">
-                            <div className="qrcode">
-                                <IonLabel className="qrcode-img">
-                                    <p>Baixe Aqui!!</p>
-                                    <img src='QRCode.jpg'></img>
-                                </IonLabel>
-                            </div>
+                                <div className="qrcode">
+                                    <IonLabel className="qrcode-img">
+                                        <p>Acesse Aqui!!</p>
+                                        <img src='QRCode.png'></img>
+                                    </IonLabel>
+                                </div>
+
                         </IonCol>
                     </IonRow>
                 </IonContent>
