@@ -272,6 +272,9 @@ const Receitas: React.FC = () => {
                                     color={'success'}
                                     className="input "
                                     fill="outline"
+                                    style={{
+                                        '--placeholder-color': 'var(--ion-text-color)', // cor do ícone de calendário // cor do texto padrão
+                                      }}
                                     onIonChange={(e: any) => {
                                         const selectedDate = new Date(e.detail.value);
                                         setData(selectedDate);

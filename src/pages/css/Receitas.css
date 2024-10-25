@@ -88,3 +88,14 @@ button.alert-button.alert-button-confirm {
 .alert-button-cancel {
     color: var(--ion-text-color) !important;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0); /* Mantém o ícone no tema claro */
+  }
+  
+  /* Para navegadores que suportam o tema escuro */
+  @media (prefers-color-scheme: dark) {
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1); /* Inverte o ícone no tema escuro */
+    }
+  }

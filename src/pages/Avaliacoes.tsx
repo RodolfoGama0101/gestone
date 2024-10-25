@@ -103,8 +103,8 @@ const Avaliacoes: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonGrid style={{ height: '20vh' }}>
-                    <IonRow class="ion-justify-content-center ion-align-items-center" style={{ height: '100%' }}>
+                <IonGrid style={{}}>
+                    <IonRow class="ion-justify-content-center ion-align-items-center">
                         <IonButton color={'success'} onClick={() => setIsOpen(true)} className="ion-justify-content-center" style={{
                             '--background': 'var(--ion-background-color)', // Controla o fundo da página
                             '--color': 'var(--ion-text-color)', // Controla a cor do texto
@@ -113,10 +113,6 @@ const Avaliacoes: React.FC = () => {
                         </IonButton>
                     </IonRow>
                 </IonGrid>
-
-
-
-
 
                 <IonModal isOpen={isOpen} className="custom-modal" backdropDismiss={false}>
                     <IonHeader>
@@ -168,13 +164,11 @@ const Avaliacoes: React.FC = () => {
                     </div>
                 </IonModal>
 
+            </IonContent>
 
-
-
+            <IonContent color={''} className="content-verde" style={{ height: '60vh' }}>
                 {userRatingData && (
-
                     <IonCard className="custom-card">
-                        
                         <IonCardContent>
                             <IonText>
                                 <p>User: {userInfo.displayName}</p>
