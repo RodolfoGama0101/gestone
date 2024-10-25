@@ -173,13 +173,11 @@
   0% {
     opacity: 0;
     transform: scale(0.9);
-    /* Início com zoom menor */
   }
 
   100% {
     opacity: 1;
     transform: scale(1);
-    /* Retorna ao tamanho original */
   }
 }
 
@@ -187,18 +185,22 @@
 .right {
   height: 600px;
   width: 50%;
-  background-color: rgb(158, 0, 0);
+  background-color: rgb(255, 119, 221);
   float: right;
+  position: relative;
 }
 
 .qrcode {
-  background: rgb(59, 109, 46);
+  background: rgba(52,154,93,255);
   max-width: 320px;
   padding: 12px;
   border-radius: 12px;
   box-shadow: 10px 10px 19px 19px rgb(0, 0, 0);
   text-align: center;
-  margin: 16px auto;
+  position: absolute;  
+  top: 50%;            
+  left: 50%;           
+  transform: translate(-50%, -50%); 
 }
 
 .qrcode p {
@@ -211,8 +213,19 @@
 .qrcode-img {
   display: block;
   max-width: 100%;
-  height: 100%;
+  height: auto;
   margin: 1px auto;
+}
+
+.ball{
+  background-color: #23df73;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  border-radius: 40% 30% 0% 20%;
+  top: 0;
+  right: 0;
+  z-index: 1;
 }
 
 footer {
@@ -321,19 +334,26 @@ footer {
   }
 
   .video {
-    max-width: 90%; /* Ajusta a largura máxima para telas menores */
-    max-height: 90%; /* Ajusta a altura máxima para telas menores */
-    object-fit: contain; /* Mantém o vídeo dentro do contêiner */
+    max-width: 90%;
+    /* Ajusta a largura máxima para telas menores */
+    max-height: 90%;
+    /* Ajusta a altura máxima para telas menores */
+    object-fit: contain;
+    /* Mantém o vídeo dentro do contêiner */
   }
 
   .video-dim {
-    padding: 5px; /* Ajusta o padding para telas menores */
-    border-radius: 16px; /* Ajusta o border-radius para telas menores */
-    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.2); /* Ajusta a sombra */
+    padding: 5px;
+    /* Ajusta o padding para telas menores */
+    border-radius: 16px;
+    /* Ajusta o border-radius para telas menores */
+    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.2);
+    /* Ajusta a sombra */
   }
 
   .video:hover {
-    transform: scale(1.05); /* Ajusta o efeito de hover para telas menores */
+    transform: scale(1.05);
+    /* Ajusta o efeito de hover para telas menores */
   }
 
   .right {
@@ -358,7 +378,7 @@ footer {
     font-size: 18px;
     /* Reduz o tamanho da fonte para telas menores */
   }
-  
+
   .qrcode-img {
     height: auto;
     /* Mantém a proporção da imagem */
