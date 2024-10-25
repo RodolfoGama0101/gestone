@@ -224,56 +224,57 @@ const Transferencias: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonGrid>
-                    <IonRow>
-                        <IonCol style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}>
-                            <IonButton
-                                color={filtroTipo === 'tudo' ? 'primary' : 'medium'}
-                                onClick={() => setFiltroTipo('tudo')}
-                            >
+                <IonToolbar style={{ maxWidth: '1800px', margin: '0 auto' }}>
+                    <IonGrid>
+                        <IonRow>
+
+                            <IonButton color={filtroTipo === 'tudo' ? 'primary' : 'medium'} onClick={() => setFiltroTipo('tudo')}>
                                 Todas
                             </IonButton>
-                            <IonButton
-                                color={filtroTipo === 'receita' ? 'success' : 'medium'}
-                                onClick={() => setFiltroTipo('receita')}
-                            >
+
+
+
+                            <IonButton color={filtroTipo === 'receita' ? 'success' : 'medium'} onClick={() => setFiltroTipo('receita')}>
                                 Receitas
                             </IonButton>
-                            <IonButton
-                                color={filtroTipo === 'despesa' ? 'danger' : 'medium'}
-                                onClick={() => setFiltroTipo('despesa')}
-                            >
+
+
+
+                            <IonButton color={filtroTipo === 'despesa' ? 'danger' : 'medium'} onClick={() => setFiltroTipo('despesa')}>
                                 Despesas
                             </IonButton>
-                        </IonCol>
 
-                        <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center", marginRight: "10px"}}>
-                            <IonIcon icon={filterOutline} size="large" />
-                            {/* Add a single button to toggle the filter */}
-                            <IonSelect className="filter-select" aria-label="Limite" interface="popover" placeholder="Limite" label=""  onIonChange={e => setLimite(Number(e.detail.value))}>
-                                <IonSelectOption value="10">10</IonSelectOption>
-                                <IonSelectOption value="20">20</IonSelectOption>
-                                <IonSelectOption value="30">30</IonSelectOption>
-                                <IonSelectOption value="40">40</IonSelectOption>
-                                <IonSelectOption value="100">100</IonSelectOption>
-                            </IonSelect>
-                        </IonCol>
 
-                        <IonCol size="auto" className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
-                            <IonIcon icon={funnelOutline} size="large" />
-                            {/* Add a single button to toggle the filter */}
-                            <IonSelect className="filter-select" aria-label="Ordem" interface="popover" placeholder="Ordem" label="" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
-                                <IonSelectOption value="data">Data</IonSelectOption>
-                                <IonSelectOption value="valor">Valor</IonSelectOption>
-                            </IonSelect>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+                            <IonCol sizeLg="7"></IonCol>
+                            <IonCol></IonCol>
 
-                <IonCard color={"medium"}>
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
+                                <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select" aria-label="Limite" interface="popover" placeholder="Limite" onIonChange={e => setLimite(Number(e.detail.value))}>
+                                    <IonSelectOption value="10">10</IonSelectOption>
+                                    <IonSelectOption value="20">20</IonSelectOption>
+                                    <IonSelectOption value="30">30</IonSelectOption>
+                                    <IonSelectOption value="40">40</IonSelectOption>
+                                    <IonSelectOption value="100">100</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+
+                            <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }}>
+                                <IonIcon icon={funnelOutline} size="large" style={{ marginRight: "8px" }} />
+                                {/* Add a single button to toggle the filter */}
+                                <IonSelect className="filter-select" aria-label="Ordenar" interface="popover" placeholder="Ordenar" value={filtroOrdenacao} onIonChange={e => setFiltroOrdenacao(e.detail.value as 'data' | 'valor')}>
+                                    <IonSelectOption value="data">Data</IonSelectOption>
+                                    <IonSelectOption value="valor">Valor</IonSelectOption>
+                                </IonSelect>
+                            </IonCol>
+
+
+                        </IonRow>
+                    </IonGrid>
+                </IonToolbar>
+
+                <IonCard color={"medium"} style={{ maxWidth: '1800px', margin: '0 auto' }}>
                     <IonCardContent>
 
                         <IonList className="ion-no-padding list-transferencias" style={{
@@ -291,41 +292,34 @@ const Transferencias: React.FC = () => {
                                         {/* Ícone */}
                                         <IonItem key={transferencia.id}>
                                             <IonCol sizeLg="1">
-                                                <IonText>
-                                                    {transferencia.tipo === "receita" ? (
-                                                        <IonIcon icon={cashOutline} style={{ fontSize: '24px', marginRight: '8px' }}  // Diminui o ícone e adiciona espaço entre ícone e texto
-                                                        />
 
+                                                <IonText className="ion-text-center" style={{ display: 'flex', justifyContent: 'center' }}>
+                                                    {transferencia.tipo === "receita" ? (
+                                                        <IonIcon icon={cashOutline} style={{ fontSize: '28px' }} /> // Move the icon to the left and remove the marginLeft
                                                     ) : (
-                                                        // Exibir ícone da tag correspondente
-                                                        <IonIcon icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '24px', marginRight: '8px' }} />
+                                                        <IonIcon icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '28px' }} />
                                                     )}
                                                 </IonText>
-                                            </IonCol>
-
-                                            {/* Valor, Descrição ou Tag */}
-                                            <IonCol sizeLg="3">
-                                                <IonText color={cor} className="ion-text-start">
-                                                    <h2 className="ion-no-padding">{negativo + "R$ " + transferencia.valor}</h2>
-                                                </IonText>
-
-                                                <IonText>
+                                                <IonText className="ion-text-center">
                                                     <p className="ion-no-margin">{descricaoOrTag}</p>
                                                 </IonText>
+                                                <IonText color={cor} className="ion-text-center">
+                                                    <h2 className="">{negativo + "R$ " + transferencia.valor}</h2>
+                                                </IonText>
+
                                             </IonCol>
 
                                             {/* Data */}
-                                            <IonCol sizeLg="3">
-                                                <IonText className="ion-text-start">
+                                            <IonCol sizeLg="10">
+                                                <IonText className="ion-text-center">
                                                     <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
                                                 </IonText>
                                             </IonCol>
 
                                             {/* Editar e Excluir */}
-                                            <IonCol sizeLg="6">
-
+                                            <IonCol sizeLg="1">
                                                 {/* Delete button */}
-                                                <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt">
+                                                <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt" style={{ float: 'right' }}>
                                                     <IonIcon icon={trashOutline} color={'light'}></IonIcon>
                                                     <IonText color={'light'}>Excluir</IonText>
                                                 </IonButton>

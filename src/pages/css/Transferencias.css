@@ -39,5 +39,9 @@ button.alert-button.alert-button-confirm {
 
 .input-editar {
     margin-bottom: 8px;
+    width: 100%;
+    max-width: 400px;
 }
+
+
 
