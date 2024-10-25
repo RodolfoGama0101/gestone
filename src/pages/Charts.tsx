@@ -448,14 +448,14 @@ const Charts: React.FC = () => {
     <div className="chart-doughnut" style={{ maxWidth: "100%", maxHeight: "500px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
       <IonGrid>
         <IonRow>
-          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
+          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="5" sizeXl="5"
             className="ion-align-items-top"
             style={{ width: "100%" }}
           >
             <Doughnut data={dataPie} options={configPie} />
           </IonCol>
 
-          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6">
+          <IonCol sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="7" sizeXl="7">
             {renderListaDespesas()}
           </IonCol>
         </IonRow>

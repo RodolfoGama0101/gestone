@@ -1,9 +1,27 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonTitle, IonBackButton, IonContent, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonText, IonButton, IonAvatar, IonCard, IonFooter, IonModal, IonInput } from '@ionic/react';
-import "./css/Conta.css"
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import {
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
+    IonBackButton,
+    IonContent,
+    IonIcon,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonImg,
+    IonText,
+    IonButton,
+    IonAvatar,
+    IonFooter,
+    IonModal,
+    IonInput,
+} from '@ionic/react';
+import "./css/Conta.css";
+import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
-import { useContext, useEffect, useState } from 'react';
-import { ThemeContext } from '../components/ThemeContext';
+import { useEffect, useState } from 'react';
 import { arrowBackOutline, brushOutline } from 'ionicons/icons';
 
 const Conta: React.FC = () => {
@@ -11,10 +29,9 @@ const Conta: React.FC = () => {
     const [userName, setUserName] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [isEditing, setIsEditing] = useState(false); // Controla se está em modo de edição
-    const [newName, setNewName] = useState(userName);  // Armazena o novo nome
-    const [isLoading, setIsLoading] = useState(false);
-    // const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [newName, setNewName] = useState<string | null>(userName);
+    const [newEmail, setNewEmail] = useState<string | null>(userEmail);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -22,40 +39,49 @@ const Conta: React.FC = () => {
                 setUserImg(user.photoURL);
                 setUserName(user.displayName);
                 setUserEmail(user.email);
+                setNewName(user.displayName);
+                setNewEmail(user.email);
             } else {
                 setUserImg(null);
                 setUserName(null);
                 setUserEmail(null);
             }
         });
-        return () => unsubscribe(); // Clean up the subscription when the component unmounts
+        return () => unsubscribe();
     }, []);
 
     function logout() {
         signOut(auth).then(() => {
             window.location.href = "/";
         }).catch((error) => {
-            const errorMessage = error.message;
-            alert(errorMessage);
+            alert(error.message);
         });
     }
 
-
-
-    // Função para alternar o modo de edição
-    const toggleEdit = () => {
-        setIsEditing(!isEditing);
+    const toggleEditName = () => {
+        setIsEditingName(!isEditingName);
     };
 
-    // Função para salvar o novo nome
-    const saveName = () => {
-        // Aqui você pode fazer um update no backend, se necessário
-        toggleEdit(); // Fecha o modo de edição
+    const handleSaveName = async () => {
+        try {
+            if (auth.currentUser) {
+                await updateProfile(auth.currentUser, { displayName: newName });
+                setUserName(newName);
+                window.alert("Nome alterado com sucesso!");
+            } else {
+                window.alert("Usuário não autenticado.");
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar o nome:", error);
+            window.alert("Erro ao atualizar o nome.");
+        } finally {
+            setIsEditingName(false); // Garante que o estado de edição seja fechado
+        }
     };
 
     return (
         <IonPage>
-            <IonHeader className='ion-no-border'>
+            <IonHeader className="ion-no-border">
                 <IonToolbar>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/Home"></IonBackButton>
@@ -63,24 +89,28 @@ const Conta: React.FC = () => {
                     <IonTitle>Sua Conta</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent fullscreen>
                 <IonGrid>
                     <IonRow>
-                        <IonCol className='user-info'>
+                        <IonCol className="user-info">
                             {userImg ? (
-                                <IonAvatar className='user-photo'>
+                                <IonAvatar className="user-photo">
                                     <IonImg src={userImg} />
                                 </IonAvatar>
                             ) : (
-                                <IonAvatar className='user-photo'>
-                                    <IonImg src="/assets/default-avatar.png" /> {/* Avatar padrão */}
+                                <IonAvatar className="user-photo">
+                                    <IonImg src="/assets/default-avatar.png" />
                                 </IonAvatar>
                             )}
                         </IonCol>
                     </IonRow>
+
                     <IonGrid>
-                        <div className='ion-text-center'>
-                            <h2 className='ion-text-capitalize'>{userName ? userName : 'Carregando...'}</h2>
+                        <div className="ion-text-center">
+                            <h2 className="ion-text-capitalize">
+                                {userName ? userName : 'Carregando...'}
+                            </h2>
                             <p>{userEmail ? userEmail : 'Carregando...'}</p>
                         </div>
 
@@ -90,99 +120,84 @@ const Conta: React.FC = () => {
                             </IonButton>
                         </div>
 
-                        <IonModal isOpen={isOpen} backdropDismiss={false}>
+                        <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)} backdropDismiss={false}>
                             <IonHeader>
                                 <IonToolbar color="success">
                                     <IonButtons slot="start">
-                                        <IonButton onClick={() => setIsOpen(false)}><IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} /></IonButton>
+                                        <IonButton onClick={() => setIsOpen(false)}>
+                                            <IonIcon aria-hidden="true" slot="icon-only" icon={arrowBackOutline} />
+                                        </IonButton>
                                     </IonButtons>
-                                    <IonText>Voltar</IonText>
+                                    <IonTitle>Editar Perfil</IonTitle>
                                 </IonToolbar>
                             </IonHeader>
 
-                            <IonGrid>
-                                <IonRow>
-                                    <IonCol className='user-info'>
-                                        {userImg ? (
-                                            <IonAvatar className='user-photo'>
-                                                <IonImg src={userImg} />
+                            <IonContent className="ion-padding">
+                                <IonGrid>
+                                    <IonRow className="ion-justify-content-center ion-align-items-center">
+                                        <IonCol size="auto">
+                                            <IonAvatar className="user-photo">
+                                                <IonImg src={userImg || "/assets/default-avatar.png"} />
                                             </IonAvatar>
-                                        ) : (
-                                            <IonAvatar className='user-photo'>
-                                                <IonImg src="/assets/default-avatar.png" /> {/* Avatar padrão */}
-                                            </IonAvatar>
-                                        )}
-                                    </IonCol>
-                                    <IonCol>
-                                        <IonButton>Editar Avatar</IonButton>
-                                    </IonCol>
-                                </IonRow>
+                                        </IonCol>
+                                        <IonCol size="auto">
+                                            <IonButton>Alterar Avatar</IonButton>
+                                        </IonCol>
+                                    </IonRow>
 
-                                <IonRow>
-                                    <div className='ion-text-center'>
-                                        <h2 className='ion-text-capitalize'>
-                                            {isEditing ? (
-                                                <>
-                                                    <IonInput
-                                                        value={newName}
-                                                        onIonChange={(e: any) => setNewName(e.detail.value)}
-                                                        placeholder="Digite o novo nome"
-                                                    />
-                                                    <IonButton onClick={saveName}>Salvar</IonButton>
-                                                </>
+                                    {/* Edição do Nome */}
+                                    <IonRow className="ion-align-items-center ion-margin-top">
+                                        <IonCol size="auto" style={{ display: 'flex', alignItems: 'center' }}>
+                                            <IonText>
+                                                <h2>Nome:</h2>
+                                            </IonText>
+                                        </IonCol>
+                                    </IonRow>
+                                    <IonRow style={{ display: 'flex', alignItems: 'center', marginTop: '0' }}>
+                                        <IonCol>
+                                            {isEditingName ? (
+                                                <IonInput
+                                                    value={newName}
+                                                    onIonChange={(e) => setNewName(e.detail.value!)}
+                                                    placeholder="Digite o novo nome"
+                                                />
                                             ) : (
-                                                <>
-                                                    {newName ? newName : 'Carregando...'}
-                                                    <IonButton onClick={toggleEdit}>
-                                                        <IonIcon icon={brushOutline} />
-                                                    </IonButton>
-                                                </>
+                                                <IonText className="ion-text-capitalize">{userName}</IonText>
                                             )}
-                                        </h2>
+                                        </IonCol>
+                                        <IonCol size="auto">
+                                            <IonButton fill="clear" onClick={toggleEditName}>
+                                                <IonIcon icon={brushOutline} color={'light'} />
+                                            </IonButton>
+                                        </IonCol>
+                                    </IonRow>
 
-                                        <p>{userEmail ? userEmail : 'Carregando...'} <IonButton><IonIcon icon={brushOutline} /></IonButton></p>
-                                        <p>Password: </p>
-                                    </div>
-                                </IonRow>
-                            </IonGrid>
-
-                            <IonButton
-                                onClick={() => {
-                                    setIsLoading(true); // Inicia o carregamento
-
-                                    // if (transferenciaSelecionada) {
-                                    //     editFinance(
-                                    //         transferenciaSelecionada.id,
-                                    //         transferenciaSelecionada.tipo
-                                    //     );
-                                    // }
-
-                                    // setUpdateSaldo(!updateSaldo); // Atualiza o saldo para refletir as mudanças
-                                    // setIsOpen(false); // Fecha o modal após a edição
-
-                                    <IonText>
-                                        {/* <p>{isLoading ? "Carregando..." : "Salvar " + (tipoAtual === "receita" ? "Receita" : "Despesa")}</p> */}
-                                    </IonText>
-                                }}
-                            ></IonButton>
-
+                                    {isEditingName && (
+                                        <IonRow className="ion-justify-content-center ion-margin-top">
+                                            <IonButton color="success" onClick={handleSaveName}>
+                                                Salvar Nome
+                                            </IonButton>
+                                            <IonButton color="medium" onClick={toggleEditName}>
+                                                Cancelar
+                                            </IonButton>
+                                        </IonRow>
+                                    )}
+                                </IonGrid>
+                            </IonContent>
                         </IonModal>
                     </IonGrid>
-
                 </IonGrid>
-
-
             </IonContent>
 
-            <IonFooter className='ion-no-border footer-logout ion-align-items-end'>
+            <IonFooter className="ion-no-border footer-logout">
                 <IonToolbar>
-                    <IonButton expand="block" color={'danger'} className='ion-no-margin ion-float-' onClick={logout}>
+                    <IonButton expand="block" color="danger" onClick={logout}>
                         Logout
                     </IonButton>
                 </IonToolbar>
             </IonFooter>
         </IonPage>
     );
-}
+};
 
 export default Conta;
