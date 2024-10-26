@@ -56,6 +56,7 @@ const LandingPage: React.FC = () => {
                                             <a href="Cadastro" className="home-cad">Fazer Cadastro</a>
                                         </div>
                                         <div className="home-img">
+                                            <div className="circle-bg"></div>
                                             <img src='versaoLetraBranca.png'></img>
                                         </div>
                                     </div>

@@ -78,13 +78,27 @@
 }
 
 .home-img {
+  position: relative;
   margin-left: 5%;
   margin-right: 5%;
 }
 
 .home-img img {
   width: 100%;
+  position: relative;
+  z-index: 1; /* Garante que a imagem fique na frente */
 }
+
+.circle-bg {
+   position: absolute;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 120%;
+  z-index: 0; 
+  background-color: #161b18;
+  clip-path: polygon(30% 0%, 100% 60%, 0% 50%);
+  }
 
 /* Testomonials */
 
@@ -309,6 +323,11 @@ footer {
 
   .home-img img {
     width: 80%;
+  }
+
+  .circle-bg {
+    top: 0%;
+    width: 110%;
   }
 
   .testimonials {
