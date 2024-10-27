@@ -1,4 +1,4 @@
-import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon, IonNav, IonNavLink, IonGrid, IonRow, IonCol } from "@ionic/react";
+import { IonButtons, IonContent, IonHeader, IonMenu, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon, IonNav, IonNavLink, IonGrid, IonRow, IonCol, IonFooter } from "@ionic/react";
 import "./css/LandingPage.css"
 import React from "react";
 
@@ -97,15 +97,20 @@ const LandingPage: React.FC = () => {
                             </div>
                         </IonCol>
                         <IonCol className="right">
-                                <div className="qrcode">
-                                    <IonLabel className="qrcode-img">
-                                        <p>Acesse Aqui!!</p>
-                                        <img src='QRCode.png'></img>
-                                    </IonLabel>
-                                </div>
-
+                            <div className="qrcode">
+                                <IonLabel className="qrcode-img">
+                                    <p>Acesse Aqui!!</p>
+                                    <img src='QRCode.png'></img>
+                                </IonLabel>
+                            </div>
                         </IonCol>
                     </IonRow>
+                    <IonFooter className="footer">
+                        <IonItem>
+                            &copy; 2024 Gestone. Todos os direitos reservados.
+                        </IonItem>
+                    </IonFooter>
+
                 </IonContent>
 
             </IonPage >
