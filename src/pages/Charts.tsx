@@ -8,7 +8,7 @@ import { collection, doc, getAggregateFromServer, getDoc, getDocs, query, sum, w
 import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import { chevronBackOutline, chevronForwardOutline, ellipse } from "ionicons/icons";
+import { arrowBackCircleOutline, arrowBackCircleSharp, arrowForwardCircleSharp, chevronBack, chevronBackCircle, chevronBackOutline, chevronForward, chevronForwardOutline, ellipse } from "ionicons/icons";
 
 interface DespesasData {
   valor: number;
@@ -499,18 +499,15 @@ const Charts: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-
-
-
             <IonCol sizeLg="11" className="ion-align-self-start ion-text-left" style={{ display: "flex", alignItems: "center" }}>
-              <IonButton onClick={antGraph} color="success" shape="round">
-                <IonIcon icon={chevronBackOutline} slot="icon-only" />
+              <IonButton onClick={antGraph} color="dark" shape="round" fill="default">
+                <IonIcon icon={arrowBackCircleSharp} slot="icon-only" size="large"/>
               </IonButton>
             </IonCol>
 
             <IonCol sizeLg="1" className="ion-align-self-end ion-text-right" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-              <IonButton onClick={proxGraph} color="success" shape="round">
-                <IonIcon icon={chevronForwardOutline} slot="icon-only" />
+              <IonButton onClick={proxGraph} color="dark" shape="round" fill="default">
+                <IonIcon icon={arrowForwardCircleSharp} slot="icon-only" size="large"/>
               </IonButton>
             </IonCol>
           </IonRow>

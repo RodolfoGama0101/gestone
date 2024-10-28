@@ -31,7 +31,7 @@ const Suporte: React.FC = () => {
                             '--color': 'var(--ion-text-color)' }}
                     />
 
-                    <IonButton className="bnt-pesquisa" type="submit" color={'success'}>Enviar</IonButton>
+                    <IonButton className="bnt-pesquisa" type="submit" color={'warning'}>Enviar</IonButton>
                 </div>
 
 

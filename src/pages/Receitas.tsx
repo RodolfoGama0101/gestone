@@ -318,7 +318,7 @@ const Receitas: React.FC = () => {
                                     required
                                     label="Data: "
                                     type="date"
-                                    color={'success'}
+                                    // color={'light'}
                                     className="input "
                                     fill="outline"
                                     style={{

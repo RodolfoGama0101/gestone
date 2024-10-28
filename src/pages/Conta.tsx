@@ -104,26 +104,26 @@ const Conta: React.FC = () => {
         maintainAspectRatio: true, // Mantém a proporção definida
         responsive: true, // O gráfico se ajustará dinamicamente ao contêiner
         aspectRatio: 2.5, // Aumentar a proporção para dar mais largura ao gráfico
-        scales: {
-            x: {
-                beginAtZero: true,
-                ticks: {
-                    color: 'var(--ion-text-color)', // Usa a cor do texto do tema
-                },
-                grid: {
-                    color: 'var(--ion-text-color)', // Usa a cor da borda do tema
-                }
-            },
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    color: 'var(--ion-text-color)', // Usa a cor do texto do tema
-                },
-                grid: {
-                    color: 'var(--ion-text-color)', // Usa a cor da borda do tema
-                }
-            },
-        },
+        // scales: {
+        //     x: {
+        //         beginAtZero: true,
+        //         ticks: {
+        //             color: 'var(--ion-text-color)', // Usa a cor do texto do tema
+        //         },
+        //         grid: {
+        //             color: 'var(--ion-text-color)', // Usa a cor da borda do tema
+        //         }
+        //     },
+        //     y: {
+        //         beginAtZero: true,
+        //         ticks: {
+        //             color: 'var(--ion-text-color)', // Usa a cor do texto do tema
+        //         },
+        //         grid: {
+        //             color: 'var(--ion-text-color)', // Usa a cor da borda do tema
+        //         }
+        //     },
+        // },
         plugins: {
             legend: {
                 display: false, // Remove a legenda se não for necessária
@@ -339,8 +339,6 @@ const Conta: React.FC = () => {
                             </IonButton>
                         </div>
 
-
-
                         <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)} backdropDismiss={false}>
                             <IonHeader>
                                 <IonToolbar color="success">
@@ -353,7 +351,7 @@ const Conta: React.FC = () => {
                                 </IonToolbar>
                             </IonHeader>
 
-                            <IonContent className="ion-padding">
+                            <IonContent className="ion-no-padding" fullscreen>
                                 <IonGrid>
                                     <IonRow className="ion-justify-content-center ion-align-items-center">
                                         <IonCol size="auto" style={{ position: 'relative' }}>
@@ -413,42 +411,27 @@ const Conta: React.FC = () => {
                     </IonGrid>
 
                     <IonGrid>
-                        <IonRow>
-                            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
-                                <IonCard className='card-2 ion-padding' style={{
-                                    '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
-                                    '--color': 'var(--ion-text-color)',
-                                }}>
-                                    <IonCardContent>
-                                        <IonText className='ion-text-center'>
-                                            <h1>Despesas por Tags</h1>
-                                        </IonText>
-                                        <IonCol size='auto'>
-                                            <div className="chart-bar-container">
-                                                <Bar data={dataBarTags} options={optionsBarTags} />
-                                            </div>
-                                        </IonCol>
-                                    </IonCardContent>
-                                </IonCard>
-                            </IonCol>
-
+                        <IonRow style={{ display: 'flex', alignItems: 'center' }}>
                             {/* ChartPie Tags */}
-                            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='6' sizeXl='6'>
-                                <IonCard className='card-2 ion-padding' style={{
-                                    '--background': 'var(--ion-color-primary-shade)', // Controla o fundo da página
-                                    '--color': 'var(--ion-text-color)',
-                                }}>
-                                    <IonCardContent>
-                                        <IonText className='ion-text-center'>
-                                            <h1>Resumo Anual</h1>
-                                        </IonText>
-                                        <IonCol size='auto'>
-                                            <div className="chart-pie-container" >
-                                                <Line data={dataDespesasAno} options={optionsLineBar} />
-                                            </div>
-                                        </IonCol>
-                                    </IonCardContent>
-                                </IonCard>
+                            <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='12' sizeXl='12'>
+                                
+                                    <IonText className='ion-text-center'>
+                                        <h1>Resumo Anual</h1>
+                                    </IonText>
+                                    <IonCol size='auto'>
+                                        <div className="chart-pie-container" 
+                                            style={{
+                                                
+                                                width: '100%',
+
+                                            }}
+
+                                            color={'medium'}
+                                        >
+                                            <Line data={dataDespesasAno} options={optionsLineBar} />
+                                        </div>
+                                    </IonCol>
+                                
                             </IonCol>
                         </IonRow>
                     </IonGrid>
