@@ -7,7 +7,8 @@
 
 .container {
   color: var(--branco);
-  background: linear-gradient(340deg, rgb(40, 150, 20), rgb(40, 100, 10), rgb(50, 80, 50));
+  background: linear-gradient(340deg,  #39653f, #365f3d, #34593b, #315339, #2e4d36, #2b4734, #294132, #263b30 );  
+  /* background: linear-gradient(340deg,  #445054, #4b585c, #526065, #59686d, #617176, #68797e, #6f8187, #76898f );  */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 2px 15px;
-  box-shadow: 0 0.1rem 0.5rem #23df73;
+  box-shadow: 0 0.1rem 0.5rem var(--ion-text-color);
   width: 100%;
   background: var(--ion-background-color);
   transition: all 0.5s;
@@ -35,7 +36,7 @@
 }
 
 .menu {
-  color: var(--branco);
+  color: var(	--ion-text-color);
 }
 
 .home {
@@ -92,8 +93,9 @@
 /* Testomonials */
 
 .testimonials {
-  background: radial-gradient(rgb(3, 161, 0), rgb(40, 255, 8, 0));
+  /* background: radial-gradient(#2e3538,#76898f ); */
   /* background: linear-gradient( 3deg,  rgb(50, 80, 50) , rgb(40, 100, 10), rgb(40, 150, 20)  ); */
+  background: radial-gradient(#263b30 ,#39653f );
   text-align: center;
   padding: 10px;
   height: 450px;
@@ -141,7 +143,7 @@
 /* Benefits */
 
 .benefits{
-  background-color: rgb(10, 120, 10);
+  background-color: #315339;
 }
 
 .left {
@@ -154,7 +156,7 @@
   border-radius: 100% 0% 0% 0%;
   bottom: 0;
   right: 0;
-  background: linear-gradient(to left,  rgb(60, 120, 30) , rgb(60, 130, 35), rgb(60, 160, 40), rgb(60, 170, 45), rgb(60, 180, 50) , rgb(60, 200, 50)  );
+  background: linear-gradient(to left,   #1e460b ,  #265118 , #2e5b26, #366633, #32612c , #3e7040 );
 }
 
 .video {
@@ -164,14 +166,27 @@
 }
 
 .video-dim {
+  width: 100%;
+  max-width: 250px; 
+  aspect-ratio: 9 / 16; 
   background-color: rgb(0, 0, 0);
   padding: 10px;
   border-radius: 20px;
-  box-shadow: 0 40px 40px 40px rgba(0, 0, 0, 0.250);
+  box-shadow: 0 40px 40px 40px rgba(0, 0, 0, 0.25);
   transition: transform 0.5s, box-shadow 0.5s;
   opacity: 0;
   transform: scale(0.9);
   animation: fadeInZoom 2.2s ease-in-out forwards;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-dim video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .video:hover {
@@ -200,7 +215,7 @@
   border-radius: 0% 0% 100% 0%;
   bottom: 0;
   right: 0;
-  background: linear-gradient(to right,  rgb(60, 120, 30) , rgb(50, 120, 25), rgb(40, 110, 20), rgb(30, 100, 15), rgb(20, 90, 10) , rgb(10, 70, 5)  );
+  background: linear-gradient(to right,   #1e460b ,  #265118 , #2e5b26, #366633, #32612c , #3e7040 );
 }
 
 .qrcode {
@@ -231,14 +246,10 @@
 }
 
 .footer {
-  /* justify-items: center;
-  text-align: center;
-  padding: 2px; */
-
   justify-items: center;
   text-align: center;
   padding: 2px;
-  max-width: 100%; /* Limita a largura ao tamanho da tela */
+  max-width: 100%; 
 }
 
 
@@ -383,11 +394,4 @@
     height: auto;
   }
 
-  .footer{
-
-    margin-top: 10px; /* Mantém o footer abaixo do QR code */
-    padding: 2px;
-    font-size: 14px; /* Diminui a fonte, se necessário */
-    max-width: 100%;
-  }
 }
