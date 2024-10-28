@@ -24,7 +24,7 @@ import "./css/Conta.css";
 import { onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { useEffect, useState } from 'react';
-import { arrowBackOutline, brushOutline } from 'ionicons/icons';
+import { arrowBackOutline, brushOutline, pencil, pencilOutline } from 'ionicons/icons';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 
 const Conta: React.FC = () => {
@@ -240,24 +240,27 @@ const Conta: React.FC = () => {
                             <IonContent className="ion-padding">
                                 <IonGrid>
                                     <IonRow className="ion-justify-content-center ion-align-items-center">
-                                        <IonCol size="auto">
+                                        <IonCol size="auto" style={{ position: 'relative' }}>
                                             <IonAvatar className="user-photo">
                                                 <IonImg src={userImg || "/assets/default-avatar.png"} />
                                             </IonAvatar>
-                                        </IonCol>
-                                        <IonCol size="auto">
-                                            <IonButton>Alterar Avatar</IonButton>
+                                            <IonButton
+                                                shape='round'
+                                                size="large"
+                                                style={{
+                                                    position: 'absolute',
+                                                    bottom: '0',
+                                                    right: '0',
+                                                    margin: 0
+                                                }}
+                                            >
+                                                <IonIcon color='success' icon={pencilOutline} />
+                                            </IonButton>
                                         </IonCol>
                                     </IonRow>
 
                                     {/* Edição do Nome */}
-                                    <IonRow className="ion-align-items-center ion-margin-top">
-                                        <IonCol size="auto" style={{ display: 'flex', alignItems: 'center' }}>
-                                            <IonText>
-                                                <h2>Nome:</h2>
-                                            </IonText>
-                                        </IonCol>
-                                    </IonRow>
+                                    
                                     <IonRow style={{ display: 'flex', alignItems: 'center', marginTop: '0' }}>
                                         <IonCol>
                                             {isEditingName ? (
@@ -265,16 +268,17 @@ const Conta: React.FC = () => {
                                                     value={newName}
                                                     onIonChange={(e) => setNewName(e.detail.value!)}
                                                     placeholder="Digite o novo nome"
+                                                    label='Nome: '
                                                 />
                                             ) : (
-                                                <IonText className="ion-text-capitalize">{userName}</IonText>
+                                                <IonText className="ion-text-capitalize">Nome: {userName}</IonText>
                                             )}
                                         </IonCol>
-                                        <IonCol size="auto">
+                                        
                                             <IonButton fill="clear" onClick={toggleEditName}>
-                                                <IonIcon icon={brushOutline} color={'light'} />
+                                                <IonIcon icon={brushOutline} color={'success'} />
                                             </IonButton>
-                                        </IonCol>
+                                        
                                     </IonRow>
 
                                     {isEditingName && (
