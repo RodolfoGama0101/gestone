@@ -9,7 +9,7 @@ import { auth, db } from '../firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { chevronBackOutline, chevronForwardOutline, ellipse } from "ionicons/icons";
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 
 interface DespesasData {
   valor: number;
@@ -425,25 +425,6 @@ const Charts: React.FC = () => {
     </IonGrid>
   );
 
-  // //Array
-  // const graphStyle = {
-  //   width: '100%',      // Para telas menores (mobile)
-  //   height: '60vh',    // Altura relativa à viewport
-  //   margin: '0 auto',  // Centraliza o gráfico
-  //   color: 'var(--ion-text-color)', // Mantém a cor do texto
-  //   maxWidth: '600px', // Limite de largura para telas maiores
-  // };
-
-  // const responsiveGraphStyle = {
-  //   ...graphStyle,
-  //   '@media(min-width: 768px)': { // Ajusta para tablets e desktops
-  //     width: '65%',    // Ajusta a largura para telas maiores
-  //     height: '70vh',  // Aumenta a altura relativa
-  //   }
-  // };
-
-
-  // Layout Responsivo com Tamanhos Consistentes
   const graphs = [
     <div className="chart-doughnut" style={{ maxWidth: "100%", maxHeight: "500px", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
       <IonGrid>
