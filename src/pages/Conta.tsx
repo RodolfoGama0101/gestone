@@ -111,7 +111,7 @@ const Conta: React.FC = () => {
                     color: 'var(--ion-text-color)', // Usa a cor do texto do tema
                 },
                 grid: {
-                    color: 'var(--ion-border-color)', // Usa a cor da borda do tema
+                    color: 'var(--ion-text-color)', // Usa a cor da borda do tema
                 }
             },
             y: {
@@ -120,7 +120,7 @@ const Conta: React.FC = () => {
                     color: 'var(--ion-text-color)', // Usa a cor do texto do tema
                 },
                 grid: {
-                    color: 'var(--ion-border-color)', // Usa a cor da borda do tema
+                    color: 'var(--ion-text-color)', // Usa a cor da borda do tema
                 }
             },
         },

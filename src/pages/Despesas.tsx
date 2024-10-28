@@ -29,7 +29,7 @@ import Verifica from "../firebase/verifica";
 import { onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { addOutline, arrowBackOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
+import { addOutline, airplaneOutline, arrowBackOutline, bookOutline, carOutline, cartOutline, chevronDownOutline, filterOutline, funnelOutline, gameControllerOutline, hammerOutline, helpOutline, homeOutline, laptopOutline, medkitOutline, restaurantOutline, shirtOutline, trashOutline } from "ionicons/icons";
 import "./css/Despesas.css"
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
@@ -256,6 +256,21 @@ const Despesas: React.FC = () => {
         return true; // Return true to include all transactions
     });
 
+    const tagIconMap: Record<string, string> = {
+        "Roupas": shirtOutline,
+        "Educação": bookOutline,
+        "Eletrônicos": laptopOutline,
+        "Saúde": medkitOutline,
+        "Casa": homeOutline,
+        "Lazer": gameControllerOutline,
+        "Restaurante": restaurantOutline,
+        "Mercado": cartOutline,
+        "Serviços": hammerOutline,
+        "Transporte": carOutline,
+        "Viagem": airplaneOutline,
+        "Outros": helpOutline,
+    };
+
     return (
         <IonPage>
             <IonHeader>
@@ -399,6 +414,11 @@ const Despesas: React.FC = () => {
                                         >
                                             <IonGrid>
                                                 <IonRow>
+                                                    <IonCol size="auto" style={{display: 'flex', alignItems: 'center', marginLeft: '0'}} className="ion-margin">
+                                                        <IonText className="ion-text-center" style={{fontSize: '28px'}}>
+                                                            <IonIcon icon={tagIconMap[despesa.tag] || helpOutline} style={{fontSize: '28px'}} />
+                                                        </IonText> 
+                                                    </IonCol> 
                                                     <IonCol>
                                                         <IonCardTitle>{"R$ " + despesa.valor.toFixed(2)}</IonCardTitle>
                                                         <IonCardSubtitle>{despesa.data.toLocaleDateString()}</IonCardSubtitle>

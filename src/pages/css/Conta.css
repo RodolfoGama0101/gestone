@@ -29,3 +29,7 @@
 .footer-logout ion-button {
     margin: 0;
 }
+
+.chart-bar-container {
+    color: var(--ion-text-color);
+}
