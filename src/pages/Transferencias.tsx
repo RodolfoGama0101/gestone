@@ -30,7 +30,7 @@ const Transferencias: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroTipo, setFiltroTipo] = useState<'tudo' | 'receita' | 'despesa'>('tudo'); // Estado para o filtro
     const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
-    const [limite, setLimite] = useState(10);
+    const [limite, setLimite] = useState(20);
     // const [transferenciaSelecionada, setTransferenciaSelecionada] = useState<SaldoData | null>(null);
 
     // // Edit Finance
