@@ -18,23 +18,31 @@ import React, { useState, useContext, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import SignGoogle from "../components/SignGoogle";
 import { ThemeContext } from '../components/ThemeContext';
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [isSetupComplete, setIsSetupComplete] = useState(false); // Verifica se a configuração inicial foi concluída
   const { isDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Se o usuário estiver logado, redireciona para a Home
-        window.location.href = "/Home";
+        // Verifique se os dados estão configurados no Firestore
+        const refDoc = doc(db, "MesSelecao", user.uid);
+        const docSnap = await getDoc(refDoc);
+        
+        if (docSnap.exists()) {
+          // Se os dados já estiverem configurados, redireciona
+          setIsSetupComplete(true);
+          window.location.href = "/Home";
+        }
       }
     });
-    
-    // Limpa o listener ao desmontar o componente
+
     return () => unsubscribe();
   }, []);
 
