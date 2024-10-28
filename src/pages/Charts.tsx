@@ -10,7 +10,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { chevronBackOutline, chevronForwardOutline, ellipse } from "ionicons/icons";
 
-
 interface DespesasData {
   valor: number;
   tag: string;
@@ -344,7 +343,6 @@ const Charts: React.FC = () => {
       },
     ],
   };
-
 
   const optionsBarTags = {
     maintainAspectRatio: true,
