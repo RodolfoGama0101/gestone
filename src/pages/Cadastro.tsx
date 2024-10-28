@@ -142,7 +142,7 @@ const Cadastro: React.FC = () => {
                                     className="input-cadastro"
                                     color={"success"}
                                     label='Nome: '
-                                    placeholder="exemple"
+                                    placeholder="Kauã Leonardo"
                                     clearInput
                                     labelPlacement="stacked"
                                     fill="outline"
@@ -153,7 +153,7 @@ const Cadastro: React.FC = () => {
                                     className="input-cadastro"
                                     color={"success"}
                                     label='Login:'
-                                    placeholder='Exemple@exemple'
+                                    placeholder='kaua.janucci@gmail.com'
                                     clearInput
                                     labelPlacement="stacked"
                                     fill="outline"
@@ -187,7 +187,7 @@ const Cadastro: React.FC = () => {
                                 <IonButton
                                     expand='block'
                                     color={'success'}
-                                    className="ion-margin-top"
+                                    className="ion-margin-top ion-no-margin"
                                     onClick={fazerCadastro}
                                     disabled={isLoading}  // Desabilita o botão enquanto está carregando
                                 >
@@ -196,7 +196,7 @@ const Cadastro: React.FC = () => {
                                     </IonText>
                                 </IonButton>
 
-                                <div className="texts-login">
+                                <div className="text-voltar-cadastro">
                                     <IonText>
                                         <a href="/Inicial" className="voltar">Voltar</a>
                                     </IonText>

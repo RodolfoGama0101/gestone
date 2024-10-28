@@ -54,6 +54,7 @@
     align-items: center;
     text-align: center;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .line {
@@ -61,5 +62,12 @@
     height: 1px;
     background-color: var(--ion-text-color);
     margin: 0 10px; 
+}
 
+.text-voltar-login {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-left: 0;
+    text-align: start;
 }
