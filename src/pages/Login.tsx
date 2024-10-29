@@ -98,6 +98,14 @@ const Login: React.FC = () => {
                   <IonText><h2>Entrar</h2></IonText>
                 </IonButton>
 
+                <div className="line-container">
+                  <div className="line"></div>
+                  <IonText>OU</IonText>
+                  <div className="line"></div>
+                </div>
+
+                <SignGoogle />
+
                 <div className="text-voltar-login">
                   <IonText>
                     <a href="/Inicial" className="voltar">Voltar</a>
