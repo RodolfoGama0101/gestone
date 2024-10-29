@@ -23,10 +23,6 @@ const LandingPage: React.FC = () => {
                         <IonItem routerLink="/support">
                             <IonLabel>Support</IonLabel>
                         </IonItem>
-                        <IonItem routerLink="/Inicial">
-                            <IonLabel>Home</IonLabel>
-                        </IonItem>
-
                     </IonList>
                 </IonContent>
 
@@ -70,19 +66,19 @@ const LandingPage: React.FC = () => {
                         <h2>O Que Nossos Usuários Dizem</h2>
                         <div className='carousel'>
                             <div className="divbox">
-                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                                <p>"É um aplicativo realmente util usei para arrumar minha vida financeira tendo mais conhecimento dos meus gastos." - Luiz Miranda</p>
                             </div>
                             <div className="divbox">
-                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                                <p>"Gestone facilita o controle das finanças com uma interface prática, permitindo visão clara dos gastos e do orçamento." - Arthur Moraes</p>
                             </div>
                             <div className="divbox">
-                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                                <p>"Gestone facilitou meu controle financeiro. Agora, posso acompanhar gastos diários de forma prática e organizada." - Kaua Leonardo</p>
                             </div>
                             <div className="divbox">
-                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                                <p>"O Gestone me deu autonomia financeira, permitindo que eu gerencie minhas despesas e economize de forma consciente." - Samuel</p>
                             </div>
                             <div className="divbox">
-                                <p>"Este serviço transformou a maneira como eu gerencio meu dinheiro. Recomendo a todos!" - João Silva</p>
+                                <p>"Funcional e completo, o Gestone tem todas as ferramentas para registro de gastos e metas personalizadas." - Paulo Henrique</p>
                             </div>
                         </div>
                     </section>
@@ -92,14 +88,14 @@ const LandingPage: React.FC = () => {
                         <IonCol className="left">
                             <div className="video">
                                 <div className="video-dim">
-                                    <video autoPlay muted loop src="videoteste.mp4"></video>
+                                    <video autoPlay muted loop src="Gestonevideo.mp4"></video>
                                 </div>
                             </div>
                         </IonCol>
                         <IonCol className="right">
                             <div className="qrcode">
                                 <IonLabel className="qrcode-img">
-                                    <p>Acesse Aqui!!</p>
+                                    <p>Acessa Ai!!</p>
                                     <img src='QRCode.png'></img>
                                 </IonLabel>
                             </div>

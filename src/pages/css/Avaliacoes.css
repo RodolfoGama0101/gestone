@@ -1,7 +1,8 @@
 .input-avaliacoes {
   height: 100px;
   min-height: 200px; /* Altura mínima para o campo de comentário */
-  width: 100%; /* Largura total dentro do contêiner */
+  width: 97%; /* Largura total dentro do contêiner */
+  margin-bottom: 20px;
 }
 
 .comentario {
@@ -30,7 +31,13 @@
 
 .star-rating {
   display: flex;
-  margin-top: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.star-rating1 {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -48,8 +55,8 @@
   align-items: center;
 }
 
-.modal-content {
-  display: flex;
+.modal-content1 {
+  margin-top: 20px;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -115,4 +122,9 @@
 
 .content-avaliacao {
   height: 100%;
+}
+
+.bnt-avali {
+  margin-top: 100px;
+  margin-bottom: 0px;
 }

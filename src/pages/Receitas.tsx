@@ -29,9 +29,10 @@ import './css/Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { addOutline, arrowBackOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, cashOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
+import { useRef } from 'react';
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -58,6 +59,8 @@ const Receitas: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
     const [limite, setLimite] = useState(10);
+
+    
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -88,6 +91,8 @@ const Receitas: React.FC = () => {
             }
         });
     });
+
+  
 
     async function addReceita() {
         if (data) {
@@ -237,6 +242,8 @@ const Receitas: React.FC = () => {
         return true; // Return true to include all transactions
     });
 
+    
+
     return (
         <IonPage>
             <IonHeader>
@@ -270,7 +277,7 @@ const Receitas: React.FC = () => {
 
                 <IonToolbar style={{ maxWidth: '1800px', marginLeft: '5px', marginRight: '5px' }}>
                     <IonGrid>
-                        <IonRow style={{display: 'flex', justifyContent: "end"}}>
+                        <IonRow style={{ display: 'flex', justifyContent: "end" }}>
                             <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
                                 <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
                                 {/* Add a single button to toggle the filter */}
@@ -317,18 +324,16 @@ const Receitas: React.FC = () => {
                                 <IonInput
                                     required
                                     label="Data: "
-                                    type="date"
+                                    type="date" 
+                                    className="input green-calendar-icon"
                                     // color={'light'}
-                                    className="input "
                                     fill="outline"
-                                    style={{
-                                        '--placeholder-color': 'var(--ion-text-color)', // cor do ícone de calendário // cor do texto padrão
-                                    }}
                                     onIonChange={(e: any) => {
                                         const selectedDate = new Date(e.detail.value);
                                         setData(selectedDate);
                                     }}
                                 />
+                                
                                 <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
@@ -388,6 +393,11 @@ const Receitas: React.FC = () => {
                                     }}>
                                         <IonGrid>
                                             <IonRow>
+                                                <IonCol size="auto" style={{ display: 'flex', alignItems: 'center', marginLeft: '0' }} className="ion-margin">
+                                                    <IonText className="ion-text-center" style={{ fontSize: '28px' }} >
+                                                        <IonIcon icon={cashOutline} style={{ fontSize: '28px' }} />
+                                                    </IonText>
+                                                </IonCol>
                                                 <IonCol>
                                                     <IonText><h1>{"R$ " + receita.valor.toFixed(2)}</h1></IonText>
                                                     <IonText><p>{receita.data.toLocaleDateString()}</p></IonText>

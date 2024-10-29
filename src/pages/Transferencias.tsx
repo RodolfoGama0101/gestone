@@ -150,51 +150,6 @@ const Transferencias: React.FC = () => {
         "Outros": helpOutline,
     };
 
-    // const editFinance = async (
-    //     id: any,
-    //     tipo: any,
-    //     newData: any,
-    //     newValor: number,
-    //     newDescricao: string,
-    //     newTag: string,
-    // ) => {
-    //     const userFinanceRef = doc(db, "UserFinance", id);
-    //     try {
-    //         if (tipo === "receita") {
-    //             await updateDoc(userFinanceRef, {
-    //                 data: newData,
-    //                 valor: newValor,
-    //                 descricao: newDescricao,
-    //             });
-    //         } else if (tipo === "despesa") {
-    //             await updateDoc(userFinanceRef, {
-    //                 data: newData,
-    //                 valor: newValor,
-    //                 tag: newTag,
-    //             });
-    //         }
-
-
-
-    //     } catch (error) {
-    //         console.error(error)
-    //     } finally {
-    //         setIsLoading(false); // Finaliza o carregamento
-    //     }
-    // };
-
-    // // Atualize a função de edição para definir a transferência selecionada
-    // const handleEditClick = (transferencia: SaldoData) => {
-    //     setTransferenciaSelecionada(transferencia);
-    //     setNewData(transferencia.data);
-    //     setNewDescricao(transferencia.descricao);
-    //     setNewTag(transferencia.tag);
-    //     setNewValor(transferencia.valor);
-    //     setTipoAtual(transferencia.tipo);
-    //     setIsOpen(true);
-    //     editFinance(transferencia.id, transferencia.tipo, newData, newValor, newDescricao, newTag);
-    // };
-
     return (
         <IonPage>
             <IonHeader>
@@ -284,61 +239,7 @@ const Transferencias: React.FC = () => {
 
                                 return (
                                     <IonGrid>
-
                                         <IonItem key={transferencia.id}>
-                                            {/*  <IonCol sizeLg="1">
-
-                                                <IonText className="ion-text-center" style={{ display: 'flex', justifyContent: 'center' }}>
-                                                    {transferencia.tipo === "receita" ? (
-                                                        <IonIcon icon={cashOutline} style={{ fontSize: '28px' }} /> // Move the icon to the left and remove the marginLeft
-                                                    ) : (
-                                                        <IonIcon icon={tagIconMap[transferencia.tag] || helpOutline} style={{ fontSize: '28px' }} />
-                                                    )}
-                                                </IonText>
-                                                <IonText className="ion-text-center">
-                                                    <p className="ion-no-margin">{descricaoOrTag}</p>
-                                                </IonText>
-                                                <IonText color={cor} className="ion-text-center">
-                                                    <h2 className="">{negativo + "R$ " + transferencia.valor}</h2>
-                                                </IonText>
-
-                                            </IonCol>
-
-                                            {/* Data 
-                                            <IonCol sizeLg="10">
-                                                <IonText className="ion-text-center">
-                                                    <p className="ion-no-margin">{transferencia.data.toLocaleDateString()}</p>
-                                                </IonText>
-                                            </IonCol>
-
-                                            {/* Editar e Excluir 
-                                            <IonCol sizeLg="1">
-                                                {/* Delete button 
-                                                <IonButton id={`present-alert-${transferencia.id}`} color="danger" className="delete-bt" style={{ float: 'right' }}>
-                                                    <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                    <IonText color={'light'}>Excluir</IonText>
-                                                </IonButton>
-                                                <IonAlert
-                                                    trigger={`present-alert-${transferencia.id}`}
-                                                    header="Tem certeza que deseja excluir?"
-                                                    className="custom-alert"
-                                                    buttons={[
-                                                        {
-                                                            text: 'cancel',
-                                                            cssClass: 'alert-button-cancel cancel-bnt',
-
-                                                        },
-                                                        {
-                                                            text: 'confirm',
-                                                            cssClass: 'alert-button-confirm',
-                                                            handler: () => {
-                                                                excluirTransferencia(transferencia.id);
-                                                            },
-                                                        }
-                                                    ]}
-                                                />
-                                            </IonCol>*/}
-
                                             <IonGrid>
                                                 <IonRow>
                                                     <IonCol size="auto" style={{ display: "flex", alignItems: "center", marginLeft: "0" }} className="ion-margin">
