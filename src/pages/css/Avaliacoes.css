@@ -36,6 +36,12 @@
   align-items: center;
 }
 
+.star-rating1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .star {
   font-size: 32px;
   margin: 0 5px;
@@ -116,4 +122,9 @@
 
 .content-avaliacao {
   height: 100%;
+}
+
+.bnt-avali {
+  margin-top: 100px;
+  margin-bottom: 0px;
 }

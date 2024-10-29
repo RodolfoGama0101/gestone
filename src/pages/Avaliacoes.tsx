@@ -96,7 +96,7 @@ const Avaliacoes: React.FC = () => {
 
       <IonContent>
         <IonGrid>
-          <IonRow class="ion-justify-content-center ion-align-items-center">
+          <IonRow class="ion-justify-content-center ion-align-items-center bnt-avali">
             <IonButton
               color={"success"}
               onClick={() => setIsOpen(true)}
@@ -161,13 +161,26 @@ const Avaliacoes: React.FC = () => {
             <IonCardContent>
               <IonText>
                 <p>Usuário: {userInfo.displayName}</p>
-                <p>Estrelas: {userRatingData.stars}</p>
+
+                {/* Bloco de estrelas preenchidas com base em userRatingData.stars */}
+                <div className="star-rating1">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <IonIcon
+                      key={index}
+                      icon={index < userRatingData.stars ? star : starOutline} // Define preenchimento com base no userRatingData.stars
+                      className="star"
+                      color={"warning"}
+                    />
+                  ))}
+                </div>
+
                 <p>Comentário: {userRatingData.comment}</p>
               </IonText>
             </IonCardContent>
           </IonCard>
         )}
       </IonContent>
+
 
       {/* <IonCard className="custom-card media-card">
             <IonCardContent>
