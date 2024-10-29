@@ -351,31 +351,24 @@ const Conta: React.FC = () => {
                                 </IonToolbar>
                             </IonHeader>
 
-                            <IonContent className="ion-no-padding" fullscreen>
+                            <IonContent className="ion-no-padding " fullscreen>
                                 <IonGrid>
-                                    <IonRow className="ion-justify-content-center ion-align-items-center">
-                                        <IonCol size="auto" style={{ position: 'relative' }}>
-                                            <IonAvatar className="user-photo">
+                                    <IonRow className="ion-justify-content-center  ion-align-items-center ">
+                                        <IonCol className='ion-text-center'>
+                                            <IonAvatar className="user-photo1">
                                                 <IonImg src={userImg || "/assets/default-avatar.png"} />
                                             </IonAvatar>
                                             <IonButton
                                                 shape='round'
-                                                size="large"
-                                                style={{
-                                                    position: 'absolute',
-                                                    bottom: '0',
-                                                    right: '0',
-                                                    margin: 0
-                                                }}
+                                                className='bnt-edit'
                                             >
-                                                <IonIcon color='success' icon={pencilOutline} />
+                                                <IonText><IonIcon color='success' icon={pencilOutline} /> Editar Avatar </IonText>
                                             </IonButton>
                                         </IonCol>
                                     </IonRow>
-
                                     {/* Edição do Nome */}
 
-                                    <IonRow style={{ display: 'flex', alignItems: 'center', marginTop: '0' }}>
+                                    <IonRow className="ion-justify-content-center ion-align-items-center ion-margin-top">
                                         <IonCol>
                                             {isEditingName ? (
                                                 <IonInput
@@ -414,24 +407,24 @@ const Conta: React.FC = () => {
                         <IonRow style={{ display: 'flex', alignItems: 'center' }}>
                             {/* ChartPie Tags */}
                             <IonCol sizeXs='12' sizeSm='12' sizeMd='12' sizeLg='12' sizeXl='12'>
-                                
-                                    <IonText className='ion-text-center'>
-                                        <h1>Resumo Anual</h1>
-                                    </IonText>
-                                    <IonCol size='auto'>
-                                        <div className="chart-pie-container" 
-                                            style={{
-                                                
-                                                width: '100%',
 
-                                            }}
+                                <IonText className='ion-text-center'>
+                                    <h1>Resumo Anual</h1>
+                                </IonText>
+                                <IonCol size='auto'>
+                                    <div className="chart-pie-container"
+                                        style={{
 
-                                            color={'medium'}
-                                        >
-                                            <Line data={dataDespesasAno} options={optionsLineBar} />
-                                        </div>
-                                    </IonCol>
-                                
+                                            width: '100%',
+
+                                        }}
+
+                                        color={'medium'}
+                                    >
+                                        <Line data={dataDespesasAno} options={optionsLineBar} />
+                                    </div>
+                                </IonCol>
+
                             </IonCol>
                         </IonRow>
                     </IonGrid>
