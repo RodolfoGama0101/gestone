@@ -406,7 +406,6 @@ const Receitas: React.FC = () => {
                                                 <IonCol size="auto" className="ion-justify-content-end ion-align-self-center">
                                                     <IonButton id={`present-alert-${receita.id}`} color="danger" className="delete-bt">
                                                         <IonIcon icon={trashOutline} color={'light'}></IonIcon>
-                                                        <IonText color={'light'}>Excluir</IonText>
                                                     </IonButton>
                                                     <IonAlert
                                                         trigger={`present-alert-${receita.id}`}
