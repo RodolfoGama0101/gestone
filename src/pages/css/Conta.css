@@ -23,6 +23,12 @@
     margin-top: 10px; /* Adiciona um espaçamento superior */
 }
 
+.user-photo2 {
+    width: 150px;
+    height: 150px;
+    margin-top: 10px; /* Adiciona um espaçamento superior */
+}
+
 
 .footer-logout {
     padding: 0px;

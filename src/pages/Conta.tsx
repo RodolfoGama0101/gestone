@@ -314,7 +314,7 @@ const Conta: React.FC = () => {
                     <IonRow>
                         <IonCol className="user-info">
                             {userImg ? (
-                                <IonAvatar className="user-photo">
+                                <IonAvatar className="user-photo2">
                                     <IonImg src={userImg} />
                                 </IonAvatar>
                             ) : (

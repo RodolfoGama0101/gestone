@@ -29,7 +29,7 @@ import './css/Receitas.css';
 import { addDoc, collection, deleteDoc, doc, getAggregateFromServer, getDoc, getDocs, limit, orderBy, query, setDoc, sum, Timestamp, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { addOutline, arrowBackOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
+import { addOutline, arrowBackOutline, cashOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
 
@@ -270,7 +270,7 @@ const Receitas: React.FC = () => {
 
                 <IonToolbar style={{ maxWidth: '1800px', marginLeft: '5px', marginRight: '5px' }}>
                     <IonGrid>
-                        <IonRow style={{display: 'flex', justifyContent: "end"}}>
+                        <IonRow style={{ display: 'flex', justifyContent: "end" }}>
                             <IonCol className="ion-justify-content-end" style={{ display: "flex", alignItems: "center" }} size="auto">
                                 <IonIcon icon={filterOutline} size="large" style={{ marginRight: "8px" }} />
                                 {/* Add a single button to toggle the filter */}
@@ -388,6 +388,11 @@ const Receitas: React.FC = () => {
                                     }}>
                                         <IonGrid>
                                             <IonRow>
+                                                <IonCol size="auto" style={{ display: 'flex', alignItems: 'center', marginLeft: '0' }} className="ion-margin">
+                                                    <IonText className="ion-text-center" style={{ fontSize: '28px' }} >
+                                                        <IonIcon icon={cashOutline} style={{ fontSize: '28px' }} />
+                                                    </IonText>
+                                                </IonCol>
                                                 <IonCol>
                                                     <IonText><h1>{"R$ " + receita.valor.toFixed(2)}</h1></IonText>
                                                     <IonText><p>{receita.data.toLocaleDateString()}</p></IonText>
