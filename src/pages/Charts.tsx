@@ -27,6 +27,7 @@ const Charts: React.FC = () => {
   const [dataMesSelecionado, setDataMesSelecionado] = useState(new Date().getMonth()); // Fazer procura de mês
   const [receitaTotal, setReceitaTotal] = useState(Number);
   const [despesaTotal, setDespesaTotal] = useState(Number);
+  const [despesaTotalAnual, setDespesaTotalAnual] = useState(Number);
   const [tags, setTags] = useState(Object);
   const [tagsData, setTagsData] = useState<DespesasData[]>([]);
   const [tagsDataAgrupado, setTagsDataAgrupado] = useState<{ [key: string]: number }>({});
@@ -64,15 +65,17 @@ const Charts: React.FC = () => {
     });
     setReceitaTotal(snapshotReceitas.data().receitaTotal);
 
-    // Soma despesas
+    // Query despesas
     const collDespesas = collection(db, 'UserFinance');
     const qDespesas = query(collDespesas, where("uid", "==", user.uid), where("mes", "==", dataMesSelecionado), where("tipo", "==", "despesa"));
 
+    // Soma despesas
     const snapshotDespesas = await getAggregateFromServer(qDespesas, {
       despesaTotal: sum('valor')
     });
 
     setDespesaTotal(snapshotDespesas.data().despesaTotal);
+    console.log(despesaTotal);
   }
 
   async function buscarMesSelecionado(user: any) {
@@ -123,7 +126,7 @@ const Charts: React.FC = () => {
       });
 
       setDespesasAnoAgrupadas(despesasPorMes); // Atualiza o estado com as despesas agrupadas por mês
-      setDespesaTotal(despesasPorMes.reduce((acc, val) => acc + val, 0)); // Calcula o total de despesas
+      // setDespesaTotalAnual(despesasPorMes.reduce((acc, val) => acc + val, 0)); // Calcula o total de despesas
     } catch (error) {
       console.error("Erro ao buscar documentos de despesas do ano: ", error);
     }
@@ -228,7 +231,9 @@ const Charts: React.FC = () => {
       tooltip: {
         callbacks: {
           label: function (tooltipItem: any) {
-            return `${tooltipItem.label}: R$${tooltipItem.raw.toFixed(2)} (${((tooltipItem.raw / despesaTotal) * 100).toFixed(2)}%)`; // Adiciona a porcentagem ao tooltip
+            const valor = tooltipItem.raw;
+            const porcentagem = ((valor / despesaTotal) * 100).toFixed(2);
+            return `${tooltipItem.label}: R$${valor.toFixed(2)} (${porcentagem}%)`; // Adiciona a porcentagem ao tooltip
           },
         },
         backgroundColor: '#333',
@@ -239,8 +244,8 @@ const Charts: React.FC = () => {
       },
       datalabels: {
         color: '#ffffff',
-        formatter: (value: any, context: any) => {
-          const total = context.chart._getDatasetTotal(context.datasetIndex);
+        formatter: (value: any) => {
+          const total = Object.values(tagsDataAgrupado).reduce((acc: number, val: number) => acc + val, 0); // Total manualmente calculado
           const percentage = ((value / total) * 100).toFixed(2) + '%';
           return percentage;
         },
@@ -267,7 +272,7 @@ const Charts: React.FC = () => {
 
   // Renderizando a lista de despesas com porcentagem
   const listaDespesas = Object.keys(tagsDataAgrupado).map((tag: string) => {
-    const valor = tagsDataAgrupado[tag]; // TypeScript agora sabe que `valor` é do tipo `number`
+    const valor = tagsDataAgrupado[tag];
     const porcentagem = ((valor / despesaTotal) * 100).toFixed(2); // Calcula a porcentagem
 
     return (
@@ -278,7 +283,7 @@ const Charts: React.FC = () => {
               <IonCol style={{ display: "flex", flexDirection: "row" }}>
                 <IonIcon icon={ellipse} style={{ color: obterCorParaTag(tag) }} className="ion-margin" />
                 <IonText>
-                  <p>{tag}: R$ {valor.toFixed(2)} ({porcentagem}%)</p>
+                  <p>{tag}: R$ {valor} ({porcentagem}%)</p>
                 </IonText>
               </IonCol>
             </IonRow>
@@ -501,13 +506,13 @@ const Charts: React.FC = () => {
           <IonRow>
             <IonCol sizeLg="11" className="ion-align-self-start ion-text-left" style={{ display: "flex", alignItems: "center" }}>
               <IonButton onClick={antGraph} color="dark" shape="round" fill="default">
-                <IonIcon icon={arrowBackCircleSharp} slot="icon-only" size="large"/>
+                <IonIcon icon={arrowBackCircleSharp} slot="icon-only" size="large" />
               </IonButton>
             </IonCol>
 
             <IonCol sizeLg="1" className="ion-align-self-end ion-text-right" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
               <IonButton onClick={proxGraph} color="dark" shape="round" fill="default">
-                <IonIcon icon={arrowForwardCircleSharp} slot="icon-only" size="large"/>
+                <IonIcon icon={arrowForwardCircleSharp} slot="icon-only" size="large" />
               </IonButton>
             </IonCol>
           </IonRow>

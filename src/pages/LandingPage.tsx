@@ -7,11 +7,6 @@ const LandingPage: React.FC = () => {
 
         <>
             <IonMenu contentId="main-content" side='end'>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle></IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <IonContent>
                     <IonList>
                         <IonItem routerLink="/Cadastro">
