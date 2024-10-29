@@ -32,6 +32,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { addOutline, arrowBackOutline, cashOutline, chevronDownOutline, filterOutline, funnelOutline, trashOutline } from "ionicons/icons";
 import { meses } from "../variables/variables";
 import { ThemeContext } from '../components/ThemeContext';
+import { useRef } from 'react';
 
 const Receitas: React.FC = () => {
     interface ReceitasData {
@@ -58,6 +59,8 @@ const Receitas: React.FC = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [filtroOrdenacao, setFiltroOrdenacao] = useState<'data' | 'valor'>('data'); // Estado para a ordenação
     const [limite, setLimite] = useState(10);
+
+    
 
     useEffect(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -88,6 +91,8 @@ const Receitas: React.FC = () => {
             }
         });
     });
+
+  
 
     async function addReceita() {
         if (data) {
@@ -237,6 +242,8 @@ const Receitas: React.FC = () => {
         return true; // Return true to include all transactions
     });
 
+    
+
     return (
         <IonPage>
             <IonHeader>
@@ -317,18 +324,16 @@ const Receitas: React.FC = () => {
                                 <IonInput
                                     required
                                     label="Data: "
-                                    type="date"
+                                    type="date" 
+                                    className="input green-calendar-icon"
                                     // color={'light'}
-                                    className="input "
                                     fill="outline"
-                                    style={{
-                                        '--placeholder-color': 'var(--ion-text-color)', // cor do ícone de calendário // cor do texto padrão
-                                    }}
                                     onIonChange={(e: any) => {
                                         const selectedDate = new Date(e.detail.value);
                                         setData(selectedDate);
                                     }}
                                 />
+                                
                                 <IonInput required label="Descrição:" type="text" color={'success'} className="input" fill="outline" onIonChange={(e: any) => setDescricao(e.target.value)}></IonInput>
                                 <IonButton className="btn-add-receita" color={'success'} onClick={() => { addReceita(), setIsOpen(false) }}>Adicionar receita</IonButton>
                             </IonCardContent>
