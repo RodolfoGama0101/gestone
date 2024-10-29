@@ -194,7 +194,7 @@ const Home: React.FC = () => {
       y: {
         beginAtZero: true,
         ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo Y
+          color: '#000000', // Cor branca para os valores do eixo Y
         },
         grid: {
           color: '#555555', // Opcional: cor da linha do grid
@@ -202,7 +202,7 @@ const Home: React.FC = () => {
       },
       x: {
         ticks: {
-          color: '#FFFFFF', // Cor branca para os valores do eixo X
+          color: '#000000', // Cor branca para os valores do eixo X
         },
         grid: {
           color: '#555555', // Opcional: cor da linha do grid
