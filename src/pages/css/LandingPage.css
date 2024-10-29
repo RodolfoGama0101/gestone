@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 2px 15px;
-  box-shadow: 0 0.1rem 0.5rem var(--ion-text-color);
+  box-shadow: 0 0.1rem 0.5rem #0c0c0c;
   width: 100%;
   background: var(--ion-background-color);
   transition: all 0.5s;
